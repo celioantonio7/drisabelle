@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react'
+import { createPortal } from 'react-dom'
 import { ArrowRight, X } from 'lucide-react'
 import { WhatsAppIcon, DiamondIcon } from './Icons'
 import { AttentionArrow, SocialInstagramLottie } from './LottieflowIcons'
@@ -258,16 +259,7 @@ export default function Results() {
 
   useEffect(() => {
     if (selectedCase) {
-      const scrollY = window.scrollY
-      const originalOverflow = document.body.style.overflow
-      const originalPosition = document.body.style.position
-      const originalTop = document.body.style.top
-      const originalWidth = document.body.style.width
-
       document.body.style.overflow = 'hidden'
-      document.body.style.position = 'fixed'
-      document.body.style.top = `-${scrollY}px`
-      document.body.style.width = '100%'
 
       const onKeyDown = (e: KeyboardEvent) => {
         if (e.key === 'Escape') setSelectedCase(null)
@@ -275,11 +267,7 @@ export default function Results() {
       window.addEventListener('keydown', onKeyDown)
 
       return () => {
-        document.body.style.overflow = originalOverflow
-        document.body.style.position = originalPosition
-        document.body.style.top = originalTop
-        document.body.style.width = originalWidth
-        window.scrollTo(0, scrollY)
+        document.body.style.overflow = ''
         window.removeEventListener('keydown', onKeyDown)
       }
     }
@@ -528,64 +516,69 @@ export default function Results() {
         </div>
       </div>
 
-      {/* ================= INTERACTIVE CASE DETAIL MODAL (Compact & Zero Scroll) ================= */}
-      {selectedCase && (
-        <div
-          className="case-modal-backdrop"
-          onClick={() => setSelectedCase(null)}
-        >
+      {/* ================= INTERACTIVE CASE DETAIL MODAL (Compact, Dead-Center & Zero Scroll) ================= */}
+      {selectedCase &&
+        createPortal(
           <div
-            className="case-modal-box"
-            onClick={(e) => e.stopPropagation()}
+            className="case-modal-backdrop"
+            role="dialog"
+            aria-modal="true"
+            aria-label={selectedCase.title}
+            onClick={() => setSelectedCase(null)}
           >
-            <button
-              type="button"
-              onClick={() => setSelectedCase(null)}
-              className="case-modal-close"
-              aria-label="Fechar modal"
+            <div
+              className="case-modal-box"
+              onClick={(e) => e.stopPropagation()}
             >
-              <X width={18} height={18} />
-            </button>
-
-            <div className="case-modal-tag">
-              <DiamondIcon width={13} height={13} />
-              <span>{selectedCase.tag}</span>
-            </div>
-
-            <h3 className="case-modal-title">{selectedCase.title}</h3>
-
-            <div className="case-modal-photo-wrap">
-              <HexFluidImage
-                topSrc={selectedCase.antesImg}
-                bottomSrc={selectedCase.depoisImg}
-                alt={selectedCase.title}
-                width={520}
-                height={260}
-                className="case-modal-photo"
-              />
-            </div>
-
-            <blockquote className="case-modal-quote">
-              &ldquo;{selectedCase.quote}&rdquo;
-            </blockquote>
-
-            <div className="case-modal-actions">
-              <a
-                href={`${WHATSAPP_URL}&text=${encodeURIComponent(
-                  `Olá Dra. Isabella! Gostei muito do caso "${selectedCase.title}" e gostaria de agendar uma avaliação privativa.`,
-                )}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="case-modal-wa-btn"
+              <button
+                type="button"
+                onClick={() => setSelectedCase(null)}
+                className="case-modal-close"
+                aria-label="Fechar modal"
               >
-                <WhatsAppIcon width={18} height={18} />
-                <span>Quero um resultado como este</span>
-                <ArrowRight width={15} height={15} />
-              </a>
+                <X width={18} height={18} />
+              </button>
+
+              <div className="case-modal-tag">
+                <DiamondIcon width={13} height={13} />
+                <span>{selectedCase.tag}</span>
+              </div>
+
+              <h3 className="case-modal-title">{selectedCase.title}</h3>
+
+              <div className="case-modal-photo-wrap">
+                <HexFluidImage
+                  topSrc={selectedCase.antesImg}
+                  bottomSrc={selectedCase.depoisImg}
+                  alt={selectedCase.title}
+                  width={520}
+                  height={260}
+                  className="case-modal-photo"
+                />
+              </div>
+
+              <blockquote className="case-modal-quote">
+                &ldquo;{selectedCase.quote}&rdquo;
+              </blockquote>
+
+              <div className="case-modal-actions">
+                <a
+                  href={`${WHATSAPP_URL}&text=${encodeURIComponent(
+                    `Olá Dra. Isabella! Gostei muito do caso "${selectedCase.title}" e gostaria de agendar uma avaliação privativa.`,
+                  )}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="case-modal-wa-btn"
+                >
+                  <WhatsAppIcon width={18} height={18} />
+                  <span>Quero um resultado como este</span>
+                  <ArrowRight width={15} height={15} />
+                </a>
+              </div>
             </div>
-          </div>
-        </div>
-      )}
+          </div>,
+          document.body,
+        )}
     </section>
   )
 }

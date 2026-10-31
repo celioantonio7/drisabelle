@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { X, Play } from 'lucide-react'
 import { WHATSAPP_URL } from '../data'
 import { Loading09, AttentionArrow } from './LottieflowIcons'
@@ -30,7 +31,7 @@ export default function VideoModal({ isOpen, onClose }: VideoModalProps) {
 
   if (!isOpen) return null
 
-  return (
+  return createPortal(
     <div className="video-modal-backdrop" onClick={onClose} role="dialog" aria-modal="true">
       <div className="video-modal-container" onClick={(e) => e.stopPropagation()}>
         <button
@@ -77,6 +78,7 @@ export default function VideoModal({ isOpen, onClose }: VideoModalProps) {
           </div>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body,
   )
 }

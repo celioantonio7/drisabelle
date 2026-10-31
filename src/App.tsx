@@ -16,16 +16,26 @@ import NotFound404 from './components/NotFound404'
 
 function checkIsNotFound(): boolean {
   if (typeof window === 'undefined') return false
-  const path = window.location.pathname
+  const path = window.location.pathname.replace(/\/+$/, '')
   const hash = window.location.hash
   const search = window.location.search
   if (hash === '#404' || search.includes('404')) return true
-  return path !== '/' && path !== '/index.html'
+
+  const validPaths = [
+    '',
+    '/',
+    '/index.html',
+    '/drisabelle',
+    '/drisabelle/',
+    '/drisabelle/index.html',
+  ]
+  return !validPaths.includes(path) && !validPaths.includes(window.location.pathname)
 }
 
 export default function App() {
   const [videoOpen, setVideoOpen] = useState(false)
   const [isNotFound, setIsNotFound] = useState<boolean>(() => checkIsNotFound())
+  const [isReady, setIsReady] = useState(false)
 
   useEffect(() => {
     const syncRoute = () => setIsNotFound(checkIsNotFound())
@@ -42,9 +52,9 @@ export default function App() {
   }
 
   return (
-    <div className="site-wrapper">
-      {/* Preloader de Assinatura Caligráfica */}
-      <SignaturePreloader />
+    <div className={`site-wrapper ${isReady ? 'is-page-ready' : 'is-page-preloading'}`}>
+      {/* Preloader de Assinatura Caligráfica — Página só abre após 100% concluído */}
+      <SignaturePreloader onComplete={() => setIsReady(true)} />
 
       {/* Barra de Navegação */}
       <Navbar />

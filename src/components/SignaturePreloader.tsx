@@ -68,18 +68,23 @@ const SIGNATURE_GLYPHS: { char: string; d: string }[] = [
   }
 ]
 
-export default function SignaturePreloader() {
+interface SignaturePreloaderProps {
+  onComplete?: () => void
+}
+
+export default function SignaturePreloader({ onComplete }: SignaturePreloaderProps) {
   const [fading, setFading] = useState(false)
   const [done, setDone] = useState(false)
 
   const dismiss = () => {
     setFading(true)
+    onComplete?.()
     window.setTimeout(() => {
       document.body.style.overflow = ''
       document.documentElement.style.overflow = ''
       setDone(true)
-      window.setTimeout(() => ScrollTrigger.refresh(), 60)
-    }, 350)
+      window.setTimeout(() => ScrollTrigger.refresh(), 80)
+    }, 450)
   }
 
   useEffect(() => {
@@ -92,13 +97,18 @@ export default function SignaturePreloader() {
     document.body.style.overflow = 'hidden'
     document.documentElement.style.overflow = 'hidden'
 
-    const t1 = window.setTimeout(() => setFading(true), 1800)
+    // Assinatura desenha completamente e depois libera a página 100%
+    const t1 = window.setTimeout(() => {
+      setFading(true)
+      onComplete?.()
+    }, 2000)
+
     const t2 = window.setTimeout(() => {
       document.body.style.overflow = ''
       document.documentElement.style.overflow = ''
       setDone(true)
-      window.setTimeout(() => ScrollTrigger.refresh(), 60)
-    }, 2300)
+      window.setTimeout(() => ScrollTrigger.refresh(), 80)
+    }, 2550)
 
     return () => {
       document.body.style.overflow = ''
@@ -106,7 +116,7 @@ export default function SignaturePreloader() {
       window.clearTimeout(t1)
       window.clearTimeout(t2)
     }
-  }, [done])
+  }, [done, onComplete])
 
   if (done) return null
 
