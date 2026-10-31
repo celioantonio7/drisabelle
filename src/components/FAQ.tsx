@@ -9,10 +9,12 @@ import {
 } from '../animations/hooks'
 import { gsap } from '../animations/gsap'
 import { AttentionArrow } from './LottieflowIcons'
+import { ToothIcon } from './Icons'
+import { assetUrl } from '../utils/assets'
 
 export default function FAQSection() {
   const rootRef = useRef<HTMLElement>(null)
-  const [openIndex, setOpenIndex] = useState<number | null>(0)
+  const [openIndex, setOpenIndex] = useState<number | null>(null)
 
   useMagneticButton(rootRef)
   useCardTilt(rootRef)
@@ -21,11 +23,10 @@ export default function FAQSection() {
   useMotion(rootRef, ({ motion, desktop }, root) => {
     if (!motion) return
 
-    // Mode D (Codrops-Paper Split-Column Counter-Parallax & Seal Rotation)
+    // Mode D (Codrops-Paper Split-Column Counter-Parallax)
     if (desktop) {
       const leftCol = root.querySelector('.faq-left-col')
       const rightCol = root.querySelector('.faq-right-showcase')
-      const sealSvg = root.querySelector('.faq-seal-svg')
 
       if (leftCol && rightCol) {
         gsap.fromTo(
@@ -53,23 +54,6 @@ export default function FAQSection() {
               start: 'top bottom',
               end: 'bottom top',
               scrub: 0.85,
-            },
-          },
-        )
-      }
-
-      if (sealSvg) {
-        gsap.fromTo(
-          sealSvg,
-          { rotation: -45 },
-          {
-            rotation: 95,
-            ease: 'none',
-            scrollTrigger: {
-              trigger: root,
-              start: 'top bottom',
-              end: 'bottom top',
-              scrub: 0.9,
             },
           },
         )
@@ -149,15 +133,35 @@ export default function FAQSection() {
             </div>
           </div>
 
-          {/* ================= RIGHT COLUMN: EXACT SHOWCASE CARD FROM REFERÊNCIA (Imagem ChatGPT 30_10_2026, 20_56_42-5.png) ================= */}
+          {/* ================= RIGHT COLUMN: SHOWCASE CARD WITH SPINNING SEAL BADGE ================= */}
           <div className="faq-right-showcase">
             <div className="faq-showcase-real-frame" data-tilt>
               <img
-                src="/img/faq_showcase_card.png"
+                src={assetUrl('/img/faq_showcase_card.png')}
                 alt="Dra. Isabella Ferro — Odontologia Estética e Harmonização Facial"
                 className="faq-showcase-real-img"
                 loading="eager"
               />
+
+              {/* Animated Spinning Circular Seal Overlay (media_1793483285937_2ed995c0.png) */}
+              <div className="faq-seal-badge" aria-hidden="true">
+                <div className="faq-seal-inner-ring" />
+                <svg viewBox="0 0 144 144" className="faq-seal-svg">
+                  <path
+                    id="faq-seal-path"
+                    d="M 72, 72 m -50, 0 a 50,50 0 1,1 100,0 a 50,50 0 1,1 -100,0"
+                    fill="none"
+                  />
+                  <text className="faq-seal-text">
+                    <textPath href="#faq-seal-path" startOffset="0%">
+                      ODONTOLOGIA ESTÉTICA • RESULTADOS REAIS •
+                    </textPath>
+                  </text>
+                </svg>
+                <div className="faq-seal-center-icon">
+                  <ToothIcon width={32} height={32} />
+                </div>
+              </div>
             </div>
           </div>
         </div>

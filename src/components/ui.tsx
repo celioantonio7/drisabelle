@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react'
 import { ArrowRight } from 'lucide-react'
 import { ToothIcon } from './Icons'
+import { assetUrl } from '../utils/assets'
 
 /** Botão principal / outline com Arrow Slide, Background Slide e Magnetic Hover */
 export function Button ({
@@ -105,7 +106,7 @@ export function PersonScene({
     <div className={`scene ${className}`}>
       <div className="scene__photo" data-img-reveal="organic">
         <img
-          src="/img/hero.jpg"
+          src={assetUrl('/img/hero.jpg')}
           width={1200}
           height={896}
           alt="Dra. Isabella Ferro sorrindo, em sua clínica de odontologia estética"

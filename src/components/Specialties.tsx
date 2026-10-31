@@ -3,6 +3,7 @@ import { ArrowDown } from 'lucide-react'
 import { ToothIcon, FaceIcon, ShieldIcon, DiamondIcon } from './Icons'
 import { AttentionArrow } from './LottieflowIcons'
 import { WHATSAPP_URL } from '../data'
+import { assetUrl } from '../utils/assets'
 import { useMotion } from '../animations/useMotion'
 import {
   useParallax,
@@ -231,7 +232,7 @@ export default function Specialties() {
           <div className="spec-top-right-group" data-spec-reveal>
             <div className="spec-beauty-arch-frame">
               <img
-                src="/img/spec_smile_hero_clean.jpg"
+                src={assetUrl('/img/spec_smile_hero_clean.jpg')}
                 alt="Sorriso natural esculpido com excelência"
                 className="spec-beauty-photo"
                 data-parallax="4"
@@ -299,7 +300,7 @@ export default function Specialties() {
               </div>
               <div className="spec-card-photo-wrap">
                 <img
-                  src="/img/spec_resina_ref.jpg"
+                  src={assetUrl('/img/spec_resina_ref.jpg')}
                   alt="Resultado de lentes em resina composta de alto padrão"
                   className="spec-card-img"
                   data-tilt-img
@@ -337,7 +338,7 @@ export default function Specialties() {
               </div>
               <div className="spec-card-photo-wrap">
                 <img
-                  src="/img/spec_porcelana_ref.jpg"
+                  src={assetUrl('/img/spec_porcelana_ref.jpg')}
                   alt="Resultado de lentes em porcelana pura ultrafina"
                   className="spec-card-img"
                   data-tilt-img

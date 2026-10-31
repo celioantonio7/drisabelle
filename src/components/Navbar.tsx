@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { NAV, WHATSAPP_URL, INSTAGRAM_URL } from '../data'
 import { scrollToId } from '../utils/scroll'
+import { assetUrl } from '../utils/assets'
 import { ScrollTrigger, useGSAP } from '../animations/gsap'
 import {
   LottieMenuNav11,
@@ -83,7 +84,7 @@ export default function Navbar() {
         >
           <div className="nav-brand-logo-wrap">
             <img
-              src="/img/logo_dourado_transparente.png"
+              src={assetUrl('/img/logo_dourado_transparente.png')}
               alt="Dra. Isabella Ferro - Odontologia Estética e Facial"
               className="nav-brand-logo-img"
             />

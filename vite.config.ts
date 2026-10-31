@@ -18,6 +18,7 @@ const designUnit = () => ({
 designUnit.postcss = true
 
 export default defineConfig({
+  base: process.env.BASE_PATH || (process.env.NODE_ENV === 'production' ? '/drisabelle/' : '/'),
   plugins: [react()],
   css: { postcss: { plugins: [designUnit()] } },
 })

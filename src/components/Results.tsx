@@ -5,6 +5,7 @@ import { AttentionArrow, SocialInstagramLottie } from './LottieflowIcons'
 import { WHATSAPP_URL, INSTAGRAM_URL } from '../data'
 import { useMagneticButton } from '../animations/hooks'
 import WobbleSpiralCanvas from './WobbleSpiralCanvas'
+import { assetUrl } from '../utils/assets'
 
 export interface CaseItem {
   id: number
@@ -21,9 +22,9 @@ export interface CaseItem {
 const CASES_DATA: CaseItem[] = [
   {
     id: 0,
-    antesImg: '/img/cases/case1_antes.jpg',
-    depoisImg: '/img/cases/case1_depois.jpg',
-    pairImg: '/img/cases/case1_pair.jpg',
+    antesImg: assetUrl('/img/cases/case1_antes.jpg'),
+    depoisImg: assetUrl('/img/cases/case1_depois.jpg'),
+    pairImg: assetUrl('/img/cases/case1_pair.jpg'),
     tag: 'Lentes em Porcelana',
     title: 'Lentes Cerâmicas Ultrafinas',
     quote:
@@ -33,9 +34,9 @@ const CASES_DATA: CaseItem[] = [
   },
   {
     id: 1,
-    antesImg: '/img/cases/case2_antes.jpg',
-    depoisImg: '/img/cases/case2_depois.jpg',
-    pairImg: '/img/cases/case2_pair.jpg',
+    antesImg: assetUrl('/img/cases/case2_antes.jpg'),
+    depoisImg: assetUrl('/img/cases/case2_depois.jpg'),
+    pairImg: assetUrl('/img/cases/case2_pair.jpg'),
     tag: 'Lentes em Resina',
     title: 'Estratificação em Resina Composta',
     quote:
@@ -45,9 +46,9 @@ const CASES_DATA: CaseItem[] = [
   },
   {
     id: 2,
-    antesImg: '/img/cases/case3_antes.jpg',
-    depoisImg: '/img/cases/case3_depois.jpg',
-    pairImg: '/img/cases/case3_pair.jpg',
+    antesImg: assetUrl('/img/cases/case3_antes.jpg'),
+    depoisImg: assetUrl('/img/cases/case3_depois.jpg'),
+    pairImg: assetUrl('/img/cases/case3_pair.jpg'),
     tag: 'Reabilitação Estética',
     title: 'Harmonia & Alinhamento do Sorriso',
     quote:
@@ -57,9 +58,9 @@ const CASES_DATA: CaseItem[] = [
   },
   {
     id: 3,
-    antesImg: '/img/cases/case4_antes.jpg',
-    depoisImg: '/img/cases/case4_depois.jpg',
-    pairImg: '/img/cases/case4_pair.jpg',
+    antesImg: assetUrl('/img/cases/case4_antes.jpg'),
+    depoisImg: assetUrl('/img/cases/case4_depois.jpg'),
+    pairImg: assetUrl('/img/cases/case4_pair.jpg'),
     tag: 'Lentes em Porcelana',
     title: 'Reabilitação Completa do Sorriso',
     quote:
@@ -69,9 +70,9 @@ const CASES_DATA: CaseItem[] = [
   },
   {
     id: 4,
-    antesImg: '/img/cases/case5_antes.jpg',
-    depoisImg: '/img/cases/case5_depois.jpg',
-    pairImg: '/img/cases/case5_pair.jpg',
+    antesImg: assetUrl('/img/cases/case5_antes.jpg'),
+    depoisImg: assetUrl('/img/cases/case5_depois.jpg'),
+    pairImg: assetUrl('/img/cases/case5_pair.jpg'),
     tag: 'Full Face & Harmonização',
     title: 'Transformação Full Face',
     quote:
@@ -81,9 +82,9 @@ const CASES_DATA: CaseItem[] = [
   },
   {
     id: 5,
-    antesImg: '/img/cases/case6_antes.jpg',
-    depoisImg: '/img/cases/case6_depois.jpg',
-    pairImg: '/img/cases/case6_pair.jpg',
+    antesImg: assetUrl('/img/cases/case6_antes.jpg'),
+    depoisImg: assetUrl('/img/cases/case6_depois.jpg'),
+    pairImg: assetUrl('/img/cases/case6_pair.jpg'),
     tag: 'Harmonização & Perfil',
     title: 'Simetria & Equilíbrio Facial',
     quote:
@@ -93,9 +94,9 @@ const CASES_DATA: CaseItem[] = [
   },
   {
     id: 6,
-    antesImg: '/img/cases/case7_antes.jpg',
-    depoisImg: '/img/cases/case7_depois.jpg',
-    pairImg: '/img/cases/case7_pair.jpg',
+    antesImg: assetUrl('/img/cases/case7_antes.jpg'),
+    depoisImg: assetUrl('/img/cases/case7_depois.jpg'),
+    pairImg: assetUrl('/img/cases/case7_pair.jpg'),
     tag: 'Full Face & Contorno',
     title: 'Rejuvenescimento & Sustentação Facial',
     quote:
@@ -279,34 +280,19 @@ export default function Results() {
       aria-label="Resultados e Casos"
     >
       <div className="section-container faq-container-layer">
-        {/* ================= MOBILE TOP HERO SPLIT (Exact match to 06_resultados_mobile.png) ================= */}
+        {/* ================= MOBILE TOP HERO SPLIT ================= */}
         <div className="rm-top-split results-anim-up">
           <div className="rm-left-copy">
-            <span className="rm-eyebrow">R E S U L T A D O S</span>
             <h2 className="rm-headline">
-              Sorrisos <br />
+              Transformações <br />
               que revelam <br />
               <em className="rm-headline-accent">confiança.</em>
             </h2>
-            <p className="rm-lead">
-              Resultados reais que valorizam a individualidade e a beleza natural de cada paciente.
-            </p>
-            <div className="rm-satisfied-row">
-              <div className="hm-avatars-stack">
-                <img src="/img/sobre_adulta.png" alt="" className="hm-avatar-img" />
-                <img src="/img/cases/case5_depois.jpg" alt="" className="hm-avatar-img" />
-                <img src="/img/cases/case6_depois.jpg" alt="" className="hm-avatar-img" />
-                <img src="/img/skincare-sorriso.jpg" alt="" className="hm-avatar-img" />
-              </div>
-              <span className="rm-satisfied-text">
-                Pacientes satisfeitos com resultados reais.
-              </span>
-            </div>
           </div>
 
           <div className="rm-right-arch-wrap">
             <div className="rm-right-arch-photo">
-              <img src="/img/skincare-sorriso.jpg" alt="Sorriso confiante" className="rm-arch-img" />
+              <img src={assetUrl('/img/skincare-sorriso.jpg')} alt="Sorriso confiante" className="rm-arch-img" />
             </div>
             <div className="rm-stamp-badge">
               <svg viewBox="0 0 140 140" className="hm-stamp-svg" aria-hidden="true">
@@ -317,7 +303,7 @@ export default function Results() {
                 />
                 <text className="hm-stamp-text">
                   <textPath href="#rm-stamp-path" startOffset="0%">
-                    • TRANSFORMAÇÕES • REAIS •
+                    • TRANSFORMAÇÕES • DE CONFIANÇA •
                   </textPath>
                 </text>
               </svg>
@@ -330,21 +316,12 @@ export default function Results() {
 
         {/* ================= DESKTOP HEADER ================= */}
         <div className="results-header results-desktop-header results-anim-up">
-          <div className="section-eyebrow">
-            <span>TRANSFORMAÇÕES REAIS</span>
-            <span className="eyebrow-line" />
-          </div>
-
           <h2 className="results-headline">
-            Sorrisos que revelam <em className="spec-headline-accent">confiança.</em>
+            Transformações que revelam <em className="spec-headline-accent">confiança.</em>
           </h2>
-
-          <p className="results-lead">
-            Resultados reais que valorizam a individualidade, a harmonia facial e a beleza natural de cada paciente.
-          </p>
         </div>
 
-        {/* ================= 3D SPIRAL SLIDER & LATERAL HONEYCOMB (COLMEIA + LANDO NORRIS ANTES->DEPOIS) ================= */}
+        {/* ================= 3D SPIRAL SLIDER & LATERAL HONEYCOMB ================= */}
         <div className="results-showcase-layout results-anim-up">
           {/* Left Honeycomb Column (Colmeia Esquerda — Fotos 100% Limpas: Antes na frente -> Depois ao passar o mouse) */}
           <div className="colmeia-column colmeia-left">
@@ -422,13 +399,13 @@ export default function Results() {
                 setSliderPos(Math.max(10, Math.min(90, ((e.touches[0].clientX - r.left) / r.width) * 100)))
               }}
             >
-              <img src="/img/cases/case1_depois.jpg" alt="Depois" className="rm-ba-img-full" />
+              <img src={assetUrl('/img/cases/case1_depois.jpg')} alt="Depois" className="rm-ba-img-full" />
               <div
                 className="rm-ba-before-clip"
                 style={{ clipPath: `inset(0 ${100 - sliderPos}% 0 0)` }}
               >
                 <img
-                  src="/img/cases/case1_antes.jpg"
+                  src={assetUrl('/img/cases/case1_antes.jpg')}
                   alt="Antes"
                   className="rm-ba-img-full"
                 />
@@ -468,7 +445,7 @@ export default function Results() {
               </span>
             </div>
             <div className="rm-split-photo">
-              <img src="/img/cases/case5_depois.jpg" alt="Harmonização" />
+              <img src={assetUrl('/img/cases/case5_depois.jpg')} alt="Harmonização" />
             </div>
           </div>
 
@@ -486,7 +463,7 @@ export default function Results() {
               <span className="rm-navy-author-name">Dra. Isabella Ferro</span>
             </div>
             <div className="rm-navy-avatar">
-              <img src="/img/sobre_adulta.png" alt="Dra. Isabella Ferro" />
+              <img src={assetUrl('/img/sobre_adulta.png')} alt="Dra. Isabella Ferro" />
             </div>
           </div>
 
@@ -496,7 +473,7 @@ export default function Results() {
             onClick={() => setSelectedCase(CASES_DATA[1])}
           >
             <div className="rm-split-photo">
-              <img src="/img/cases/case2_depois.jpg" alt="Sorriso Natural" />
+              <img src={assetUrl('/img/cases/case2_depois.jpg')} alt="Sorriso Natural" />
             </div>
             <div className="rm-split-text">
               <h3 className="rm-card-h">Sorriso Natural</h3>
@@ -524,14 +501,14 @@ export default function Results() {
               no Instagram. &rarr;
             </span>
             <div className="rm-insta-thumbs">
-              <img src="/img/cases/case4_depois.jpg" alt="" className="rm-insta-t1" />
-              <img src="/img/cases/case7_depois.jpg" alt="" className="rm-insta-t2" />
+              <img src={assetUrl('/img/cases/case4_depois.jpg')} alt="" className="rm-insta-t1" />
+              <img src={assetUrl('/img/cases/case7_depois.jpg')} alt="" className="rm-insta-t2" />
             </div>
           </a>
         </div>
       </div>
 
-      {/* ================= INTERACTIVE CASE DETAIL MODAL (Pure CSS + Clean Before/After Lando Norris) ================= */}
+      {/* ================= INTERACTIVE CASE DETAIL MODAL (Compact & Zero Scroll) ================= */}
       {selectedCase && (
         <div
           className="case-modal-backdrop"
@@ -547,24 +524,23 @@ export default function Results() {
               className="case-modal-close"
               aria-label="Fechar modal"
             >
-              <X width={20} height={20} />
+              <X width={18} height={18} />
             </button>
 
             <div className="case-modal-tag">
-              <DiamondIcon width={14} height={14} />
+              <DiamondIcon width={13} height={13} />
               <span>{selectedCase.tag}</span>
             </div>
 
             <h3 className="case-modal-title">{selectedCase.title}</h3>
 
-            {/* Interactive Lando Norris Before -> After inside the modal too! */}
             <div className="case-modal-photo-wrap">
               <HexFluidImage
                 topSrc={selectedCase.antesImg}
                 bottomSrc={selectedCase.depoisImg}
                 alt={selectedCase.title}
-                width={580}
-                height={340}
+                width={520}
+                height={260}
                 className="case-modal-photo"
               />
             </div>
@@ -572,8 +548,6 @@ export default function Results() {
             <blockquote className="case-modal-quote">
               &ldquo;{selectedCase.quote}&rdquo;
             </blockquote>
-
-            <p className="case-modal-desc">{selectedCase.desc}</p>
 
             <div className="case-modal-actions">
               <a
@@ -584,18 +558,10 @@ export default function Results() {
                 rel="noopener noreferrer"
                 className="case-modal-wa-btn"
               >
-                <WhatsAppIcon width={20} height={20} />
-                <span>Quero um resultado como este no WhatsApp</span>
-                <ArrowRight width={16} height={16} />
+                <WhatsAppIcon width={18} height={18} />
+                <span>Quero um resultado como este</span>
+                <ArrowRight width={15} height={15} />
               </a>
-
-              <button
-                type="button"
-                onClick={() => setSelectedCase(null)}
-                className="case-modal-cancel-btn"
-              >
-                Fechar
-              </button>
             </div>
           </div>
         </div>

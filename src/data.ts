@@ -4,6 +4,10 @@ export const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURICo
 export const INSTAGRAM_URL = 'https://www.instagram.com/isabellapferro/'
 export const INSTAGRAM_POST_URL = 'https://www.instagram.com/p/DWXSzTTlou0/'
 
+export const ADDRESS_TEXT = 'Av. Itália, 928 - Jardim das Nações, Taubaté - SP, 12030-212'
+export const MAPS_URL = 'https://www.google.com/maps/search/?api=1&query=Av.+It%C3%A1lia%2C+928+-+Jardim+das+Na%C3%A7%C3%B5es%2C+Taubat%C3%A9+-+SP%2C+12030-212'
+export const MAPS_EMBED_URL = 'https://maps.google.com/maps?q=Av.+It%C3%A1lia,+928+-+Jardim+das+Na%C3%A7%C3%B5es,+Taubat%C3%A9+-+SP,+12030-212&t=&z=16&ie=UTF8&iwloc=&output=embed'
+
 export const NAV = [
   { id: 'inicio', label: 'Início' },
   { id: 'sobre', label: 'Sobre' },

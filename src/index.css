@@ -24,11 +24,11 @@
   --color-border: #dce6f4;
 
   /* Ultra Liquid Glassmorphism */
-  --liquid-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.36) 0%, rgba(255, 255, 255, 0.16) 100%);
-  --liquid-bg-hover: linear-gradient(135deg, rgba(255, 255, 255, 0.52) 0%, rgba(255, 255, 255, 0.28) 100%);
-  --liquid-border: rgba(255, 255, 255, 0.84);
-  --liquid-shadow: 0 20px 44px -12px rgba(11, 25, 44, 0.10), inset 0 1.5px 2px rgba(255, 255, 255, 0.96), inset 0 -1px 2px rgba(0, 86, 214, 0.06);
-  --liquid-shadow-hover: 0 26px 52px -10px rgba(0, 86, 214, 0.18), inset 0 2px 3px #ffffff;
+  --liquid-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.78) 0%, rgba(246, 250, 255, 0.64) 100%);
+  --liquid-bg-hover: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(246, 250, 255, 0.76) 100%);
+  --liquid-border: rgba(255, 255, 255, 0.92);
+  --liquid-shadow: 0 16px 36px -10px rgba(11, 25, 44, 0.08), 0 4px 12px rgba(0, 86, 214, 0.03);
+  --liquid-shadow-hover: 0 22px 48px -10px rgba(0, 86, 214, 0.14), 0 4px 14px rgba(11, 25, 44, 0.06);
 
   --shadow-pill: 0 10px 24px -6px rgba(0, 86, 214, 0.35);
 }
@@ -3098,13 +3098,13 @@ button {
 }
 
 /* ==========================================================================
-   05: FAQ SECTION — DESKTOP & 05_faq_mobile.png + ANTIGRAVITY BACKGROUND
+   05: FAQ SECTION — DESKTOP & 05_faq_mobile.png + ATMOSPHERIC BACKGROUND
    ========================================================================== */
 .faq-section {
   position: relative;
   overflow: hidden;
   padding: 72px 0 48px;
-  background: #ffffff;
+  background: radial-gradient(circle at 80% 25%, rgba(215, 233, 255, 0.45) 0%, rgba(248, 250, 255, 0) 65%), #f5f9ff;
 }
 
 @media (min-width: 1024px) {
@@ -3112,6 +3112,8 @@ button {
     padding: 96px 0 56px;
   }
 }
+
+
 
 .faq-antigravity-bg {
   position: absolute !important;
@@ -3410,18 +3412,29 @@ button {
   justify-content: center;
 }
 
+section[id] {
+  scroll-margin-top: 84px;
+}
+
+.results-header.results-desktop-header {
+  position: relative;
+  z-index: 10;
+  pointer-events: none;
+  text-align: center;
+  margin-bottom: -36px;
+}
+
 .results-headline {
   font-family: var(--font-serif);
   font-size: clamp(2.2rem, 3.4vw, 3.4rem);
   font-weight: 500;
   line-height: 1.15;
   color: var(--color-navy);
-  margin-bottom: 12px;
+  margin-bottom: 0;
 }
 
 .results-lead {
-  font-size: 1rem;
-  color: var(--color-slate-body);
+  display: none;
 }
 
 /* 3D Spiral + Honeycomb Grid */
@@ -3430,13 +3443,13 @@ button {
   grid-template-columns: 1fr;
   gap: 24px;
   align-items: center;
-  margin-bottom: 32px;
+  margin-bottom: 24px;
 }
 
 @media (min-width: 1024px) {
   .results-showcase-layout {
-    grid-template-columns: 260px 1fr 260px;
-    gap: 28px;
+    grid-template-columns: 240px 1fr 240px;
+    gap: 24px;
   }
 }
 
@@ -3450,7 +3463,7 @@ button {
 @media (min-width: 1024px) {
   .colmeia-column {
     display: flex;
-    margin-top: -72px;
+    margin-top: -30px;
     z-index: 10;
   }
 }
@@ -3934,75 +3947,86 @@ button {
   margin-left: -14px;
 }
 
-/* ================= PURE CSS CASE DETAIL MODAL ================= */
+/* ================= PURE CSS CASE DETAIL MODAL (ZERO SCROLL, COMPACT & LUXURY) ================= */
 .case-modal-backdrop {
   position: fixed;
   inset: 0;
   z-index: 9999;
   background: rgba(11, 25, 44, 0.75);
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 18px;
+  padding: 16px;
 }
 
 .case-modal-box {
   position: relative;
   width: 100%;
-  max-width: 600px;
-  max-height: 92vh;
+  max-width: 480px;
+  max-height: 88vh;
   overflow: hidden;
   background: #ffffff;
-  border-radius: 36px 14px 36px 14px;
-  padding: 22px 22px;
+  border-radius: 28px;
+  padding: 20px 22px;
   box-shadow: 0 28px 65px rgba(0, 0, 0, 0.34);
+  display: flex;
+  flex-direction: column;
 }
 
 .case-modal-close {
   position: absolute;
-  top: 16px;
-  right: 16px;
-  width: 38px;
-  height: 38px;
+  top: 14px;
+  right: 14px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   background: #0b192c;
   color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.case-modal-close:hover {
+  background: #0056d6;
+  transform: scale(1.08);
 }
 
 .case-modal-tag {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 4px 12px;
+  padding: 3px 10px;
   border-radius: 9999px;
   background: var(--color-blue-ice);
   color: var(--color-blue-royal);
-  font-size: 0.7rem;
+  font-size: 0.68rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
+  width: fit-content;
 }
 
 .case-modal-title {
   font-family: var(--font-serif);
-  font-size: 1.55rem;
+  font-size: 1.25rem;
   font-weight: 600;
   color: var(--color-navy);
-  margin-bottom: 12px;
+  margin-bottom: 8px;
+  line-height: 1.2;
 }
 
 .case-modal-photo-wrap {
   width: 100%;
-  height: 235px;
-  border-radius: 22px 8px 22px 8px;
+  height: 180px;
+  border-radius: 16px;
   overflow: hidden;
   background: #0f172a;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
 .case-modal-photo {
@@ -4012,54 +4036,51 @@ button {
 }
 
 .case-modal-quote {
-  padding: 10px 14px;
-  border-radius: 12px;
+  padding: 8px 12px;
+  border-radius: 10px;
   background: var(--color-blue-tint);
-  border-left: 4px solid var(--color-blue-royal);
+  border-left: 3px solid var(--color-blue-royal);
   font-family: var(--font-serif);
   font-style: italic;
-  font-size: 0.88rem;
+  font-size: 0.8rem;
   color: var(--color-navy);
   margin-bottom: 10px;
-  line-height: 1.42;
+  line-height: 1.38;
 }
 
 .case-modal-desc {
-  font-size: 0.84rem;
-  color: var(--color-slate-body);
-  line-height: 1.5;
-  margin-bottom: 14px;
+  display: none;
 }
 
 .case-modal-actions {
   display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+  width: 100%;
+  margin-top: 2px;
 }
 
 .case-modal-wa-btn {
-  flex: 1;
-  min-width: 240px;
+  width: 100%;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  padding: 14px 22px;
+  gap: 8px;
+  padding: 11px 18px;
   border-radius: 9999px;
   background: #16a34a;
   color: #ffffff;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   font-weight: 600;
-  box-shadow: 0 10px 24px rgba(22, 163, 74, 0.3);
+  box-shadow: 0 8px 20px rgba(22, 163, 74, 0.28);
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.case-modal-wa-btn:hover {
+  background: #15803d;
+  transform: translateY(-1px);
 }
 
 .case-modal-cancel-btn {
-  padding: 14px 22px;
-  border-radius: 9999px;
-  background: #f1f5f9;
-  color: var(--color-slate-dark);
-  font-size: 0.9rem;
-  font-weight: 600;
+  display: none;
 }
 
 /* ==========================================================================
@@ -6121,7 +6142,7 @@ button:hover > .lf-attention8-wrap .lf-attention8-primary {
   width: 100%;
   max-width: 540px;
   border-radius: 36px;
-  overflow: hidden;
+  overflow: visible;
   box-shadow:
     0 24px 64px -14px rgba(11, 25, 44, 0.16),
     0 8px 24px -6px rgba(0, 86, 214, 0.1);
@@ -6142,6 +6163,7 @@ button:hover > .lf-attention8-wrap .lf-attention8-primary {
   height: auto;
   display: block;
   object-fit: cover;
+  border-radius: 34px;
 }
 
 @media (max-width: 640px) {
@@ -6210,48 +6232,100 @@ button:hover > .lf-attention8-wrap .lf-attention8-primary {
 /* Bottom-Right Circular Tooth Seal ("ODONTOLOGIA ESTÉTICA • RESULTADOS REAIS •") */
 .faq-seal-badge {
   position: absolute;
-  right: 2%;
-  bottom: 24px;
-  z-index: 6;
-  width: 144px;
-  height: 144px;
+  right: -20px;
+  bottom: -20px;
+  z-index: 10;
+  width: 148px;
+  height: 148px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.95) 0%, rgba(235, 244, 255, 0.88) 100%);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1.5px solid #ffffff;
-  box-shadow: 0 18px 42px rgba(11, 25, 44, 0.12);
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.98) 0%, rgba(240, 248, 255, 0.92) 100%);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 2px solid #ffffff;
+  box-shadow: 0 18px 44px -8px rgba(11, 25, 44, 0.16);
   display: flex;
   align-items: center;
   justify-content: center;
+  pointer-events: none;
+}
+
+@keyframes faqSealSpin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .faq-seal-inner-ring {
   position: absolute;
-  inset: 28px;
+  inset: 26px;
   border-radius: 50%;
   border: 1px solid rgba(186, 212, 248, 0.75);
-  background: rgba(246, 250, 255, 0.8);
+  background: rgba(246, 250, 255, 0.85);
 }
 
 .faq-seal-svg {
   width: 100%;
   height: 100%;
+  animation: faqSealSpin 24s linear infinite;
+  transform-origin: center center;
 }
 
 .faq-seal-text {
-  font-size: 9.2px;
-  letter-spacing: 0.19em;
+  font-size: 9.6px;
+  letter-spacing: 0.18em;
   font-weight: 700;
-  fill: #334155;
+  fill: #1e3a8a;
 }
 
 .faq-seal-center-icon {
   position: absolute;
-  color: #0b2545;
+  color: #0056d6;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+/* Footer Google Maps Embed Box */
+.footer-col-map {
+  min-width: 250px;
+}
+
+.footer-map-embed-box {
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1.5px solid rgba(255, 255, 255, 0.95);
+  border-radius: 24px;
+  padding: 10px;
+  box-shadow: 0 16px 36px -8px rgba(11, 25, 44, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.footer-map-action-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #0056d6;
+  padding: 8px 14px;
+  border-radius: 9999px;
+  background: #ffffff;
+  border: 1px solid rgba(0, 86, 214, 0.15);
+  box-shadow: 0 4px 12px rgba(0, 86, 214, 0.06);
+  transition: all 0.25s ease;
+}
+
+.footer-map-action-link:hover {
+  background: #0056d6;
+  color: #ffffff;
+  transform: translateY(-1px);
 }
 
 /* --- 07: FOOTER BACKGROUND ATMOSPHERE & MONUMENTAL REFLECTION --- */

@@ -6,7 +6,7 @@ import {
   SocialWhatsAppLottie,
   SocialLocationLottie,
 } from './LottieflowIcons'
-import { INSTAGRAM_URL, NAV, WHATSAPP_URL } from '../data'
+import { INSTAGRAM_URL, NAV, WHATSAPP_URL, ADDRESS_TEXT, MAPS_URL, MAPS_EMBED_URL } from '../data'
 import { scrollToId } from '../utils/scroll'
 import {
   useMagneticButton,
@@ -207,7 +207,12 @@ export default function Footer() {
               </p>
               <p>
                 <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer">
-                  Instagram: @draisabellaferro
+                  Instagram: @isabellapferro
+                </a>
+              </p>
+              <p>
+                <a href={MAPS_URL} target="_blank" rel="noopener noreferrer">
+                  {ADDRESS_TEXT}
                 </a>
               </p>
             </div>
@@ -348,8 +353,10 @@ export default function Footer() {
                     <SocialLocationLottie size={16} />
                   </span>
                   <div className="footer-contact-item-copy">
-                    <span>Localização</span>
-                    <small>São José dos Campos - SP</small>
+                    <a href={MAPS_URL} target="_blank" rel="noopener noreferrer">
+                      Localização
+                    </a>
+                    <small>{ADDRESS_TEXT}</small>
                   </div>
                 </li>
               </ul>
@@ -362,6 +369,32 @@ export default function Footer() {
                 <strong>Dra. Isabella Ferro</strong>
                 <span>Clínico Geral &bull; CRO 140267</span>
                 <span>Odontologia Estética &amp; Harmonização Facial</span>
+              </div>
+            </div>
+
+            {/* Google Maps Interactive Card (Exact address embed) */}
+            <div className="footer-col footer-col-map">
+              <h4 className="footer-col-h">MAPA &amp; ROTA</h4>
+              <span className="footer-col-rule" aria-hidden="true" />
+              <div className="footer-map-embed-box">
+                <iframe
+                  title="Localização Dra. Isabella Ferro — Taubaté SP"
+                  src={MAPS_EMBED_URL}
+                  width="100%"
+                  height="160"
+                  style={{ border: 0, borderRadius: '18px' }}
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                />
+                <a
+                  href={MAPS_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="footer-map-action-link"
+                >
+                  <span>Abrir no Google Maps</span>
+                  <AttentionArrow size={14} />
+                </a>
               </div>
             </div>
           </div>
@@ -414,6 +447,11 @@ export default function Footer() {
                 <p>
                   <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer">
                     Instagram: @isabellapferro
+                  </a>
+                </p>
+                <p>
+                  <a href={MAPS_URL} target="_blank" rel="noopener noreferrer">
+                    Localização: {ADDRESS_TEXT}
                   </a>
                 </p>
               </div>

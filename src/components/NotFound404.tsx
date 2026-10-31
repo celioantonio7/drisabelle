@@ -77,7 +77,7 @@ export default function NotFound404({ onGoHome }: NotFound404Props) {
         </p>
 
         <a
-          href="/"
+          href={import.meta.env.BASE_URL || '/'}
           onClick={handleBackHome}
           className="notfound-404-home-btn"
         >

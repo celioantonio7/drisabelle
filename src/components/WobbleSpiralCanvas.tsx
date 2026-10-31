@@ -86,15 +86,15 @@ export default function WobbleSpiralCanvas({
     camera.position.z = 7.0
 
     const settings = {
-      radius: 2.35,
-      verticalGap: 0.74,
+      radius: 2.25,
+      verticalGap: 0.70,
       angleGap: 0.80,
-      cardWidth: 1.88,
-      cardHeight: 2.24,
-      idleSpin: 0.0035,
+      cardWidth: 1.82,
+      cardHeight: 2.18,
+      idleSpin: 0.003,
       scrollSensitivity: 0.004,
-      smoothing: 0.1,
-      wobbleStrength: 0.28,
+      smoothing: 0.12,
+      wobbleStrength: 0.22,
     }
 
     const cardGeometry = new THREE.PlaneGeometry(settings.cardWidth, settings.cardHeight, 12, 16)
@@ -279,12 +279,21 @@ export default function WobbleSpiralCanvas({
         slot -= cardCount / 2
 
         const angle = slot * settings.angleGap + Math.PI / 2
+        const rawX = Math.cos(angle) * settings.radius
+        const rawY = slot * settings.verticalGap
+        const rawZ = Math.sin(angle) * settings.radius
+
+        // Trajectory following user's red sketch:
+        // Top right -> sweeping left across behind the phrase -> center -> bottom-left curve
+        const curveOffsetX = (rawY * 0.32) - 0.12
+
         card.position.set(
-          Math.cos(angle) * settings.radius,
-          slot * settings.verticalGap,
-          Math.sin(angle) * settings.radius,
+          rawX + curveOffsetX,
+          rawY,
+          rawZ,
         )
-        card.rotation.y = Math.PI / 2 - angle
+        card.rotation.y = Math.PI / 2 - angle - 0.15
+        card.rotation.z = -0.04
       })
 
       renderer.render(scene, camera)

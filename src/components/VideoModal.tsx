@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { X, Play } from 'lucide-react'
 import { WHATSAPP_URL } from '../data'
 import { Loading09, AttentionArrow } from './LottieflowIcons'
+import { assetUrl } from '../utils/assets'
 
 interface VideoModalProps {
   isOpen: boolean
@@ -49,7 +50,7 @@ export default function VideoModal({ isOpen, onClose }: VideoModalProps) {
               </div>
             )}
             <img
-              src="/img/bg-clinica.jpg"
+              src={assetUrl('/img/bg-clinica.jpg')}
               alt="Clínica Dra. Isabella Ferro"
               className="video-modal-poster"
               onLoad={() => setImgLoaded(true)}

@@ -9,6 +9,7 @@ import {
 import FluidRevealCanvas from './FluidRevealCanvas'
 import Stack from './Stack'
 import { AttentionArrow } from './LottieflowIcons'
+import { assetUrl } from '../utils/assets'
 
 export default function About() {
   const rootRef = useRef<HTMLElement>(null)
@@ -122,8 +123,8 @@ export default function About() {
               <div className="about-photo-card" data-expand-photo>
                 <div className="about-photo-wrap">
                   <FluidRevealCanvas
-                    topSrc="/img/sobre_adulta.png"
-                    bottomSrc="/img/sobre_crianca.png"
+                    topSrc={assetUrl('/img/sobre_adulta.png')}
+                    bottomSrc={assetUrl('/img/sobre_crianca.png')}
                   />
                 </div>
               </div>
