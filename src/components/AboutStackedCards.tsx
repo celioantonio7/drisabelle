@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react'
 import { GraduationCap, Award, HeartHandshake } from 'lucide-react'
-import { gsap, useGSAP } from '../animations/gsap'
+import { gsap, useGSAP, ScrollTrigger } from '../animations/gsap'
 
 export default function AboutStackedCards() {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -12,9 +12,11 @@ export default function AboutStackedCards() {
   const dragStartRef = useRef<{ x: number; y: number } | null>(null)
   const currentDragCardRef = useRef<HTMLElement | null>(null)
 
-  // Track the current display order of cards [0, 1, 2, 3]
+  // Track the current display order of cards: [slot0, slot1, slot2, slot3]
   // card 0: Electric Blue, 1: Vibrant Purple, 2: Deep Turquoise, 3: Amber Orange
-  const [, setActiveCardsOrder] = useState<number[]>([0, 1, 2, 3])
+  const [deckOrder, setDeckOrder] = useState<number[]>([0, 1, 2, 3])
+  const deckOrderRef = useRef<number[]>([0, 1, 2, 3])
+  deckOrderRef.current = deckOrder
 
   useGSAP(
     () => {
@@ -28,14 +30,36 @@ export default function AboutStackedCards() {
       // =========================================================================
       // 1. DESKTOP ANIMATION (>= 769px)
       // Trava na primeira rolagem até o último card subir.
-      // Uma vez completado, rolar para cima mantém o stack montado.
+      // Uma vez completado, destrava e rolar para cima mantém o stack montado.
       // =========================================================================
       mm.add('(min-width: 769px)', () => {
+        if (hasCompletedRef.current) {
+          // Já completado: manter empilhado permanentemente
+          gsap.set(cards[0], { scale: 0.88, y: -24, opacity: 1, zIndex: 10, yPercent: 0 })
+          gsap.set(cards[1], { scale: 0.92, y: 8, opacity: 1, zIndex: 20, yPercent: 0 })
+          gsap.set(cards[2], { scale: 0.96, y: 40, opacity: 1, zIndex: 30, yPercent: 0 })
+          gsap.set(cards[3], { scale: 1.0, y: 72, opacity: 1, zIndex: 40, yPercent: 0 })
+          return
+        }
+
         // Initial state: Card 01 static and visible; Cards 02, 03, 04 hidden below
-        gsap.set(cards[0], { y: 0, scale: 1, opacity: 1, zIndex: 10 })
+        gsap.set(cards[0], { y: 0, scale: 1, opacity: 1, zIndex: 10, yPercent: 0 })
         gsap.set(cards[1], { yPercent: 125, y: 0, scale: 0.98, opacity: 0, zIndex: 20 })
         gsap.set(cards[2], { yPercent: 135, y: 0, scale: 0.98, opacity: 0, zIndex: 30 })
         gsap.set(cards[3], { yPercent: 145, y: 0, scale: 0.98, opacity: 0, zIndex: 40 })
+
+        const lockAndComplete = (st?: ScrollTrigger) => {
+          if (hasCompletedRef.current) return
+          hasCompletedRef.current = true
+          gsap.set(cards[0], { scale: 0.88, y: -24, opacity: 1, zIndex: 10, yPercent: 0 })
+          gsap.set(cards[1], { scale: 0.92, y: 8, opacity: 1, zIndex: 20, yPercent: 0 })
+          gsap.set(cards[2], { scale: 0.96, y: 40, opacity: 1, zIndex: 30, yPercent: 0 })
+          gsap.set(cards[3], { scale: 1.0, y: 72, opacity: 1, zIndex: 40, yPercent: 0 })
+          if (st) {
+            st.kill(false)
+            ScrollTrigger.refresh()
+          }
+        }
 
         const tl = gsap.timeline({
           scrollTrigger: {
@@ -47,18 +71,13 @@ export default function AboutStackedCards() {
             scrub: 0.65,
             anticipatePin: 1,
             invalidateOnRefresh: true,
-            onLeave: () => {
-              // Quando o último card terminar de subir, marca como completado
-              hasCompletedRef.current = true
+            onLeave: (self) => {
+              lockAndComplete(self)
             },
             onUpdate: (self) => {
-              // Se já completou uma vez na descida, ao rolar para cima não desmonta os cards
-              if (hasCompletedRef.current && self.direction === -1 && self.progress < 0.99) {
-                // Mantém todos empilhados permanentemente
-                gsap.set(cards[0], { scale: 0.88, y: -24, opacity: 1, zIndex: 10 })
-                gsap.set(cards[1], { scale: 0.92, y: 8, yPercent: 0, opacity: 1, zIndex: 20 })
-                gsap.set(cards[2], { scale: 0.96, y: 40, yPercent: 0, opacity: 1, zIndex: 30 })
-                gsap.set(cards[3], { scale: 1, y: 72, yPercent: 0, opacity: 1, zIndex: 40 })
+              // Se atingiu o final do empilhamento na primeira rolagem, fixa e destrava
+              if (self.progress >= 0.98 && !hasCompletedRef.current) {
+                lockAndComplete(self)
               }
             },
           },
@@ -192,20 +211,46 @@ export default function AboutStackedCards() {
       // 2. MOBILE ANIMATION (<= 768px)
       // =========================================================================
       mm.add('(max-width: 768px)', () => {
-        gsap.set(cards[0], { y: 0, scale: 1, opacity: 1, zIndex: 10 })
+        if (hasCompletedRef.current) {
+          gsap.set(cards[0], { scale: 0.91, y: -16, opacity: 1, zIndex: 10, yPercent: 0 })
+          gsap.set(cards[1], { scale: 0.94, y: 8, opacity: 1, zIndex: 20, yPercent: 0 })
+          gsap.set(cards[2], { scale: 0.97, y: 32, opacity: 1, zIndex: 30, yPercent: 0 })
+          gsap.set(cards[3], { scale: 1.0, y: 56, opacity: 1, zIndex: 40, yPercent: 0 })
+          return
+        }
+
+        gsap.set(cards[0], { y: 0, scale: 1, opacity: 1, zIndex: 10, yPercent: 0 })
         gsap.set(cards[1], { yPercent: 110, y: 0, scale: 0.98, opacity: 0, zIndex: 20 })
         gsap.set(cards[2], { yPercent: 120, y: 0, scale: 0.98, opacity: 0, zIndex: 30 })
         gsap.set(cards[3], { yPercent: 130, y: 0, scale: 0.98, opacity: 0, zIndex: 40 })
 
+        const lockMobileAndComplete = (st?: ScrollTrigger) => {
+          if (hasCompletedRef.current) return
+          hasCompletedRef.current = true
+          gsap.set(cards[0], { scale: 0.91, y: -16, opacity: 1, zIndex: 10, yPercent: 0 })
+          gsap.set(cards[1], { scale: 0.94, y: 8, opacity: 1, zIndex: 20, yPercent: 0 })
+          gsap.set(cards[2], { scale: 0.97, y: 32, opacity: 1, zIndex: 30, yPercent: 0 })
+          gsap.set(cards[3], { scale: 1.0, y: 56, opacity: 1, zIndex: 40, yPercent: 0 })
+          if (st) {
+            st.kill(false)
+            ScrollTrigger.refresh()
+          }
+        }
+
         const tl = gsap.timeline({
           scrollTrigger: {
             trigger: containerRef.current,
-            start: 'top 75%',
-            end: 'bottom 25%',
+            start: 'top 80%',
+            end: 'bottom 20%',
             scrub: 0.5,
             invalidateOnRefresh: true,
-            onLeave: () => {
-              hasCompletedRef.current = true
+            onLeave: (self) => {
+              lockMobileAndComplete(self)
+            },
+            onUpdate: (self) => {
+              if (self.progress >= 0.98 && !hasCompletedRef.current) {
+                lockMobileAndComplete(self)
+              }
             },
           },
         })
@@ -227,26 +272,26 @@ export default function AboutStackedCards() {
             1,
           )
 
-        tl.to(cards[0], { scale: 0.90, y: -18, duration: 1, ease: 'power1.inOut' }, 2)
-          .to(cards[1], { scale: 0.93, y: 8, duration: 1, ease: 'power1.inOut' }, 2)
-          .to(cards[2], { scale: 0.96, y: 34, duration: 1, ease: 'power1.inOut' }, 2)
+        tl.to(cards[0], { scale: 0.91, y: -16, duration: 1, ease: 'power1.inOut' }, 2)
+          .to(cards[1], { scale: 0.94, y: 8, duration: 1, ease: 'power1.inOut' }, 2)
+          .to(cards[2], { scale: 0.97, y: 32, duration: 1, ease: 'power1.inOut' }, 2)
           .fromTo(
             cards[3],
             { yPercent: 130, opacity: 0 },
-            { yPercent: 0, y: 60, opacity: 1, scale: 1, duration: 1, ease: 'power1.inOut' },
+            { yPercent: 0, y: 56, opacity: 1, scale: 1, duration: 1, ease: 'power1.inOut' },
             2,
           )
       })
 
       // =========================================================================
       // 3. ACCESSIBILITY: REDUCED MOTION
-      // ==========================================
+      // =========================================================================
       mm.add('(prefers-reduced-motion: reduce)', () => {
         hasCompletedRef.current = true
-        gsap.set(cards[0], { y: 0, scale: 1, opacity: 1, zIndex: 10 })
-        gsap.set(cards[1], { y: 24, scale: 0.97, opacity: 1, zIndex: 20 })
-        gsap.set(cards[2], { y: 48, scale: 0.94, opacity: 1, zIndex: 30 })
-        gsap.set(cards[3], { y: 72, scale: 0.91, opacity: 1, zIndex: 40 })
+        gsap.set(cards[0], { y: -24, scale: 0.88, opacity: 1, zIndex: 10, yPercent: 0 })
+        gsap.set(cards[1], { y: 8, scale: 0.92, opacity: 1, zIndex: 20, yPercent: 0 })
+        gsap.set(cards[2], { y: 40, scale: 0.96, opacity: 1, zIndex: 30, yPercent: 0 })
+        gsap.set(cards[3], { y: 72, scale: 1.0, opacity: 1, zIndex: 40, yPercent: 0 })
       })
 
       return () => mm.revert()
@@ -256,41 +301,82 @@ export default function AboutStackedCards() {
 
   // =========================================================================
   // INTERAÇÃO DE PUXAR / CLICAR ("pode também puxar/trocar igual era antes")
+  // Cicla a carta do topo para trás, avançando todas as outras
   // =========================================================================
-  const sendCardToBack = (cardIndex: number, directionX = 80) => {
+  const cycleCardToBack = (directionX = 85) => {
     if (isAnimatingRef.current || !deckRef.current) return
-    const cardEl = deckRef.current.querySelector<HTMLElement>(`[data-index="${cardIndex}"]`)
-    if (!cardEl) return
+    const order = [...deckOrderRef.current]
+    if (order.length < 4) return
+
+    // Front card is the last element in deckOrder
+    const frontCardIndex = order[order.length - 1]
+    const frontCardEl = deckRef.current.querySelector<HTMLElement>(`[data-index="${frontCardIndex}"]`)
+    if (!frontCardEl) return
 
     isAnimatingRef.current = true
 
-    const currentZ = parseInt(window.getComputedStyle(cardEl).zIndex || '40', 10)
+    // New order: front card moves to the back (index 0)
+    const newOrder = [frontCardIndex, order[0], order[1], order[2]]
+
+    const isMobile = window.innerWidth <= 768
+    const desktopSlots = [
+      { y: -24, scale: 0.88, zIndex: 10 },
+      { y: 8, scale: 0.92, zIndex: 20 },
+      { y: 40, scale: 0.96, zIndex: 30 },
+      { y: 72, scale: 1.0, zIndex: 40 },
+    ]
+    const mobileSlots = [
+      { y: -16, scale: 0.91, zIndex: 10 },
+      { y: 8, scale: 0.94, zIndex: 20 },
+      { y: 32, scale: 0.97, zIndex: 30 },
+      { y: 56, scale: 1.0, zIndex: 40 },
+    ]
+    const slots = isMobile ? mobileSlots : desktopSlots
+
+    // 1. Animate other cards moving one slot forward
+    for (let slot = 0; slot < 3; slot++) {
+      const cardIdx = order[slot]
+      const cardEl = deckRef.current.querySelector<HTMLElement>(`[data-index="${cardIdx}"]`)
+      if (cardEl) {
+        const nextSlot = slots[slot + 1]
+        gsap.to(cardEl, {
+          y: nextSlot.y,
+          scale: nextSlot.scale,
+          zIndex: nextSlot.zIndex,
+          duration: 0.38,
+          ease: 'power2.out',
+        })
+      }
+    }
+
+    // 2. Animate front card flying out, lowering zIndex to 5, and sliding back into slot 0
+    const backSlot = slots[0]
     gsap.timeline({
       onComplete: () => {
-        setActiveCardsOrder((prev) => {
-          const rest = prev.filter((i) => i !== cardIndex)
-          return [...rest, cardIndex]
-        })
+        setDeckOrder(newOrder)
+        deckOrderRef.current = newOrder
         isAnimatingRef.current = false
       },
     })
-      .to(cardEl, {
+      .to(frontCardEl, {
         x: directionX,
-        rotation: directionX > 0 ? 5 : -5,
-        scale: 0.92,
+        rotation: directionX > 0 ? 6 : -6,
+        scale: 0.94,
         opacity: 0.85,
-        duration: 0.22,
+        duration: 0.20,
         ease: 'power2.out',
       })
-      .set(cardEl, {
-        zIndex: Math.max(1, currentZ - 35),
+      .set(frontCardEl, {
+        zIndex: 5,
+        y: backSlot.y,
+        scale: backSlot.scale,
       })
-      .to(cardEl, {
+      .to(frontCardEl, {
         x: 0,
         rotation: 0,
-        scale: 0.96,
         opacity: 1,
-        duration: 0.32,
+        zIndex: backSlot.zIndex,
+        duration: 0.26,
         ease: 'power2.inOut',
       })
   }
@@ -300,10 +386,14 @@ export default function AboutStackedCards() {
     if (isAnimatingRef.current) return
     dragStartRef.current = { x: e.clientX, y: e.clientY }
     currentDragCardRef.current = e.currentTarget
-    e.currentTarget.setPointerCapture(e.pointerId)
+    try {
+      e.currentTarget.setPointerCapture(e.pointerId)
+    } catch {
+      // ignore
+    }
   }
 
-  const handlePointerUp = (e: React.PointerEvent<HTMLDivElement>, cardIdx: number) => {
+  const handlePointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
     if (!dragStartRef.current || !currentDragCardRef.current) return
     const deltaX = e.clientX - dragStartRef.current.x
     const deltaY = e.clientY - dragStartRef.current.y
@@ -319,12 +409,12 @@ export default function AboutStackedCards() {
     dragStartRef.current = null
     currentDragCardRef.current = null
 
-    // Se puxou mais de 35px para o lado ou para cima, ou se foi um clique simples
-    if (absX > 35 || absY > 35) {
-      sendCardToBack(cardIdx, deltaX >= 0 ? 90 : -90)
+    // Se puxou mais de 25px para o lado ou para cima, ou clique simples
+    if (absX > 25 || absY > 25) {
+      cycleCardToBack(deltaX >= 0 ? 85 : -85)
     } else {
-      // Clique simples também envia para trás
-      sendCardToBack(cardIdx, 75)
+      // Clique simples também cicla a carta do topo
+      cycleCardToBack(80)
     }
   }
 
@@ -342,9 +432,9 @@ export default function AboutStackedCards() {
           role="button"
           tabIndex={0}
           onPointerDown={handlePointerDown}
-          onPointerUp={(e) => handlePointerUp(e, 0)}
+          onPointerUp={handlePointerUp}
           aria-label="Card 1: Ciência, Arte e Naturalidade. Puxe ou clique para alternar."
-          onKeyDown={(e) => e.key === 'Enter' && sendCardToBack(0, 75)}
+          onKeyDown={(e) => e.key === 'Enter' && cycleCardToBack(80)}
         >
           <div className="about-stack-card-inner">
             <div className="about-stack-card-shine" aria-hidden="true" />
@@ -365,16 +455,16 @@ export default function AboutStackedCards() {
           role="button"
           tabIndex={0}
           onPointerDown={handlePointerDown}
-          onPointerUp={(e) => handlePointerUp(e, 1)}
+          onPointerUp={handlePointerUp}
           aria-label="Card 2: Dentística e Harmonização Facial. Puxe ou clique para alternar."
-          onKeyDown={(e) => e.key === 'Enter' && sendCardToBack(1, 75)}
+          onKeyDown={(e) => e.key === 'Enter' && cycleCardToBack(80)}
         >
           <div className="about-stack-card-inner">
             <div className="about-stack-card-shine" aria-hidden="true" />
             <div className="about-stack-card-left">
-              <div className="about-stack-icon-pill">
-                <GraduationCap width={20} height={20} className="about-cred-icon" />
-              </div>
+              <span className="about-stack-icon-pill" aria-hidden="true">
+                <GraduationCap size={22} className="about-cred-icon" />
+              </span>
               <div className="about-stack-texts">
                 <strong>Dentística &amp; Harmonização Facial</strong>
                 <p>Protocolos avançados em Lentes de Resina, Porcelana e Full Face</p>
@@ -391,19 +481,19 @@ export default function AboutStackedCards() {
           role="button"
           tabIndex={0}
           onPointerDown={handlePointerDown}
-          onPointerUp={(e) => handlePointerUp(e, 2)}
+          onPointerUp={handlePointerUp}
           aria-label="Card 3: Excelência Estética. Puxe ou clique para alternar."
-          onKeyDown={(e) => e.key === 'Enter' && sendCardToBack(2, 75)}
+          onKeyDown={(e) => e.key === 'Enter' && cycleCardToBack(80)}
         >
           <div className="about-stack-card-inner">
             <div className="about-stack-card-shine" aria-hidden="true" />
             <div className="about-stack-card-left">
-              <div className="about-stack-icon-pill">
-                <Award width={20} height={20} className="about-cred-icon" />
-              </div>
+              <span className="about-stack-icon-pill" aria-hidden="true">
+                <Award size={22} className="about-cred-icon" />
+              </span>
               <div className="about-stack-texts">
                 <strong>Excelência Estética</strong>
-                <p>Planejamento digital tridimensional personalizado para cada sorriso</p>
+                <p>Mais de 10 anos transformando sorrisos com precisão e harmonia</p>
               </div>
             </div>
             <span className="about-stack-badge">03 / 04</span>
@@ -417,16 +507,16 @@ export default function AboutStackedCards() {
           role="button"
           tabIndex={0}
           onPointerDown={handlePointerDown}
-          onPointerUp={(e) => handlePointerUp(e, 3)}
+          onPointerUp={handlePointerUp}
           aria-label="Card 4: Atendimento Privativo. Puxe ou clique para alternar."
-          onKeyDown={(e) => e.key === 'Enter' && sendCardToBack(3, 75)}
+          onKeyDown={(e) => e.key === 'Enter' && cycleCardToBack(80)}
         >
           <div className="about-stack-card-inner">
             <div className="about-stack-card-shine" aria-hidden="true" />
             <div className="about-stack-card-left">
-              <div className="about-stack-icon-pill">
-                <HeartHandshake width={20} height={20} className="about-cred-icon" />
-              </div>
+              <span className="about-stack-icon-pill" aria-hidden="true">
+                <HeartHandshake size={22} className="about-cred-icon" />
+              </span>
               <div className="about-stack-texts">
                 <strong>Atendimento Privativo</strong>
                 <p>Número limitado de pacientes por período para máxima dedicação</p>

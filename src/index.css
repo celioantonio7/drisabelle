@@ -200,11 +200,11 @@ button {
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
   animation:
-    sigPenStroke 0.26s cubic-bezier(0.25, 0.8, 0.25, 1) forwards,
-    sigPenFill 0.24s ease forwards;
+    sigPenStroke 0.22s cubic-bezier(0.25, 0.8, 0.25, 1) forwards,
+    sigPenFill 0.20s ease forwards;
   animation-delay:
-    calc(var(--char-idx, 0) * 190ms),
-    calc(var(--char-idx, 0) * 190ms + 140ms);
+    calc(var(--char-idx, 0) * 85ms),
+    calc(var(--char-idx, 0) * 85ms + 110ms);
 }
 
 @keyframes sigPenStroke {
@@ -230,7 +230,7 @@ button {
 .sig-preloader-flourish {
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
-  animation: sigFlourishDraw 0.85s cubic-bezier(0.22, 0.61, 0.36, 1) 3.15s forwards;
+  animation: sigFlourishDraw 0.60s cubic-bezier(0.22, 0.61, 0.36, 1) 1.35s forwards;
 }
 
 @keyframes sigFlourishDraw {
@@ -250,7 +250,7 @@ button {
   margin-top: 10px;
   text-align: center;
   opacity: 0;
-  animation: sigSubFade 0.65s ease 3.35s forwards;
+  animation: sigSubFade 0.50s ease 1.70s forwards;
 }
 
 @keyframes sigSubFade {
@@ -4327,6 +4327,12 @@ section[id] {
   width: 100%;
 }
 
+@media (max-width: 959px) {
+  .footer-upward-wrapper {
+    display: none !important;
+  }
+}
+
 /* ==========================================================================
    MOBILE INLINE FOOTER FLOW (Matching 07_footer_mobile.png)
    ========================================================================== */
@@ -4335,7 +4341,7 @@ section[id] {
   flex-direction: column;
   gap: 22px;
   padding-top: 36px;
-  padding-bottom: 20px;
+  padding-bottom: 120px;
   position: relative;
   z-index: 2;
 }
@@ -4405,6 +4411,45 @@ section[id] {
   line-height: 0.94;
   letter-spacing: 0.02em;
   color: var(--color-navy);
+}
+
+.fm-flow-bottom-bar {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.fm-flow-socials {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.fm-social-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 9999px;
+  background: #f1f6fd;
+  color: var(--color-blue-royal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+  text-decoration: none;
+}
+
+.fm-social-icon:hover {
+  background: #e3effd;
+  transform: translateY(-2px);
+}
+
+.fm-flow-copy {
+  font-size: 0.78rem;
+  color: var(--color-slate-muted);
+  margin: 0;
+  line-height: 1.5;
 }
 
 .footer-expandable-drawer {

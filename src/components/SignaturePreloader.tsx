@@ -97,18 +97,18 @@ export default function SignaturePreloader({ onComplete }: SignaturePreloaderPro
     document.body.style.overflow = 'hidden'
     document.documentElement.style.overflow = 'hidden'
 
-    // Assinatura desenha completamente e depois libera a página 100%
+    // Assinatura desenha completamente "Dra. Isabella Ferro" + flourish e depois libera a página 100%
     const t1 = window.setTimeout(() => {
       setFading(true)
       onComplete?.()
-    }, 2000)
+    }, 2550)
 
     const t2 = window.setTimeout(() => {
       document.body.style.overflow = ''
       document.documentElement.style.overflow = ''
       setDone(true)
       window.setTimeout(() => ScrollTrigger.refresh(), 80)
-    }, 2550)
+    }, 3050)
 
     return () => {
       document.body.style.overflow = ''

@@ -228,6 +228,42 @@ export default function Footer() {
             <div className="fm-brand-isabella">ISABELLA</div>
             <div className="fm-brand-ferro">FERRO</div>
           </div>
+
+          {/* Mobile Bottom Bar: Socials + Copyright */}
+          <div className="fm-flow-bottom-bar">
+            <div className="fm-flow-socials">
+              <a
+                href={WHATSAPP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="fm-social-icon"
+                aria-label="WhatsApp"
+              >
+                <SocialWhatsAppLottie size={20} />
+              </a>
+              <a
+                href={INSTAGRAM_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="fm-social-icon"
+                aria-label="Instagram"
+              >
+                <SocialInstagramLottie size={20} />
+              </a>
+              <a
+                href={MAPS_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="fm-social-icon"
+                aria-label="Abrir localização no Google Maps"
+              >
+                <SocialLocationLottie size={20} />
+              </a>
+            </div>
+            <p className="fm-flow-copy">
+              &copy; 2026 Dra. Isabella Ferro &bull; Todos os direitos reservados.
+            </p>
+          </div>
         </div>
       </div>
 
