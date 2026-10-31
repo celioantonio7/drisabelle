@@ -153,7 +153,7 @@ export default function FAQSection() {
                     fill="none"
                   />
                   <text className="faq-seal-text">
-                    <textPath href="#faq-seal-path" startOffset="0%">
+                    <textPath href="#faq-seal-path" startOffset="2%" textLength="285" lengthAdjust="spacing">
                       ODONTOLOGIA ESTÉTICA • RESULTADOS REAIS •
                     </textPath>
                   </text>

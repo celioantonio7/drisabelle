@@ -83,18 +83,18 @@ export default function WobbleSpiralCanvas({
 
     const scene = new THREE.Scene()
     const camera = new THREE.PerspectiveCamera(38, w / h, 0.1, 100)
-    camera.position.z = 7.0
+    camera.position.z = 7.4
 
     const settings = {
-      radius: 2.25,
-      verticalGap: 0.70,
-      angleGap: 0.80,
-      cardWidth: 1.82,
-      cardHeight: 2.18,
+      radius: 1.95,
+      verticalGap: 0.54,
+      angleGap: 0.82,
+      cardWidth: 1.34,
+      cardHeight: 1.64,
       idleSpin: 0.003,
       scrollSensitivity: 0.004,
       smoothing: 0.12,
-      wobbleStrength: 0.22,
+      wobbleStrength: 0.20,
     }
 
     const cardGeometry = new THREE.PlaneGeometry(settings.cardWidth, settings.cardHeight, 12, 16)

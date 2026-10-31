@@ -6,7 +6,7 @@ import {
   SocialWhatsAppLottie,
   SocialLocationLottie,
 } from './LottieflowIcons'
-import { INSTAGRAM_URL, NAV, WHATSAPP_URL, ADDRESS_TEXT, MAPS_URL, MAPS_EMBED_URL } from '../data'
+import { INSTAGRAM_URL, NAV, WHATSAPP_URL, ADDRESS_TEXT, MAPS_URL } from '../data'
 import { scrollToId } from '../utils/scroll'
 import {
   useMagneticButton,
@@ -38,7 +38,14 @@ export default function Footer() {
   const handleNav = (e: React.MouseEvent, id: string) => {
     e.preventDefault()
     setExpanded(false)
-    window.setTimeout(() => scrollToId(id), 80)
+    document.body.style.overflow = ''
+    scrollToId(id)
+    const target = document.getElementById(id)
+    if (target) {
+      setTimeout(() => {
+        target.scrollIntoView({ behavior: 'smooth', block: id === 'contato' ? 'end' : 'start' })
+      }, 50)
+    }
   }
 
   return (
@@ -132,13 +139,11 @@ export default function Footer() {
                   <SocialInstagramLottie size={16} />
                 </a>
                 <a
-                  href="#contato"
-                  onClick={(e) => {
-                    e.preventDefault()
-                    setExpanded(true)
-                  }}
+                  href={MAPS_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="footer-pill-social-icon"
-                  aria-label="Localização"
+                  aria-label="Abrir localização no Google Maps"
                 >
                   <SocialLocationLottie size={16} />
                 </a>
@@ -369,32 +374,6 @@ export default function Footer() {
                 <strong>Dra. Isabella Ferro</strong>
                 <span>Clínico Geral &bull; CRO 140267</span>
                 <span>Odontologia Estética &amp; Harmonização Facial</span>
-              </div>
-            </div>
-
-            {/* Google Maps Interactive Card (Exact address embed) */}
-            <div className="footer-col footer-col-map">
-              <h4 className="footer-col-h">MAPA &amp; ROTA</h4>
-              <span className="footer-col-rule" aria-hidden="true" />
-              <div className="footer-map-embed-box">
-                <iframe
-                  title="Localização Dra. Isabella Ferro — Taubaté SP"
-                  src={MAPS_EMBED_URL}
-                  width="100%"
-                  height="160"
-                  style={{ border: 0, borderRadius: '18px' }}
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                />
-                <a
-                  href={MAPS_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="footer-map-action-link"
-                >
-                  <span>Abrir no Google Maps</span>
-                  <AttentionArrow size={14} />
-                </a>
               </div>
             </div>
           </div>

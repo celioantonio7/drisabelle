@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Dra. Isabella Ferro | Redirecionando...</title>
+    <script>
+      // Single Page Application redirect for GitHub Pages
+      (function() {
+        var base = '/drisabelle/';
+        var path = window.location.pathname;
+        if (!path.startsWith(base)) {
+          window.location.replace(base);
+        } else {
+          window.location.replace(base + window.location.search + window.location.hash);
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <p>Redirecionando para <a href="/drisabelle/">Dra. Isabella Ferro</a>...</p>
+  </body>
+</html>

@@ -1,13 +1,12 @@
 import { useRef } from 'react'
-import { Award, GraduationCap, HeartHandshake } from 'lucide-react'
 import { WHATSAPP_URL } from '../data'
 import {
   useMagneticButton,
   useCardTilt,
-  useExpandPhotoOnScroll,
 } from '../animations/hooks'
+import { gsap, useGSAP } from '../animations/gsap'
 import FluidRevealCanvas from './FluidRevealCanvas'
-import Stack from './Stack'
+import AboutStackedCards from './AboutStackedCards'
 import { AttentionArrow } from './LottieflowIcons'
 import { assetUrl } from '../utils/assets'
 
@@ -16,55 +15,38 @@ export default function About() {
 
   useMagneticButton(rootRef)
   useCardTilt(rootRef)
-  useExpandPhotoOnScroll(rootRef)
 
-  const stackCards = [
-    <div key="ciencia" className="about-stack-card-inner about-stack-tone-1">
-      <div className="about-stack-card-left">
-        <div className="about-stack-texts">
-          <strong className="about-science-tags">CIÊNCIA &bull; ARTE &bull; NATURALIDADE</strong>
-          <p className="about-science-desc">Cuidado individualizado em cada etapa.</p>
-        </div>
-      </div>
-      <span className="about-stack-badge">01 / 04</span>
-    </div>,
-    <div key="dentistica" className="about-stack-card-inner about-stack-tone-2">
-      <div className="about-stack-card-left">
-        <div className="about-stack-icon-pill">
-          <GraduationCap width={20} height={20} className="about-cred-icon" />
-        </div>
-        <div className="about-stack-texts">
-          <strong>Dentística &amp; Harmonização Facial</strong>
-          <p>Protocolos avançados em Lentes de Resina, Porcelana e Full Face</p>
-        </div>
-      </div>
-      <span className="about-stack-badge">02 / 04</span>
-    </div>,
-    <div key="excelencia" className="about-stack-card-inner about-stack-tone-3">
-      <div className="about-stack-card-left">
-        <div className="about-stack-icon-pill">
-          <Award width={20} height={20} className="about-cred-icon" />
-        </div>
-        <div className="about-stack-texts">
-          <strong>Excelência Estética</strong>
-          <p>Planejamento digital tridimensional personalizado para cada sorriso</p>
-        </div>
-      </div>
-      <span className="about-stack-badge">03 / 04</span>
-    </div>,
-    <div key="privativo" className="about-stack-card-inner about-stack-tone-4">
-      <div className="about-stack-card-left">
-        <div className="about-stack-icon-pill">
-          <HeartHandshake width={20} height={20} className="about-cred-icon" />
-        </div>
-        <div className="about-stack-texts">
-          <strong>Atendimento Privativo</strong>
-          <p>Número limitado de pacientes por período para máxima dedicação</p>
-        </div>
-      </div>
-      <span className="about-stack-badge">04 / 04</span>
-    </div>,
-  ]
+  // Ao rolar a página, a foto dela sobe de baixo suavemente e para no ponto certo
+  useGSAP(
+    () => {
+      if (!rootRef.current) return
+      const photoCard = rootRef.current.querySelector('.about-photo-card')
+      if (!photoCard) return
+
+      const mm = gsap.matchMedia()
+      mm.add('(prefers-reduced-motion: no-preference)', () => {
+        gsap.fromTo(
+          photoCard,
+          { y: 110, opacity: 0.75 },
+          {
+            y: 0,
+            opacity: 1,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: rootRef.current,
+              start: 'top 85%',
+              end: 'top 30%',
+              scrub: 0.65,
+              invalidateOnRefresh: true,
+            },
+          },
+        )
+      })
+
+      return () => mm.revert()
+    },
+    { scope: rootRef },
+  )
 
   return (
     <section ref={rootRef} id="sobre" className="about-section" aria-label="Sobre a Dra. Isabella Ferro">
@@ -164,28 +146,8 @@ export default function About() {
                 </p>
               </div>
 
-              {/* Subtle Interactive React Bits <Stack /> for Pillars & Credentials */}
-              <div className="about-stack-wrapper">
-                <div className="about-stack-stage">
-                  <Stack
-                    layout="deck"
-                    visible={4}
-                    spread={0.35}
-                    depth={0.28}
-                    radius={18}
-                    frame={0}
-                    shadow={false}
-                    tilt={0}
-                    threshold={70}
-                    speed={1}
-                    sendToBackOnClick={true}
-                    autoplay={true}
-                    autoplayDelay={4200}
-                    pauseOnHover={true}
-                    cards={stackCards}
-                  />
-                </div>
-              </div>
+              {/* Premium Awwwards-Inspired Stacked Cards on Scroll */}
+              <AboutStackedCards />
 
               <div className="about-cta-wrap">
                 <a
