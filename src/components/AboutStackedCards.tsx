@@ -386,10 +386,12 @@ export default function AboutStackedCards() {
     if (isAnimatingRef.current) return
     dragStartRef.current = { x: e.clientX, y: e.clientY }
     currentDragCardRef.current = e.currentTarget
-    try {
-      e.currentTarget.setPointerCapture(e.pointerId)
-    } catch {
-      // ignore
+    if (e.pointerType === 'mouse') {
+      try {
+        e.currentTarget.setPointerCapture(e.pointerId)
+      } catch {
+        // ignore
+      }
     }
   }
 
@@ -401,7 +403,9 @@ export default function AboutStackedCards() {
     const absY = Math.abs(deltaY)
 
     try {
-      currentDragCardRef.current.releasePointerCapture(e.pointerId)
+      if (currentDragCardRef.current.hasPointerCapture(e.pointerId)) {
+        currentDragCardRef.current.releasePointerCapture(e.pointerId)
+      }
     } catch {
       // ignore
     }
@@ -409,11 +413,16 @@ export default function AboutStackedCards() {
     dragStartRef.current = null
     currentDragCardRef.current = null
 
-    // Se puxou mais de 25px para o lado ou para cima, ou clique simples
-    if (absX > 25 || absY > 25) {
+    // If vertical movement dominated (user was scrolling the page on touch), do NOT cycle!
+    if (absY > absX && absY > 15) {
+      return
+    }
+
+    // Se puxou mais de 25px horizontalmente
+    if (absX > 25) {
       cycleCardToBack(deltaX >= 0 ? 85 : -85)
-    } else {
-      // Clique simples também cicla a carta do topo
+    } else if (absX < 10 && absY < 10) {
+      // Clique ou toque simples deliberado: cicla a carta para trás
       cycleCardToBack(80)
     }
   }
