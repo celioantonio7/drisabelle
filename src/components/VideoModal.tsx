@@ -51,7 +51,7 @@ export default function VideoModal({ isOpen, onClose }: VideoModalProps) {
               </div>
             )}
             <img
-              src={assetUrl('/img/bg-clinica.jpg')}
+              src={assetUrl('/img/bg-clinica.webp')}
               alt="Clínica Dra. Isabella Ferro"
               className="video-modal-poster"
               onLoad={() => setImgLoaded(true)}

@@ -75,8 +75,8 @@ export default function About() {
               <div className="about-photo-card" data-expand-photo>
                 <div className="about-photo-wrap">
                   <FluidRevealCanvas
-                    topSrc={assetUrl('/img/sobre_adulta.png')}
-                    bottomSrc={assetUrl('/img/sobre_crianca.png')}
+                    topSrc={assetUrl('/img/sobre_adulta.webp')}
+                    bottomSrc={assetUrl('/img/sobre_crianca.webp')}
                   />
                 </div>
               </div>

@@ -19,15 +19,15 @@ interface ExperienceProps {
 
 const FOLDER_ITEMS = [
   {
-    image: assetUrl('/img/cases/case1_depois.jpg'),
+    image: assetUrl('/img/cases/case1_depois.webp'),
     alt: 'Resultado Lentes em Porcelana',
   },
   {
-    image: assetUrl('/img/cases/case2_depois.jpg'),
+    image: assetUrl('/img/cases/case2_depois.webp'),
     alt: 'Resultado Lentes em Resina',
   },
   {
-    image: assetUrl('/img/cases/case5_depois.jpg'),
+    image: assetUrl('/img/cases/case5_depois.webp'),
     alt: 'Resultado Harmonização Facial',
   },
 ]
@@ -136,7 +136,7 @@ export default function Experience({ onOpenVideo }: ExperienceProps) {
         <div className="exp-col-center" data-exp-reveal>
           <div className="exp-doctor-asym-frame" data-expand-photo>
             <img
-              src={assetUrl('/img/dra_master_exp.png')}
+              src={assetUrl('/img/dra_master_exp.webp')}
               alt="Dra. Isabella Ferro em atendimento acolhedor"
               className="exp-doctor-img"
               loading="lazy"
@@ -170,7 +170,7 @@ export default function Experience({ onOpenVideo }: ExperienceProps) {
           </div>
           <div className="exp-c2-photo-wrap">
             <img
-              src={assetUrl('/img/porcelana_vertical.jpg')}
+              src={assetUrl('/img/porcelana_vertical.webp')}
               alt="Planejamento estético facial do sorriso"
               className="exp-c2-img"
               data-tilt-img
@@ -203,7 +203,7 @@ export default function Experience({ onOpenVideo }: ExperienceProps) {
         <div className="exp-card-pos exp-c4-pos hero-glass-card" data-exp-reveal data-tilt>
           <div className="exp-c4-photo-box">
             <img
-              src={assetUrl('/img/clinica.jpg')}
+              src={assetUrl('/img/clinica.webp')}
               alt="Ambiente estéril e moderno de atendimento"
               className="exp-c4-img"
               data-tilt-img
@@ -241,7 +241,7 @@ export default function Experience({ onOpenVideo }: ExperienceProps) {
           </div>
           <div className="exp-c5-photo-box">
             <img
-              src={assetUrl('/img/instrumentos.jpg')}
+              src={assetUrl('/img/instrumentos.webp')}
               alt="Instrumentos odontológicos de precisão"
               className="exp-c5-img"
             />
@@ -268,7 +268,7 @@ export default function Experience({ onOpenVideo }: ExperienceProps) {
         {/* Visual Showcase Card (with CONHEÇA NOSSO ESPAÇO ↗ pill) */}
         <div className="em-showcase-card">
           <img
-            src={assetUrl('/img/experiencia.jpg')}
+            src={assetUrl('/img/experiencia.webp')}
             alt="Experiência Dra. Isabella Ferro"
             className="em-showcase-img"
           />

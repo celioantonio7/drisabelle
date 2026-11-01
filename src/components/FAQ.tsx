@@ -252,7 +252,7 @@ export default function FAQSection() {
             {/* Top Doctor Showcase Card (Matching reference photo & typography) */}
             <div className="faq-side-doctor-card">
               <img
-                src={assetUrl('/img/dra_faq_clean.png')}
+                src={assetUrl('/img/dra_faq_clean.webp')}
                 alt="Dra. Isabella Ferro — Odontologia Estética"
                 className="faq-side-doctor-img"
               />

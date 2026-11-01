@@ -232,7 +232,7 @@ export default function Specialties() {
           <div className="spec-top-right-group" data-spec-reveal>
             <div className="spec-beauty-arch-frame">
               <img
-                src={assetUrl('/img/spec_smile_hero_clean.jpg')}
+                src={assetUrl('/img/spec_smile_hero_clean.webp')}
                 alt="Sorriso natural esculpido com excelência"
                 className="spec-beauty-photo"
                 data-parallax="4"
@@ -243,7 +243,7 @@ export default function Specialties() {
             <div id="harmonizacao" className="spec-floating-planning-card spec-floating-preenchimento-card hero-glass-card" data-tilt>
               <div className="spec-plan-thumb-box">
                 <img
-                  src={assetUrl('/img/preenchimento_clean.png')}
+                  src={assetUrl('/img/preenchimento_clean.webp')}
                   alt="Resultado real de preenchimento labial e harmonização facial pela Dra. Isabella Ferro"
                   className="spec-plan-thumb-img"
                   loading="lazy"
@@ -302,7 +302,7 @@ export default function Specialties() {
               </div>
               <div className="spec-card-photo-wrap">
                 <img
-                  src={assetUrl('/img/spec_resina_ref.jpg')}
+                  src={assetUrl('/img/spec_resina_ref.webp')}
                   alt="Resultado de lentes em resina composta de alto padrão"
                   className="spec-card-img"
                   data-tilt-img
@@ -340,7 +340,7 @@ export default function Specialties() {
               </div>
               <div className="spec-card-photo-wrap">
                 <img
-                  src={assetUrl('/img/spec_porcelana_ref.jpg')}
+                  src={assetUrl('/img/spec_porcelana_ref.webp')}
                   alt="Resultado de lentes em porcelana pura ultrafina"
                   className="spec-card-img"
                   data-tilt-img

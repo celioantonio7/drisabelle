@@ -84,7 +84,7 @@ export default function Navbar() {
         >
           <div className="nav-brand-logo-wrap">
             <img
-              src={assetUrl('/img/logo_dourado_transparente.png')}
+              src={assetUrl('/img/logo_dourado_transparente.webp')}
               alt="Dra. Isabella Ferro - Odontologia Estética e Facial"
               className="nav-brand-logo-img"
             />

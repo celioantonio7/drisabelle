@@ -106,7 +106,7 @@ export function PersonScene({
     <div className={`scene ${className}`}>
       <div className="scene__photo" data-img-reveal="organic">
         <img
-          src={assetUrl('/img/hero.jpg')}
+          src={assetUrl('/img/hero.webp')}
           width={1200}
           height={896}
           alt="Dra. Isabella Ferro sorrindo, em sua clínica de odontologia estética"

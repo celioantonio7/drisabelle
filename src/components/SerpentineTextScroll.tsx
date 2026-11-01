@@ -3,7 +3,7 @@ import { gsap, useGSAP, ScrollTrigger } from '../animations/gsap'
 import './SerpentineTextScroll.css'
 
 /**
- * Generates an SVG path matching 01_serpentine_line.png / svg with dynamic velocity bend.
+ * Generates an SVG path matching 01_serpentine_line.webp / svg with dynamic velocity bend.
  */
 function generateWavePath(bend = 0, yCenter = 220, amp = 140): string {
   const effectiveAmp = amp + bend
@@ -57,6 +57,9 @@ export default function SerpentineTextScroll() {
       const timeline = gsap.timeline({ scrollTrigger: {
         id: 'hero-serpentine', trigger: composition,
         start: () => `top+=${(section.parentElement?.offsetHeight ?? 0) - window.innerHeight * 0.7} top`, end: '+=80%', pin: true,
+        // Transform pinning keeps the boundary continuous when anticipatePin
+        // re-enters on upward scrolling; fixed positioning jumps ahead at speed.
+        pinType: 'transform',
         scrub: 1, anticipatePin: 1, invalidateOnRefresh: true,
       } })
       let phase = 0
@@ -82,8 +85,8 @@ export default function SerpentineTextScroll() {
         textPath.setAttribute('startOffset', `${-length * .12 - phase}`)
       }
       gsap.ticker.add(glide)
-      // The About pin adds space inside this composition. Keep the outer spacer
-      // large enough for that content instead of letting the next section cover it.
+      // Include the native sticky About track in the outer pin spacer so
+      // the next section follows the complete composition.
       let refreshFrame = 0
       const syncSpacer = () => {
         const trigger = timeline.scrollTrigger
@@ -146,7 +149,7 @@ export default function SerpentineTextScroll() {
             />
           </defs>
 
-          {/* Upper dashed hairline spline matching 01_serpentine_line.png */}
+          {/* Upper dashed hairline spline matching 01_serpentine_line.webp */}
           <path
             ref={topSplineRef}
             d={generateWavePath(0, 160, 120)}

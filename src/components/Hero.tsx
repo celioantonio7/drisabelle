@@ -51,7 +51,7 @@ export default function Hero({ onOpenVideo }: HeroProps) {
       {/* Full-bleed Luxury Clinic Background Layer */}
       <div className="hero-full-bg-layer" aria-hidden="true">
         <img
-          src={assetUrl('/img/clinica.jpg')}
+          src={assetUrl('/img/clinica.webp')}
           alt=""
           className="hero-full-bg-img"
         />
@@ -168,7 +168,7 @@ export default function Hero({ onOpenVideo }: HeroProps) {
               aria-label="Assistir tour da clínica"
             >
               <img
-                src={assetUrl('/img/clinica.jpg')}
+                src={assetUrl('/img/clinica.webp')}
                 alt="Ambiente moderno da clínica"
                 className="hero-teaser-img"
               />
@@ -186,7 +186,7 @@ export default function Hero({ onOpenVideo }: HeroProps) {
         {/* CENTER: DOCTOR PORTRAIT & CLINIC BACKDROP */}
         <div className="hero-col-center">
           <div className="hero-clinic-backdrop-blur" aria-hidden="true">
-            <img src={assetUrl('/img/clinica.jpg')} alt="" className="hero-clinic-bg-img" />
+            <img src={assetUrl('/img/clinica.webp')} alt="" className="hero-clinic-bg-img" />
             <div className="hero-clinic-bg-glow" />
           </div>
 
@@ -198,12 +198,12 @@ export default function Hero({ onOpenVideo }: HeroProps) {
           </div>
 
           <div className="hero-bg-faded-smile" aria-hidden="true">
-            <img src={assetUrl('/img/skincare-sorriso.jpg')} alt="" className="hero-bg-faded-img" />
+            <img src={assetUrl('/img/skincare-sorriso.webp')} alt="" className="hero-bg-faded-img" />
           </div>
 
           <div className="hero-doctor-frame">
             <img
-              src={assetUrl('/img/dra_master_hero.png')}
+              src={assetUrl('/img/dra_master_hero.webp')}
               alt="Dra. Isabella Ferro - Odontologia Estética e Harmonização"
               className="hero-doctor-image"
               loading="eager"
@@ -258,7 +258,7 @@ export default function Hero({ onOpenVideo }: HeroProps) {
           </div>
           <div className="hero-macro-photo-frame">
             <img
-              src={assetUrl('/img/porcelana_vertical.jpg')}
+              src={assetUrl('/img/porcelana_vertical.webp')}
               alt="Macro fotografia de lentes cerâmicas ultrafinas"
               className="hero-macro-img"
               data-tilt-img
@@ -311,7 +311,7 @@ export default function Hero({ onOpenVideo }: HeroProps) {
           <div className="hm-right-arch-wrap">
             <div className="hm-right-arch-photo">
               <img
-                src={assetUrl('/img/dra_master_hero.png')}
+                src={assetUrl('/img/dra_master_hero.webp')}
                 alt="Dra. Isabella Ferro"
                 className="hm-arch-img"
               />
@@ -404,7 +404,7 @@ export default function Hero({ onOpenVideo }: HeroProps) {
           aria-label="Conheça nosso espaço em vídeo"
         >
           <img
-            src={assetUrl('/img/clinica.jpg')}
+            src={assetUrl('/img/clinica.webp')}
             alt="Espaço da clínica Dra. Isabella Ferro"
             className="hm-video-banner-img"
           />
@@ -422,10 +422,10 @@ export default function Hero({ onOpenVideo }: HeroProps) {
         {/* +500 Social Proof Bar */}
         <div className="hm-social-proof-pill hero-glass-card">
           <div className="hm-avatars-stack">
-            <img src={assetUrl('/img/sobre_adulta.png')} alt="" className="hm-avatar-img" />
-            <img src={assetUrl('/img/exemplo_harmonizacao.png')} alt="" className="hm-avatar-img" />
-            <img src={assetUrl('/img/exemplo2.png')} alt="" className="hm-avatar-img" />
-            <img src={assetUrl('/img/skincare-sorriso.jpg')} alt="" className="hm-avatar-img" />
+            <img src={assetUrl('/img/sobre_adulta.webp')} alt="" className="hm-avatar-img" />
+            <img src={assetUrl('/img/exemplo_harmonizacao.webp')} alt="" className="hm-avatar-img" />
+            <img src={assetUrl('/img/exemplo2.webp')} alt="" className="hm-avatar-img" />
+            <img src={assetUrl('/img/skincare-sorriso.webp')} alt="" className="hm-avatar-img" />
           </div>
           <div className="hm-proof-texts">
             <strong className="hm-proof-num">+500</strong>
