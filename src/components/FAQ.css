@@ -1,0 +1,540 @@
+/* ==========================================================================
+   FAQ SECTION: BENTO GLASSMORPHISM + 3D FLIP CARDS
+   Fiel à referência: media_1793533963841_9da672cd.jpg
+   ========================================================================== */
+
+.faq-bento-section {
+  position: relative;
+  overflow: hidden;
+  padding: 88px 0 72px;
+  background: #f7faff;
+}
+
+/* ================= BACKGROUND CANVAS WITH DECORATIVE SVGS ================= */
+.faq-bg-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.faq-bg-waves {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.85;
+}
+
+.faq-bg-marble-arc {
+  position: absolute;
+  bottom: -90px;
+  left: -80px;
+  width: 320px;
+  height: 320px;
+  opacity: 0.72;
+  filter: drop-shadow(0 20px 40px rgba(0, 86, 214, 0.15));
+}
+
+.faq-bg-spline-wrap {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.faq-bg-glow-curve {
+  position: absolute;
+  top: 18%;
+  left: 20%;
+  width: 75%;
+  opacity: 0.65;
+  filter: blur(12px);
+}
+
+.faq-bg-spline-line {
+  position: absolute;
+  top: 15%;
+  left: 18%;
+  width: 80%;
+  opacity: 0.78;
+}
+
+/* 3D Glass Orbs positioned along the spline */
+.faq-bg-orb {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  filter: drop-shadow(0 6px 14px rgba(0, 86, 214, 0.35));
+}
+
+.faq-bg-orb.orb-1 {
+  top: 14%;
+  left: 26%;
+  width: 26px;
+  height: 26px;
+}
+
+.faq-bg-orb.orb-2 {
+  top: 12%;
+  right: 28%;
+  width: 28px;
+  height: 28px;
+}
+
+.faq-bg-orb.orb-3 {
+  bottom: 22%;
+  left: 15%;
+  width: 36px;
+  height: 36px;
+}
+
+/* ================= CONTAINER & 3-COLUMN ASYMMETRIC BENTO GRID ================= */
+.faq-bento-container {
+  position: relative;
+  z-index: 3;
+}
+
+.faq-bento-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 28px;
+  align-items: start;
+}
+
+@media (min-width: 1024px) {
+  .faq-bento-layout {
+    grid-template-columns: 280px 1.45fr 330px;
+    gap: 32px;
+  }
+}
+
+/* ================= LEFT COLUMN: EDITORIAL ================= */
+.faq-col-left {
+  display: flex;
+  flex-direction: column;
+  padding-top: 12px;
+}
+
+.faq-eyebrow-line {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.faq-eyebrow-txt {
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  color: var(--color-blue-royal);
+}
+
+.faq-eyebrow-bar {
+  display: inline-block;
+  width: 24px;
+  height: 1.5px;
+  background: var(--color-blue-royal);
+}
+
+.faq-main-title {
+  font-family: var(--font-serif);
+  font-size: clamp(2.3rem, 3.4vw, 3.4rem);
+  font-weight: 500;
+  line-height: 1.12;
+  color: var(--color-navy);
+  margin-bottom: 18px;
+  letter-spacing: -0.015em;
+}
+
+.faq-title-accent {
+  font-style: italic;
+  font-weight: 600;
+  color: var(--color-blue-royal);
+}
+
+.faq-main-desc {
+  font-size: 0.95rem;
+  line-height: 1.62;
+  color: var(--color-slate-body);
+  margin-bottom: 28px;
+}
+
+.faq-contact-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--color-navy);
+  font-size: 0.90rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.faq-contact-link:hover {
+  color: var(--color-blue-royal);
+  transform: translateX(3px);
+}
+
+.faq-link-circle {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 1px solid rgba(0, 86, 214, 0.2);
+  color: var(--color-blue-royal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 86, 214, 0.08);
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.faq-contact-link:hover .faq-link-circle {
+  background: var(--color-blue-royal);
+  color: #ffffff;
+  transform: scale(1.08);
+}
+
+/* ================= CENTER COLUMN: 5 BENTO 3D FLIP CARDS ================= */
+.faq-col-center {
+  width: 100%;
+}
+
+.faq-cards-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+@media (min-width: 640px) {
+  .faq-cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .faq-flip-card.is-wide-card {
+    grid-column: span 2;
+  }
+}
+
+/* 3D Flip Card Container */
+.faq-flip-card {
+  perspective: 1200px;
+  position: relative;
+  min-height: 155px;
+  border-radius: 24px;
+  cursor: pointer;
+  user-select: none;
+  outline: none;
+}
+
+.faq-flip-card:focus-visible {
+  box-shadow: 0 0 0 3px rgba(0, 86, 214, 0.45);
+}
+
+.faq-flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 155px;
+  transform-style: preserve-3d;
+  transition: transform 0.75s cubic-bezier(0.645, 0.045, 0.355, 1);
+  border-radius: 24px;
+}
+
+.faq-flip-card.is-flipped .faq-flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+/* Faces */
+.faq-card-face {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 24px;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px 22px;
+  box-sizing: border-box;
+}
+
+/* FRONT FACES */
+.faq-card-front {
+  z-index: 2;
+  transform: rotateY(0deg);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.faq-flip-card:hover .faq-card-front {
+  transform: translateY(-3px) rotateY(0deg);
+}
+
+/* Card 01: Glowing Liquid Blue Glass */
+.card-front-blue-liquid {
+  background: linear-gradient(135deg, rgba(64, 150, 255, 0.88) 0%, rgba(16, 92, 214, 0.94) 100%);
+  border: 1.5px solid rgba(255, 255, 255, 0.7);
+  box-shadow:
+    0 16px 36px rgba(0, 86, 214, 0.28),
+    inset 0 1.5px 1px rgba(255, 255, 255, 0.85);
+  color: #ffffff;
+}
+
+.card-front-blue-liquid .faq-card-num {
+  color: #ffffff;
+}
+
+.card-front-blue-liquid .faq-card-question {
+  color: #ffffff;
+}
+
+.card-front-blue-liquid .faq-card-action-btn {
+  background: rgba(255, 255, 255, 0.22);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  color: #ffffff;
+}
+
+/* Cards 02..05: Frosted White Translucent Glass */
+.card-front-frosted {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1.5px solid rgba(255, 255, 255, 0.95);
+  box-shadow:
+    0 12px 30px rgba(11, 25, 44, 0.05),
+    inset 0 1.5px 0.5px rgba(255, 255, 255, 1);
+  color: var(--color-navy);
+}
+
+.card-front-frosted .faq-card-num {
+  color: var(--color-blue-royal);
+}
+
+.card-front-frosted .faq-card-question {
+  color: var(--color-navy);
+}
+
+.card-front-frosted .faq-card-action-btn {
+  background: rgba(239, 246, 255, 0.9);
+  border: 1px solid rgba(191, 219, 254, 0.8);
+  color: var(--color-blue-royal);
+}
+
+/* Top Row within Card */
+.faq-card-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.faq-card-num {
+  font-size: 1.25rem;
+  font-weight: 700;
+  font-family: var(--font-serif);
+  line-height: 1;
+}
+
+.faq-card-action-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.25s ease;
+}
+
+.faq-flip-card:hover .faq-card-action-btn {
+  transform: rotate(90deg) scale(1.1);
+}
+
+.faq-card-question {
+  font-size: 0.94rem;
+  font-weight: 600;
+  line-height: 1.38;
+  margin-top: 14px;
+}
+
+/* BACK FACES */
+.faq-card-back {
+  transform: rotateY(180deg);
+  padding: 18px 20px;
+}
+
+.card-back-blue-deep {
+  background: linear-gradient(135deg, #093f9c 0%, #002c77 100%);
+  border: 1.5px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 16px 36px rgba(0, 86, 214, 0.35);
+  color: #ffffff;
+}
+
+.card-back-navy {
+  background: linear-gradient(145deg, #0b192c 0%, #1e3a8a 100%);
+  border: 1.5px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 16px 36px rgba(11, 25, 44, 0.22);
+  color: #ffffff;
+}
+
+.back-num {
+  color: #93c5fd;
+}
+
+.back-btn {
+  background: rgba(255, 255, 255, 0.18);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+.faq-card-answer {
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: #f1f5f9;
+  margin-top: 10px;
+  animation: faqAnswerFade 0.4s ease forwards;
+}
+
+@keyframes faqAnswerFade {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ================= RIGHT COLUMN: DOCTOR CARD + WHATSAPP CARD ================= */
+.faq-col-right {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Doctor Portrait Card */
+.faq-side-doctor-card {
+  position: relative;
+  width: 100%;
+  height: 250px;
+  border-radius: 28px;
+  overflow: hidden;
+  box-shadow: 0 16px 36px rgba(11, 25, 44, 0.12);
+  border: 1.5px solid rgba(255, 255, 255, 0.85);
+}
+
+.faq-side-doctor-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 20%;
+  display: block;
+}
+
+.faq-side-doctor-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(11, 25, 44, 0.1) 0%, rgba(11, 25, 44, 0.78) 100%);
+}
+
+.faq-side-doctor-content {
+  position: absolute;
+  left: 20px;
+  bottom: 18px;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+}
+
+.faq-doctor-monogram {
+  font-family: 'Mrs Saint Delafield', cursive;
+  font-size: 2.8rem;
+  line-height: 0.8;
+  color: #ffffff;
+  margin-bottom: 4px;
+}
+
+.faq-doctor-name {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.faq-doctor-cro {
+  font-size: 0.74rem;
+  color: #cbd5e1;
+}
+
+.faq-doctor-spec {
+  font-size: 0.76rem;
+  color: #93c5fd;
+  font-weight: 600;
+}
+
+/* WhatsApp Concierge Card */
+.faq-side-cta-card {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1.5px solid rgba(255, 255, 255, 0.95);
+  border-radius: 28px;
+  padding: 24px;
+  box-shadow:
+    0 16px 36px rgba(11, 25, 44, 0.05),
+    inset 0 1.5px 0.5px #ffffff;
+  display: flex;
+  flex-direction: column;
+}
+
+.faq-cta-tag {
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  color: var(--color-blue-royal);
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+.faq-cta-headline {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-navy);
+  margin-bottom: 8px;
+}
+
+.faq-cta-sub {
+  font-size: 0.82rem;
+  line-height: 1.55;
+  color: var(--color-slate-body);
+  margin-bottom: 20px;
+}
+
+.faq-cta-whatsapp-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 13px 18px;
+  border-radius: 9999px;
+  background: var(--color-blue-royal);
+  color: #ffffff;
+  font-size: 0.86rem;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: 0 10px 24px rgba(0, 86, 214, 0.28);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
+}
+
+.faq-cta-whatsapp-btn:hover {
+  transform: translateY(-2px);
+  background: #004dc0;
+  box-shadow: 0 14px 30px rgba(0, 86, 214, 0.38);
+}

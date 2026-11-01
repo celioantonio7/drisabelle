@@ -23,6 +23,18 @@ export interface CaseItem {
 const CASES_DATA: CaseItem[] = [
   {
     id: 0,
+    antesImg: assetUrl('/img/cases/case2_antes.jpg'),
+    depoisImg: assetUrl('/img/exemploresina_clean.png'),
+    pairImg: assetUrl('/img/exemploresina_clean.png'),
+    tag: 'Lentes em Resina',
+    title: 'Transformação em Resina Composta',
+    quote:
+      'Escultura direta com anatomia natural, textura acetinada e iluminação imediata do sorriso. 🤍',
+    desc: 'Facetas e lentes de resina nobre aplicadas com estratificação de alta precisão pela Dra. Isabella Ferro.',
+    category: 'Resina',
+  },
+  {
+    id: 1,
     antesImg: assetUrl('/img/cases/case1_antes.jpg'),
     depoisImg: assetUrl('/img/cases/case1_depois.jpg'),
     pairImg: assetUrl('/img/cases/case1_pair.jpg'),
@@ -32,18 +44,6 @@ const CASES_DATA: CaseItem[] = [
       'Um novo sorriso que ilumina todo o rosto com delicadeza, proporção áurea e textura idêntica ao dente natural. 🤍',
     desc: 'Lentes de porcelana pura com planejamento digital 3D. Textura, reflexo de luz e translucidez idênticos ao esmalte dental natural.',
     category: 'Porcelana',
-  },
-  {
-    id: 1,
-    antesImg: assetUrl('/img/cases/case2_antes.jpg'),
-    depoisImg: assetUrl('/img/cases/case2_depois.jpg'),
-    pairImg: assetUrl('/img/cases/case2_pair.jpg'),
-    tag: 'Lentes em Resina',
-    title: 'Estratificação em Resina Composta',
-    quote:
-      'Escultura artesanal dente a dente que devolve volume, alinhamento e brilho natural sem desgaste excessivo. 🤍',
-    desc: 'Escultura direta dente a dente com resinas nobres de alta performance. Ajuste anatômico que devolve jovialidade e iluminação ao sorriso.',
-    category: 'Resina',
   },
   {
     id: 2,
@@ -419,13 +419,13 @@ export default function Results() {
                 setSliderPos(Math.max(10, Math.min(90, ((e.touches[0].clientX - r.left) / r.width) * 100)))
               }}
             >
-              <img src={assetUrl('/img/cases/case1_depois.jpg')} alt="Depois" className="rm-ba-img-full" />
+              <img src={assetUrl('/img/exemploresina_clean.png')} alt="Depois — Lentes em Resina" className="rm-ba-img-full" />
               <div
                 className="rm-ba-before-clip"
                 style={{ clipPath: `inset(0 ${100 - sliderPos}% 0 0)` }}
               >
                 <img
-                  src={assetUrl('/img/cases/case1_antes.jpg')}
+                  src={assetUrl('/img/cases/case2_antes.jpg')}
                   alt="Antes"
                   className="rm-ba-img-full"
                 />
@@ -439,9 +439,9 @@ export default function Results() {
 
             <div className="rm-ba-footer" onClick={() => setSelectedCase(CASES_DATA[0])}>
               <div>
-                <h3 className="rm-card-h">Lentes em Porcelana</h3>
+                <h3 className="rm-card-h">Lentes em Resina Composta</h3>
                 <p className="rm-card-p">
-                  Reestruturação estética com naturalidade e refinamento imediato.
+                  Escultura direta com anatomia natural e alinhamento do sorriso.
                 </p>
               </div>
               <span className="rm-round-arrow">

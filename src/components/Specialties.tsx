@@ -251,7 +251,6 @@ export default function Specialties() {
                   className="spec-plan-thumb-img"
                   loading="lazy"
                 />
-                <span className="spec-plan-badge">CASO REAL</span>
               </div>
               <div className="spec-plan-info">
                 <strong className="spec-plan-title">
