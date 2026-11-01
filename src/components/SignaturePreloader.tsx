@@ -1,3 +1,4 @@
+import SectionBackground from './SectionBackground'
 import { useEffect, useState } from 'react'
 import { ScrollTrigger } from '../animations/gsap'
 
@@ -122,12 +123,14 @@ export default function SignaturePreloader({ onComplete }: SignaturePreloaderPro
 
   return (
     <div
+      data-background-scope
       className={`sig-preloader-backdrop ${fading ? 'is-fading' : ''}`}
       aria-hidden="true"
       onClick={dismiss}
       onTouchStart={dismiss}
       style={{ cursor: 'pointer' }}
     >
+      <SectionBackground variant="soft-aurora" allowMobile />
       <div className="sig-preloader-center">
         <svg
           className="sig-preloader-svg"

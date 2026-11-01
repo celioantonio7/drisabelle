@@ -56,3 +56,6 @@
 /* 404 shader test: keep the blue light behind readable editorial content. */
 .section-background[data-variant='color-bends'] .section-background__shader { opacity: .36; }
 .footer-expandable-drawer > .section-background { border-radius: 0; }
+
+.sig-preloader-center { position: relative; z-index: 1; }
+.sig-preloader-backdrop .section-background__shader { mask-image: none; opacity: .55; }

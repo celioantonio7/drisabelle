@@ -69,8 +69,9 @@ export function createBackgroundRenderer(onSlowDevice: () => void) {
     if (!host) return
     const width = host.clientWidth
     const height = host.clientHeight
-    const maxWidth = variant === 'color-bends' ? 720 : 960
-    const maxHeight = variant === 'color-bends' ? 480 : 720
+    const mobile = matchMedia('(max-width: 959px)').matches
+    const maxWidth = mobile ? 420 : variant === 'color-bends' ? 720 : 960
+    const maxHeight = mobile ? 560 : variant === 'color-bends' ? 480 : 720
     const ratio = Math.min(1, maxWidth / Math.max(1, width), maxHeight / Math.max(1, height))
     canvas.width = Math.max(1, Math.round(width * ratio))
     canvas.height = Math.max(1, Math.round(height * ratio))

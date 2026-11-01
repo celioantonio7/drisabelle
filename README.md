@@ -58,7 +58,7 @@ Mantenha telefone, endereço e identidade consistentes em `config/site.json`, `s
 <SectionBackground variant="soft-aurora" />
 ```
 
-O elemento deve estar dentro de uma seção com `position: relative`. Um único renderizador WebGL é compartilhado e carregado sob demanda em desktops elegíveis. Em touch, movimento reduzido, economia de dados, ausência de WebGL ou desempenho insuficiente, o fundo permanece estático. O canvas pausa fora da seção ativa e com a aba oculta.
+O elemento deve estar dentro de uma seção com `position: relative`. Um único renderizador WebGL é compartilhado e carregado sob demanda em dispositivos elegíveis. O ColorBends das seções e o Aurora do preload também funcionam no mobile, com resolução reduzida e sem interação de mouse. Em movimento reduzido, economia de dados, ausência de WebGL ou desempenho insuficiente, o fundo permanece estático. O canvas pausa fora da seção ativa e com a aba oculta.
 
 `src/LiquidGlass.css` define o acabamento dos cards. A refração SVG fica na camada decorativa de elementos selecionados durante hover; os textos mantêm uma camada separada. O fallback usa gradientes, bordas e glassmorphism CSS.
 
