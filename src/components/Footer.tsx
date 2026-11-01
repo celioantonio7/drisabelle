@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { ArrowUp, ChevronDown, ChevronUp, X } from 'lucide-react'
+import { ArrowUp, ChevronDown, ChevronUp, ChevronRight, X } from 'lucide-react'
 import {
   AttentionArrow,
   SocialInstagramLottie,
@@ -110,7 +110,7 @@ export default function Footer() {
           </a>
         </div>
 
-        {/* ================= COLLAPSIBLE PILL BAR AT THE BOTTOM ================= */}
+        {/* ================= COLLAPSIBLE PILL BAR AT THE BOTTOM (Desktop & Mobile) ================= */}
         <div className="footer-upward-wrapper" data-footer-reveal>
           <div className="footer-pill-bar hero-glass-card">
             <p className="footer-pill-copy">
@@ -159,110 +159,6 @@ export default function Footer() {
                 {expanded ? <ChevronDown width={15} height={15} /> : <ChevronUp width={15} height={15} />}
               </button>
             </div>
-          </div>
-        </div>
-
-        {/* ================= MOBILE INLINE FOOTER (Directly visible on mobile matching 07_footer_mobile.png) ================= */}
-        <div className="footer-mobile-flow" data-footer-reveal>
-          <div className="fm-flow-group">
-            <h4 className="fm-flow-title">NAVEGAÇÃO</h4>
-            <span className="fm-flow-rule" aria-hidden="true" />
-            <div className="fm-flow-links">
-              <p>
-                <a href="#inicio" onClick={(e) => handleNav(e, 'inicio')}>Início</a>
-                <span className="fm-dot">&bull;</span>
-                <a href="#sobre" onClick={(e) => handleNav(e, 'sobre')}>Sobre</a>
-              </p>
-              <p>
-                <a href="#especialidades" onClick={(e) => handleNav(e, 'especialidades')}>Especialidades</a>
-                <span className="fm-dot">&bull;</span>
-                <a href="#experiencia" onClick={(e) => handleNav(e, 'experiencia')}>Experiência</a>
-              </p>
-              <p>
-                <a href="#faq" onClick={(e) => handleNav(e, 'faq')}>FAQ</a>
-                <span className="fm-dot">&bull;</span>
-                <a href="#resultados" onClick={(e) => handleNav(e, 'resultados')}>Resultados</a>
-              </p>
-            </div>
-          </div>
-
-          <div className="fm-flow-group">
-            <h4 className="fm-flow-title">ESPECIALIDADES</h4>
-            <span className="fm-flow-rule" aria-hidden="true" />
-            <div className="fm-flow-links">
-              <p>
-                <a href="#especialidades" onClick={(e) => handleNav(e, 'especialidades')}>Lentes em Resina</a>
-                <span className="fm-dot">&bull;</span>
-                <a href="#especialidades" onClick={(e) => handleNav(e, 'especialidades')}>Porcelana</a>
-              </p>
-              <p>
-                <span>Odontologia estética &amp; Harmonização</span>
-              </p>
-            </div>
-          </div>
-
-          <div className="fm-flow-group">
-            <h4 className="fm-flow-title">CONTATO</h4>
-            <span className="fm-flow-rule" aria-hidden="true" />
-            <div className="fm-flow-links">
-              <p>
-                <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
-                  WhatsApp: (12) 99623-2567
-                </a>
-              </p>
-              <p>
-                <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer">
-                  Instagram: @isabellapferro
-                </a>
-              </p>
-              <p>
-                <a href={MAPS_URL} target="_blank" rel="noopener noreferrer">
-                  {ADDRESS_TEXT}
-                </a>
-              </p>
-            </div>
-          </div>
-
-          {/* Monumental Watermark Name (Matching 07_footer_mobile.png) */}
-          <div className="footer-mobile-brand-watermark" aria-hidden="true">
-            <div className="fm-brand-isabella">ISABELLA</div>
-            <div className="fm-brand-ferro">FERRO</div>
-          </div>
-
-          {/* Mobile Bottom Bar: Socials + Copyright */}
-          <div className="fm-flow-bottom-bar">
-            <div className="fm-flow-socials">
-              <a
-                href={WHATSAPP_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="fm-social-icon"
-                aria-label="WhatsApp"
-              >
-                <SocialWhatsAppLottie size={20} />
-              </a>
-              <a
-                href={INSTAGRAM_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="fm-social-icon"
-                aria-label="Instagram"
-              >
-                <SocialInstagramLottie size={20} />
-              </a>
-              <a
-                href={MAPS_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="fm-social-icon"
-                aria-label="Abrir localização no Google Maps"
-              >
-                <SocialLocationLottie size={20} />
-              </a>
-            </div>
-            <p className="fm-flow-copy">
-              &copy; 2026 Dra. Isabella Ferro &bull; Todos os direitos reservados.
-            </p>
           </div>
         </div>
       </div>
@@ -414,62 +310,130 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Mobile Stacked Layout (Exact match to 07_footer_mobile.png, Zero Scroll) */}
+          {/* Mobile Stacked Layout (Exact match to media_1793530364048_be6b9f6c.jpg) */}
           <div className="footer-cols-mobile">
-            <div className="fm-group">
-              <h4 className="fm-group-title">NAVEGAÇÃO</h4>
-              <div className="fm-inline-links">
-                <p>
-                  <a href="#inicio" onClick={(e) => handleNav(e, 'inicio')}>Início</a>
-                  <span className="fm-dot">&bull;</span>
-                  <a href="#sobre" onClick={(e) => handleNav(e, 'sobre')}>Sobre</a>
-                </p>
-                <p>
-                  <a href="#especialidades" onClick={(e) => handleNav(e, 'especialidades')}>Especialidades</a>
-                  <span className="fm-dot">&bull;</span>
-                  <a href="#experiencia" onClick={(e) => handleNav(e, 'experiencia')}>Experiência</a>
-                </p>
-                <p>
-                  <a href="#faq" onClick={(e) => handleNav(e, 'faq')}>FAQ</a>
-                  <span className="fm-dot">&bull;</span>
-                  <a href="#resultados" onClick={(e) => handleNav(e, 'resultados')}>Resultados</a>
-                </p>
+            {/* 1. NAVEGAÇÃO */}
+            <div className="fm-drawer-card hero-glass-card">
+              <h4 className="fm-drawer-card-title">NAVEGAÇÃO</h4>
+              <ul className="fm-drawer-list">
+                {NAV.map(({ id, label }) => (
+                  <li key={id}>
+                    <a href={`#${id}`} onClick={(e) => handleNav(e, id)} className="fm-drawer-row">
+                      <span>{label}</span>
+                      <ChevronRight size={15} className="fm-drawer-chevron" />
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* 2. ESPECIALIDADES */}
+            <div className="fm-drawer-card hero-glass-card">
+              <h4 className="fm-drawer-card-title">ESPECIALIDADES</h4>
+              <ul className="fm-drawer-list">
+                <li>
+                  <a href="#especialidades" onClick={(e) => handleNav(e, 'especialidades')} className="fm-drawer-row">
+                    <span>Lentes de Resina</span>
+                    <ChevronRight size={15} className="fm-drawer-chevron" />
+                  </a>
+                </li>
+                <li>
+                  <a href="#especialidades" onClick={(e) => handleNav(e, 'especialidades')} className="fm-drawer-row">
+                    <span>Lentes de Porcelana</span>
+                    <ChevronRight size={15} className="fm-drawer-chevron" />
+                  </a>
+                </li>
+                <li>
+                  <a href="#especialidades" onClick={(e) => handleNav(e, 'especialidades')} className="fm-drawer-row">
+                    <span>Harmonização do Sorriso</span>
+                    <ChevronRight size={15} className="fm-drawer-chevron" />
+                  </a>
+                </li>
+                <li>
+                  <a href="#especialidades" onClick={(e) => handleNav(e, 'especialidades')} className="fm-drawer-row">
+                    <span>Clareamento Dental</span>
+                    <ChevronRight size={15} className="fm-drawer-chevron" />
+                  </a>
+                </li>
+                <li>
+                  <a href="#especialidades" onClick={(e) => handleNav(e, 'especialidades')} className="fm-drawer-row">
+                    <span>Facetas Dentárias</span>
+                    <ChevronRight size={15} className="fm-drawer-chevron" />
+                  </a>
+                </li>
+                <li>
+                  <a href="#experiencia" onClick={(e) => handleNav(e, 'experiencia')} className="fm-drawer-row">
+                    <span>Outros Tratamentos</span>
+                    <ChevronRight size={15} className="fm-drawer-chevron" />
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            {/* 3. ATENDIMENTO */}
+            <div className="fm-drawer-card hero-glass-card">
+              <h4 className="fm-drawer-card-title">ATENDIMENTO</h4>
+              <ul className="fm-drawer-list">
+                <li>
+                  <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="fm-drawer-row">
+                    <div className="fm-drawer-contact-left">
+                      <span className="fm-drawer-icon-pill">
+                        <SocialWhatsAppLottie size={18} />
+                      </span>
+                      <div className="fm-drawer-contact-texts">
+                        <strong>WhatsApp</strong>
+                        <small>Atendimento rápido</small>
+                      </div>
+                    </div>
+                    <ChevronRight size={15} className="fm-drawer-chevron" />
+                  </a>
+                </li>
+                <li>
+                  <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" className="fm-drawer-row">
+                    <div className="fm-drawer-contact-left">
+                      <span className="fm-drawer-icon-pill">
+                        <SocialInstagramLottie size={18} />
+                      </span>
+                      <div className="fm-drawer-contact-texts">
+                        <strong>Instagram</strong>
+                        <small>Acompanhe os resultados</small>
+                      </div>
+                    </div>
+                    <ChevronRight size={15} className="fm-drawer-chevron" />
+                  </a>
+                </li>
+                <li>
+                  <a href={MAPS_URL} target="_blank" rel="noopener noreferrer" className="fm-drawer-row">
+                    <div className="fm-drawer-contact-left">
+                      <span className="fm-drawer-icon-pill">
+                        <SocialLocationLottie size={18} />
+                      </span>
+                      <div className="fm-drawer-contact-texts">
+                        <strong>Localização</strong>
+                        <small>{ADDRESS_TEXT}</small>
+                      </div>
+                    </div>
+                    <ChevronRight size={15} className="fm-drawer-chevron" />
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            {/* 4. INFORMAÇÕES */}
+            <div className="fm-drawer-card hero-glass-card">
+              <h4 className="fm-drawer-card-title">INFORMAÇÕES</h4>
+              <div className="fm-drawer-info">
+                <strong className="fm-drawer-doctor-name">Dra. Isabella Ferro</strong>
+                <span className="fm-drawer-cro">Clínico Geral &bull; CRO 140267</span>
+                <span className="fm-drawer-specialties">Odontologia Estética &amp; Harmonização Facial</span>
               </div>
             </div>
 
-            <div className="fm-group">
-              <h4 className="fm-group-title">ESPECIALIDADES</h4>
-              <div className="fm-inline-links">
-                <p>
-                  <span>Lentes em Resina</span>
-                  <span className="fm-dot">&bull;</span>
-                  <span>Porcelana</span>
-                </p>
-                <p>
-                  <span>Odontologia estética &amp; Harmonização Facial</span>
-                </p>
-              </div>
-            </div>
-
-            <div className="fm-group">
-              <h4 className="fm-group-title">CONTATO</h4>
-              <div className="fm-inline-links">
-                <p>
-                  <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
-                    WhatsApp: (12) 99623-2567
-                  </a>
-                </p>
-                <p>
-                  <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer">
-                    Instagram: @isabellapferro
-                  </a>
-                </p>
-                <p>
-                  <a href={MAPS_URL} target="_blank" rel="noopener noreferrer">
-                    Localização: {ADDRESS_TEXT}
-                  </a>
-                </p>
-              </div>
+            {/* 5. BRANDING WATERMARK (Matching screenshot) */}
+            <div className="fm-drawer-bottom-brand" aria-hidden="true">
+              <span className="fm-drawer-eyebrow">&mdash; ODONTOLOGIA ESTÉTICA DE ALTO PADRÃO &mdash;</span>
+              <span className="fm-drawer-sub">SORRISOS QUE TRANSFORMAM</span>
+              <div className="fm-drawer-monumental-name">DRA. ISABELLA FERRO</div>
             </div>
           </div>
 

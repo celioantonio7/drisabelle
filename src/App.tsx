@@ -13,6 +13,7 @@ import WhatsAppFloat from './components/WhatsAppFloat'
 import BackToTopFloat from './components/BackToTopFloat'
 import SectionIndexStrip from './components/SectionIndexStrip'
 import NotFound404 from './components/NotFound404'
+import { useAwwwardsScrollSystem } from './animations/useAwwwardsScrollSystem'
 
 function checkIsNotFound(): boolean {
   if (typeof window === 'undefined') return false
@@ -36,6 +37,9 @@ export default function App() {
   const [videoOpen, setVideoOpen] = useState(false)
   const [isNotFound, setIsNotFound] = useState<boolean>(() => checkIsNotFound())
   const [isReady, setIsReady] = useState(false)
+
+  // Ativa o sistema premium de animações GSAP + ScrollTrigger após o preloader
+  useAwwwardsScrollSystem(isReady)
 
   useEffect(() => {
     const syncRoute = () => setIsNotFound(checkIsNotFound())
