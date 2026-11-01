@@ -99,15 +99,15 @@ export default function WobbleSpiralCanvas({
 
     const scene = new THREE.Scene()
     const camera = new THREE.PerspectiveCamera(38, w / h, 0.1, 100)
-    camera.position.z = 7.0
+    camera.position.z = 7.2
 
-    // Dimensions tuned for horizontal dental smile framing and straight orientation
+    // Dimensions and spacing tuned for generous negative space between cards
     const settings = {
-      radius: 2.15,
-      verticalGap: 0.48,
-      angleGap: 0.72,
-      cardWidth: 1.68,
-      cardHeight: 1.28,
+      radius: 2.50,
+      verticalGap: 0.72,
+      angleGap: 1.05,
+      cardWidth: 1.44,
+      cardHeight: 1.08,
       idleSpin: 0.002,
       scrollSensitivity: 0.0035,
       smoothing: 0.12,
@@ -299,13 +299,13 @@ export default function WobbleSpiralCanvas({
         const rawY = slot * settings.verticalGap
         const rawZ = Math.sin(angle) * settings.radius
 
-        // Cards aligned straight towards the user:
+        // Clean, generous spacing between cards:
         // Center card faces 100% straight ahead with zero tilt.
-        // Lateral cards retain very gentle 3D depth without distorting or clipping text/smiles.
-        const curveOffsetX = (rawY * 0.20) - 0.06
+        // Lateral cards retain very gentle 3D depth with ample breathing room.
+        const curveOffsetX = (rawY * 0.16) - 0.04
 
-        card.position.set(rawX * 0.86 + curveOffsetX, rawY, rawZ)
-        card.rotation.y = (Math.PI / 2 - angle) * 0.20
+        card.position.set(rawX * 0.82 + curveOffsetX, rawY, rawZ)
+        card.rotation.y = (Math.PI / 2 - angle) * 0.16
         card.rotation.x = 0
         card.rotation.z = 0
       })
