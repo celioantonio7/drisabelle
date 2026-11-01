@@ -2514,10 +2514,6 @@ button {
   gap: 8px;
 }
 
-.spec-navy-diamond {
-  color: #60a5fa;
-}
-
 .spec-navy-quote {
   font-family: var(--font-serif);
   font-style: italic;

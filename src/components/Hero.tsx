@@ -2,7 +2,7 @@ import CardHoverLight from './CardHoverLight'
 import SectionBackground from './SectionBackground'
 import { useEffect, useRef, useState } from 'react'
 import { ChevronDown, ArrowDown, Lock, Play } from 'lucide-react'
-import { ToothIcon, FaceIcon, ShieldIcon, DiamondIcon } from './Icons'
+import { ToothIcon, FaceIcon, ShieldIcon } from './Icons'
 import { AttentionArrow } from './LottieflowIcons'
 import { WHATSAPP_URL } from '../data'
 import { assetUrl } from '../utils/assets'
@@ -336,9 +336,6 @@ export default function Hero({ onOpenVideo }: HeroProps) {
                   </textPath>
                 </text>
               </svg>
-              <div className="hm-stamp-center">
-                <DiamondIcon width={18} height={18} />
-              </div>
             </div>
           </div>
         </div>

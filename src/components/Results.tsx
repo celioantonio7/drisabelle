@@ -7,7 +7,7 @@ import PatientReviews from './PatientReviews'
 import { useState, useRef, useEffect, useMemo, useCallback } from 'react'
 import { createPortal } from 'react-dom'
 import { ArrowRight, X } from 'lucide-react'
-import { WhatsAppIcon, DiamondIcon } from './Icons'
+import { WhatsAppIcon } from './Icons'
 import { AttentionArrow, SocialInstagramLottie } from './LottieflowIcons'
 import { WHATSAPP_URL, INSTAGRAM_URL } from '../data'
 import { useMagneticButton } from '../animations/hooks'
@@ -387,9 +387,6 @@ export default function Results() {
                   </textPath>
                 </text>
               </svg>
-              <div className="hm-stamp-center">
-                <DiamondIcon width={18} height={18} />
-              </div>
             </div>
           </div>
         </div>
@@ -555,7 +552,6 @@ export default function Results() {
               </button>
 
               <div className="case-modal-tag">
-                <DiamondIcon width={13} height={13} />
                 <span>{selectedCase.tag}</span>
               </div>
 

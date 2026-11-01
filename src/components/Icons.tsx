@@ -27,13 +27,6 @@ export const ToothIcon = (p: P) => (
   </svg>
 )
 
-export const DiamondIcon = (p: P) => (
-  <svg {...base(p)}>
-    <path d="M6.5 4h11l4 5.5L12 20.5 2.5 9.5z" />
-    <path d="M2.5 9.5h19M9.5 4 8 9.5l4 11 4-11L14.5 4" />
-  </svg>
-)
-
 export const ShieldIcon = (p: P) => (
   <svg {...base(p)}>
     <path d="M12 3 5 5.8v5.4c0 4.3 3 7.8 7 9.8 4-2 7-5.5 7-9.8V5.8z" />

@@ -2,7 +2,7 @@ import SpecialtiesMobileContour from './SpecialtiesMobileContour'
 import CardHoverLight from './CardHoverLight'
 import SectionBackground from './SectionBackground'
 import { useEffect, useRef, useState } from 'react'
-import { ToothIcon, FaceIcon, ShieldIcon, DiamondIcon } from './Icons'
+import { ToothIcon, FaceIcon, ShieldIcon } from './Icons'
 import { AttentionArrow } from './LottieflowIcons'
 import { WHATSAPP_URL } from '../data'
 import { assetUrl } from '../utils/assets'
@@ -390,9 +390,6 @@ export default function Specialties() {
             </div>
 
             <div className="spec-pillar-item">
-              <div className="spec-pillar-icon-box">
-                <DiamondIcon width={24} height={24} />
-              </div>
               <div className="spec-pillar-texts">
                 <h4 className="spec-pillar-name">Estética Avançada</h4>
                 <p className="spec-pillar-desc">
@@ -412,7 +409,6 @@ export default function Specialties() {
           className="spec-mobile-navy-banner"
         >
           <div className="spec-navy-banner-left">
-            <DiamondIcon width={18} height={18} className="spec-navy-diamond" />
             <p className="spec-navy-quote">
               Mais que um tratamento, <br />
               uma experiência <br />
