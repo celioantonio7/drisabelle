@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://celioantonio7.github.io/drisabelle/sitemap.xml
