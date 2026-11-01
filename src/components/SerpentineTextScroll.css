@@ -17,7 +17,6 @@
 }
 
 .serpentine-text-group {
-  will-change: transform;
   transform-origin: center center;
 }
 
@@ -39,14 +38,14 @@
   font-style: italic;
   font-weight: 700;
   fill: #0056d6;
-  filter: drop-shadow(0 2px 10px rgba(0, 86, 214, 0.28));
+
 }
 
 .st-serif-bold-navy {
   font-family: var(--font-serif, 'Playfair Display Variable', Georgia, serif);
   font-weight: 800;
   fill: #0b192c;
-  filter: drop-shadow(0 2px 8px rgba(11, 25, 44, 0.18));
+
 }
 
 .st-serif-bold-royal {
@@ -79,5 +78,3 @@
   .serpentine-text-content { font-size: 64px; }
   .serpentine-text-content tspan { font-size: inherit; }
 }
-/* Include the About pin spacer in the opening composition's natural height. */
-.hero-transition-composition { height: auto !important; max-height: none !important; }

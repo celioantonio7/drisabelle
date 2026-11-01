@@ -73,7 +73,7 @@ export default function App() {
 
       {/* Conteúdo Principal — Ordem exata do menu e das referências 01..07 */}
       <main id="main-content">
-        {/* Hero and About share a pin wrapper so the boundary never opens a blank gap. */}
+        {/* Hero and About share an overlapping SVG boundary in the native scroll flow. */}
         <div className="hero-transition-composition">
           <div className="hero-transition-opening">
             <Hero onOpenVideo={() => setVideoOpen(true)} />

@@ -27,7 +27,7 @@ const PHRASE_PARTS = [
 ]
 
 // Repetitions to ensure continuous looping without visual seams
-const REPETITION_COUNT = 6
+const REPETITION_COUNT = 3
 
 export default function SerpentineTextScroll() {
   const sectionRef = useRef<HTMLElement>(null)
@@ -52,73 +52,89 @@ export default function SerpentineTextScroll() {
       svg?.setAttribute('viewBox', '0 0 900 440')
       return () => svg?.setAttribute('viewBox', '0 0 2400 440')
     })
+    let disposed = false
+    let refreshTimer = 0
+    let waitingForScrollEnd = false
+    const finishRefresh = () => {
+      ScrollTrigger.removeEventListener('scrollEnd', finishRefresh)
+      waitingForScrollEnd = false
+      if (!disposed) ScrollTrigger.refresh()
+    }
+    // Image/font changes may alter layout. Defer recalculation until a gesture ends.
+    const queueRefresh = () => {
+      window.clearTimeout(refreshTimer)
+      refreshTimer = window.setTimeout(() => {
+        if (ScrollTrigger.isScrolling()) {
+          if (!waitingForScrollEnd) {
+            waitingForScrollEnd = true
+            ScrollTrigger.addEventListener('scrollEnd', finishRefresh)
+          }
+        } else finishRefresh()
+      }, 120)
+    }
     mm.add('(prefers-reduced-motion: no-preference)', () => {
       const length = path.getTotalLength()
-      const timeline = gsap.timeline({ scrollTrigger: {
-        id: 'hero-serpentine', trigger: composition,
-        start: () => `top+=${(section.parentElement?.offsetHeight ?? 0) - window.innerHeight * 0.7} top`, end: '+=80%', pin: true,
-        // Transform pinning keeps the boundary continuous when anticipatePin
-        // re-enters on upward scrolling; fixed positioning jumps ahead at speed.
-        pinType: 'transform',
-        scrub: 1, anticipatePin: 1, invalidateOnRefresh: true,
-      } })
+      const motion = { progress: 0 }
+      const scrollDistance = length * .12
       let phase = 0
       let repeatWidth = 0
+      let visible = false
+      let alive = true
+      let lastOffset = Number.NaN
+      const writeOffset = () => {
+        const offset = -scrollDistance * motion.progress - phase
+        if (offset === lastOffset) return
+        textPathRef.current?.setAttribute('startOffset', String(offset))
+        lastOffset = offset
+      }
       const measureText = () => {
         const text = textPathRef.current?.parentElement as SVGTextElement | null
         repeatWidth = text ? text.getComputedTextLength() / REPETITION_COUNT : 0
       }
-      measureText()
-      let alive = true
-      document.fonts.ready.then(() => { if (alive) measureText() })
-      const glide = () => {
-        const trigger = timeline.scrollTrigger
-        const textPath = textPathRef.current
-        if (!trigger || !textPath || document.hidden) return
-        if (window.scrollY < trigger.end || timeline.progress() < .999) {
-          phase = 0
-          return
-        }
-        const bounds = section.getBoundingClientRect()
-        if (bounds.bottom <= 0 || bounds.top >= window.innerHeight || repeatWidth <= 0) return
-        phase = (phase + Math.min(gsap.ticker.deltaRatio(60), 3) * 32 / 60) % repeatWidth
-        textPath.setAttribute('startOffset', `${-length * .12 - phase}`)
-      }
-      gsap.ticker.add(glide)
-      // Include the native sticky About track in the outer pin spacer so
-      // the next section follows the complete composition.
-      let refreshFrame = 0
-      const syncSpacer = () => {
-        const trigger = timeline.scrollTrigger
-        const spacer = composition.parentElement
-        if (!trigger || !spacer?.classList.contains('pin-spacer')) return
-        const height = Math.ceil(composition.offsetHeight + trigger.end - trigger.start)
-        if (spacer.style.minHeight === `${height}px`) return
-        spacer.style.minHeight = `${height}px`
-        cancelAnimationFrame(refreshFrame)
-        refreshFrame = requestAnimationFrame(() => ScrollTrigger.refresh())
-      }
-      const observer = new ResizeObserver(syncSpacer)
-      observer.observe(composition)
-      syncSpacer()
+      const timeline = gsap.timeline({ scrollTrigger: {
+        id: 'hero-serpentine', trigger: section,
+        // Draw while the boundary crosses the viewport. Holding the entire
+        // Hero/About composition created a long dead zone for native scrolling.
+        start: 'center 85%', end: 'center 25%',
+        scrub: 1, invalidateOnRefresh: true,
+      } })
       timeline.fromTo(path, { strokeDasharray: length, strokeDashoffset: length },
         { strokeDashoffset: 0, duration: 1, ease: 'none' }, 0)
-      if (textPathRef.current) timeline.fromTo(textPathRef.current,
-        { attr: { startOffset: '0%' } },
-        { attr: { startOffset: '-12%' }, duration: 1, ease: 'none' }, 0)
+      // The scrub and the idle glide share one numeric coordinate system and
+      // one writer. Keep the accumulated phase when reversing the scroll.
+      timeline.to(motion, { progress: 1, duration: 1, ease: 'none', onUpdate: writeOffset }, 0)
+      measureText()
+      writeOffset()
+      document.fonts.ready.then(() => { if (alive) measureText() })
+      const visibility = new IntersectionObserver(entries => {
+        visible = entries[0]?.isIntersecting ?? false
+      })
+      visibility.observe(section)
+      const glide = () => {
+        const trigger = timeline.scrollTrigger
+        if (!trigger || !visible || document.hidden || repeatWidth <= 0) return
+        if (window.scrollY < trigger.end || motion.progress < .999) return
+        phase = (phase + Math.min(gsap.ticker.deltaRatio(60), 3) * 32 / 60) % repeatWidth
+        writeOffset()
+      }
+      gsap.ticker.add(glide)
       return () => {
         alive = false
         gsap.ticker.remove(glide)
-        observer.disconnect()
-        cancelAnimationFrame(refreshFrame)
-        composition.parentElement?.style.removeProperty('min-height')
+        visibility.disconnect()
+        textPathRef.current?.setAttribute('startOffset', '0')
       }
     })
-    const refresh = () => ScrollTrigger.refresh()
-    document.fonts.ready.then(refresh)
+    document.fonts.ready.then(() => { if (!disposed) queueRefresh() })
     const images = Array.from(composition.querySelectorAll('img'))
-    images.forEach(img => img.addEventListener('load', refresh))
-    return () => { mm.revert(); images.forEach(img => img.removeEventListener('load', refresh)) }
+    images.forEach(img => img.addEventListener('load', queueRefresh))
+    return () => {
+      disposed = true
+      window.clearTimeout(refreshTimer)
+      ScrollTrigger.removeEventListener('scrollEnd', finishRefresh)
+      images.forEach(img => img.removeEventListener('load', queueRefresh))
+      mm.revert()
+    }
   }, { scope: sectionRef })
 
   return (

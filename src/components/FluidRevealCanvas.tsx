@@ -102,6 +102,8 @@ export default function FluidRevealCanvas({ topSrc, bottomSrc, className = '' }:
 
     let animationFrameId = 0
     let isVisible = true
+    let needsDraw = true
+    let trailFrames = 0
     const w = Math.min(container.clientWidth || 420, 600)
     const h = Math.min(container.clientHeight || 520, 700)
     const dpr = Math.min(window.devicePixelRatio || 1, 2)
@@ -188,6 +190,7 @@ export default function FluidRevealCanvas({ topSrc, bottomSrc, className = '' }:
 
     let loadedCount = 0
     const checkLoaded = () => {
+      needsDraw = true
       loadedCount++
       if (loadedCount >= 2) {
         setLoaded(true)
@@ -266,6 +269,7 @@ export default function FluidRevealCanvas({ topSrc, bottomSrc, className = '' }:
         mouse.set(nx, ny)
       }
       isMoving = true
+      trailFrames = 60
       lastMoveTime = performance.now()
     }
 
@@ -302,6 +306,7 @@ export default function FluidRevealCanvas({ topSrc, bottomSrc, className = '' }:
       if (Math.abs(nw - lastW) < 2 && Math.abs(nh - lastH) < 2) return
       lastW = nw
       lastH = nh
+      needsDraw = true
       renderer.setSize(nw, nh, false)
       displayMaterial.uniforms.uResolution.value.set(nw, nh)
       displayMaterial.uniforms.uDpr.value = Math.min(window.devicePixelRatio || 1, 2)
@@ -320,7 +325,11 @@ export default function FluidRevealCanvas({ topSrc, bottomSrc, className = '' }:
 
     const renderLoop = () => {
       animationFrameId = requestAnimationFrame(renderLoop)
-      if (!isVisible) return
+      // A settled portrait is a static frame. Avoid two WebGL passes per
+      // frame while the user is scrolling past the Hero/About boundary.
+      if (!isVisible || document.hidden || (!needsDraw && trailFrames === 0)) return
+      needsDraw = false
+      trailFrames = Math.max(0, trailFrames - 1)
 
       if (isMoving && performance.now() - lastMoveTime > 70) {
         isMoving = false

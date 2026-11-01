@@ -94,7 +94,7 @@ export function useEditorialReveal(scope: RefObject<HTMLElement | null>, kind: K
                 y: mobile ? 2 : 4, ease: 'none', scrollTrigger: {
                   trigger: root.closest('.about-sticky-track') ?? root,
                   start: 'top bottom', end: 'bottom top', scrub: 1,
-                  pinnedContainer: '.hero-transition-composition', invalidateOnRefresh: true,
+                  invalidateOnRefresh: true,
                 },
               })
             }
@@ -109,7 +109,6 @@ export function useEditorialReveal(scope: RefObject<HTMLElement | null>, kind: K
             ScrollTrigger.create({
               id: `editorial-${kind}`, trigger: kind === 'about' ? root.closest('.about-sticky-track') ?? root : root.querySelector('.footer-signature-cta'),
               start: 'top 75%', once: true,
-              pinnedContainer: kind === 'about' ? '.hero-transition-composition' : undefined,
               onEnter: () => {
                 entered.current = true
                 context.add(play)

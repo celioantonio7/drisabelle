@@ -90,21 +90,10 @@ export default function AboutStackedCards() {
       ScrollTrigger.create({
         id: 'about-stack-reveal', trigger: container,
         start: () => {
-          const stage = container.closest<HTMLElement>('.about-sticky-track') ?? container
-          const composition = container.closest<HTMLElement>('.hero-transition-composition')
-          const heroPin = ScrollTrigger.getById('hero-serpentine')
-          if (!composition || !heroPin) return stage.getBoundingClientRect().top + window.scrollY - 80
-          const localTop = stage.getBoundingClientRect().top - composition.getBoundingClientRect().top
-          const spacer = composition.parentElement
-          const documentTop = (spacer?.classList.contains('pin-spacer') ? spacer : composition).getBoundingClientRect().top + window.scrollY
-          return documentTop + localTop + heroPin.end - heroPin.start - 80
+          const track = container.closest<HTMLElement>('.about-sticky-track') ?? container
+          return track.getBoundingClientRect().top + window.scrollY - 80
         },
         end: () => `+=${window.innerHeight * .6}`, invalidateOnRefresh: true,
-        onRefresh: () => {
-          const heroPin = ScrollTrigger.getById('hero-serpentine')
-          const track = container.closest<HTMLElement>('.about-sticky-track')
-          track?.style.setProperty('--about-sticky-top', `${80 - (heroPin ? heroPin.end - heroPin.start : 0)}px`)
-        },
         onUpdate: self => {
           if (hasCompletedRef.current || self.direction < 0 || self.progress <= furthest) return
           furthest = self.progress

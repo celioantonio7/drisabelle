@@ -7093,9 +7093,9 @@ button:hover > .lf-attention8-wrap .lf-attention8-primary {
 .rm-ba-viewport { user-select: none; -webkit-user-select: none; }
 .rm-ba-viewport img, .rm-ba-before-clip, .rm-ba-divider, .rm-ba-pill { pointer-events: none; -webkit-user-drag: none; }
 .rm-ba-card.hero-glass-card:hover { transform: none; }
-/* One GSAP pin at the boundary; native sticky holds the complete About stage. */
+/* Native scrolling at the SVG boundary; only the About stage stays sticky. */
 .about-sticky-track { position: relative; height: calc(var(--about-stage-height, 640px) + 60svh); }
-.about-sticky-track > #sobre { position: sticky; top: var(--about-sticky-top, 80px); }
+.about-sticky-track > #sobre { position: sticky; top: 80px; }
 @media (prefers-reduced-motion: reduce) {
   .about-sticky-track { height: auto; }
   .about-sticky-track > #sobre { position: relative; top: auto; }
