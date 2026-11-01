@@ -1,3 +1,4 @@
+import SectionBackground from './SectionBackground'
 import './FooterCompact.css'
 import { useEditorialReveal } from '../animations/useEditorialReveal'
 import { useEffect, useRef, useState } from 'react'
@@ -47,6 +48,7 @@ export default function Footer() {
 
   return (
     <footer ref={footerRef} id="contato" className="footer-section" aria-label="Contato e Rodapé">
+      <SectionBackground variant="static" />
       {/* Atmospheric Silk Blue Waves & Diagonal Hairline SVG Splines (Matching Footer Reference) */}
       <div className="footer-bg-atmosphere" aria-hidden="true">
         <svg viewBox="0 0 1448 680" fill="none" preserveAspectRatio="none" className="footer-bg-svg">

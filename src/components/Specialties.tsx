@@ -1,3 +1,4 @@
+import SectionBackground from './SectionBackground'
 import { useEffect, useRef, useState } from 'react'
 import { ArrowDown } from 'lucide-react'
 import { ToothIcon, FaceIcon, ShieldIcon, DiamondIcon } from './Icons'
@@ -105,6 +106,7 @@ export default function Specialties() {
       className={`spec-stage-wrapper ${inView ? 'is-section-inview' : ''}`}
       aria-label="Especialidades"
     >
+      <SectionBackground variant="silk" />
       {/* Layered Organic Background Matching "Excelência em Cada Detalhe.png" */}
       <div className="spec-bg-organic-canvas" aria-hidden="true">
         <svg viewBox="0 0 1536 1024" fill="none" preserveAspectRatio="none" className="spec-svg-bg">

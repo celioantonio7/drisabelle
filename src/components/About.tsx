@@ -1,3 +1,4 @@
+import SectionBackground from './SectionBackground'
 import { useRef } from 'react'
 import { WHATSAPP_URL } from '../data'
 import {
@@ -20,6 +21,7 @@ export default function About() {
 
   return (
     <section ref={rootRef} id="sobre" className="about-section" aria-label="Sobre a Dra. Isabella Ferro">
+      <SectionBackground variant="soft-aurora" />
       {/* Organic Soft Blue SVG Waves & Splines for Atmospheric Depth */}
       <div className="about-bg-organic-svg" aria-hidden="true">
         <svg viewBox="0 0 1600 900" fill="none" preserveAspectRatio="none" className="about-svg-canvas">

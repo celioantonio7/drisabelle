@@ -1,3 +1,5 @@
+import './LiquidGlass.css'
+import LiquidGlassDefinitions from './components/LiquidGlassDefinitions'
 import './GlassSurfaces.css'
 import { useDoctorPortraitMotion } from './animations/useDoctorPortraitMotion'
 import { useCallback, useEffect, useState } from 'react'
@@ -64,6 +66,8 @@ export default function App() {
     <div className={`site-wrapper ${isReady ? 'is-page-ready' : 'is-page-preloading'}`}>
       {/* Preloader de Assinatura Caligráfica — Página só abre após 100% concluído */}
       <SignaturePreloader onComplete={handlePreloaderComplete} />
+
+      <LiquidGlassDefinitions />
 
       {/* Barra de Navegação */}
       <Navbar />

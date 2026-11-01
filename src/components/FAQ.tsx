@@ -1,3 +1,4 @@
+import SectionBackground from './SectionBackground'
 import { useRef, useState, useLayoutEffect } from 'react'
 import { Plus, RotateCcw, ArrowRight } from 'lucide-react'
 import { FAQ, WHATSAPP_URL } from '../data'
@@ -111,6 +112,7 @@ export default function FAQSection() {
 
   return (
     <section ref={rootRef} id="faq" className="faq-bento-section" aria-label="Perguntas Frequentes">
+      <SectionBackground variant="soft-aurora" />
       {/* ================= BACKGROUND DECORATIVE SVGS (From public/ assets) ================= */}
       <div className="faq-bg-canvas" aria-hidden="true">
         {/* 05: Background waves */}

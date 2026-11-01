@@ -1,0 +1,54 @@
+/* Common white edge light keeps successive sections visually connected. */
+.section-background {
+  --sb-x: 0;
+  --sb-y: 0;
+  --sb-scroll-y: 0px;
+  --sb-presence: 1;
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: clip;
+  pointer-events: none;
+  background: #f8fbff;
+  contain: paint;
+}
+.section-background *, .section-background canvas { pointer-events: none !important; }
+.section-background__illumination {
+  position: absolute;
+  inset: -24px;
+  background:
+    radial-gradient(ellipse at 15% 38%, #c8dfff66, #c8dfff00 52%),
+    radial-gradient(ellipse at 82% 67%, #91bdf533, #91bdf500 48%);
+  opacity: calc(var(--sb-presence) * .75);
+  transform: translate3d(calc(var(--sb-x) * 1px), calc(var(--sb-y) * 1px + var(--sb-scroll-y)), 0);
+  mask-image: linear-gradient(transparent, #000 16%, #000 84%, transparent);
+}
+.section-background[data-variant='static'] .section-background__illumination { display: none; }
+.section-background[data-variant='mesh-gradient'] .section-background__illumination {
+  background:
+    radial-gradient(ellipse at 22% 30%, #e8f2ff, #e8f2ff00 46%),
+    radial-gradient(ellipse at 76% 58%, #c8dfff88, #c8dfff00 52%),
+    radial-gradient(ellipse at 36% 82%, #91bdf526, #91bdf500 44%);
+}
+.section-background[data-variant='silk'] .section-background__illumination {
+  background: radial-gradient(ellipse at 75% 50%, #c8dfff66, transparent 60%), linear-gradient(120deg, transparent 15%, #e8f2ff88 36%, #fff8 48%, #e8f2ff88 63%, transparent 85%);
+}
+.section-background__shader {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: .58;
+  mask-image: linear-gradient(transparent, #000 20%, #000 80%, transparent);
+  animation: section-shader-enter 1.1s ease both;
+}
+.section-background[data-variant='soft-aurora'] .section-background__shader { opacity: .36; }
+.section-background[data-renderer='webgl'] .section-background__illumination { opacity: .15; }
+.section-background[data-motion='on'][data-visible='true'][data-renderer='css'] .section-background__illumination { animation: section-light-breathe 32s ease-in-out infinite alternate; }
+@keyframes section-light-breathe { to { opacity: .45; } }
+@keyframes section-shader-enter { from { opacity: 0; } }
+#resultados.has-section-background::before { content: none; }
+#faq.has-section-background .faq-bg-waves { opacity: .2; }
+@media (prefers-reduced-motion: reduce) {
+  .section-background *, .section-background canvas { animation: none !important; transform: none !important; }
+}

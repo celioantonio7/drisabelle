@@ -1,3 +1,4 @@
+import SectionBackground from './SectionBackground'
 import { useEffect, useRef, useState } from 'react'
 import { Play, User } from 'lucide-react'
 import { ToothIcon } from './Icons'
@@ -64,6 +65,7 @@ export default function Experience({ onOpenVideo }: ExperienceProps) {
       className={`exp-stage-wrapper ${inView ? 'is-section-inview' : ''}`}
       aria-label="Experiência"
     >
+      <SectionBackground variant="mesh-gradient" />
       {/* Dynamic SVG Curves Weaving Through Section (Desktop) */}
       <div className="exp-svg-canvas-wrap" aria-hidden="true" data-draw>
         <svg viewBox="0 0 1672 941" fill="none" preserveAspectRatio="none" className="exp-svg-spline">

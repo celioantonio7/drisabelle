@@ -28,6 +28,7 @@ const PHRASE_PARTS = [
 
 // Repetitions to ensure continuous looping without visual seams
 const REPETITION_COUNT = 3
+const IDLE_SPEED = 48 // SVG units per second; scroll-driven travel stays unchanged.
 
 export default function SerpentineTextScroll() {
   const sectionRef = useRef<HTMLElement>(null)
@@ -110,11 +111,11 @@ export default function SerpentineTextScroll() {
         visible = entries[0]?.isIntersecting ?? false
       })
       visibility.observe(section)
-      const glide = () => {
+      const glide = (_time: number, deltaTime: number) => {
         const trigger = timeline.scrollTrigger
         if (!trigger || !visible || document.hidden || repeatWidth <= 0) return
         if (window.scrollY < trigger.end || motion.progress < .999) return
-        phase = (phase + Math.min(gsap.ticker.deltaRatio(60), 3) * 32 / 60) % repeatWidth
+        phase = (phase + Math.min(deltaTime, 100) * IDLE_SPEED / 1000) % repeatWidth
         writeOffset()
       }
       gsap.ticker.add(glide)

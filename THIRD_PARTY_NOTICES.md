@@ -15,3 +15,7 @@ React, Vite, TypeScript, GSAP, Three.js, Lucide, fontes e demais pacotes mantêm
 ## Identidade e conteúdo da clínica
 
 As fotos da profissional e dos pacientes, os casos clínicos, os depoimentos, a marca e os logotipos da clínica não integram a concessão MIT. A presença desses arquivos no repositório não concede autorização para usar a identidade ou os materiais de pacientes em outros projetos.
+
+## Fundos Aurora e Silk
+
+As equações de shader em `src/components/backgrounds/reactBitsShaders.ts` foram adaptadas dos fundos [Aurora](https://github.com/DavidHDev/react-bits/tree/main/src/content/Backgrounds/Aurora) e [Silk](https://github.com/DavidHDev/react-bits/tree/main/src/content/Backgrounds/Silk) do React Bits, de David Haz. O renderizador compartilhado usa essas equações com uma paleta clara e passagem única para reduzir o custo de renderização. As condições originais estão preservadas em [ReactBitsBackgrounds.LICENSE](src/components/backgrounds/ReactBitsBackgrounds.LICENSE).

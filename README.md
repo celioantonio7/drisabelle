@@ -50,6 +50,20 @@ npm run seo      # regenera sitemap, robots.txt e metadados
 
 Mantenha telefone, endereço e identidade consistentes em `config/site.json`, `src/data.ts` e no conteúdo das seções. O bloco SEO de `index.html` é gerado automaticamente; altere a configuração em vez desse bloco.
 
+## Fundos e acabamento dos cards
+
+`SectionBackground` oferece quatro variantes: `soft-aurora`, `silk`, `mesh-gradient` e `static`. Cada seção usa uma variante, atrás do conteúdo e sem capturar cliques. As equações Aurora e Silk vêm do React Bits, com a licença original preservada.
+
+```tsx
+<SectionBackground variant="soft-aurora" />
+```
+
+O elemento deve estar dentro de uma seção com `position: relative`. Um único renderizador WebGL é compartilhado e carregado sob demanda em desktops elegíveis. Em touch, movimento reduzido, economia de dados, ausência de WebGL ou desempenho insuficiente, o fundo permanece estático. O canvas pausa fora da seção ativa e com a aba oculta.
+
+`src/LiquidGlass.css` define o acabamento dos cards. A refração SVG fica na camada decorativa de elementos selecionados durante hover; os textos mantêm uma camada separada. O fallback usa gradientes, bordas e glassmorphism CSS.
+
+A velocidade do loop parado da serpentina é definida por `IDLE_SPEED` em `SerpentineTextScroll.tsx`, independentemente da animação ligada ao scroll.
+
 ## Publicar
 
 O workflow em `.github/workflows/deploy.yml` publica a branch `main` no GitHub Pages. O endereço padrão deste repositório usa `/drisabelle/`.
@@ -68,6 +82,6 @@ Veja [SEO_LANCAMENTO.md](SEO_LANCAMENTO.md) para a configuração do domínio, a
 
 A [licença MIT](LICENSE) cobre o código original disponibilizado pelo titular deste repositório. Preserve o aviso de copyright ao reutilizá-lo.
 
-Componentes incorporados e dependências mantêm suas licenças próprias. O Depth Carousel, adaptado do React Bits, usa [MIT + Commons Clause](src/components/DepthCarousel.LICENSE), que contém condições adicionais para redistribuição e venda de componentes. Portanto, o pacote completo não deve ser apresentado como integralmente MIT. Consulte [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+Componentes incorporados e dependências mantêm suas licenças próprias. O Depth Carousel e os shaders Aurora/Silk, adaptados do React Bits, usam [MIT + Commons Clause](src/components/DepthCarousel.LICENSE), que contém condições adicionais para redistribuição e venda de componentes. Portanto, o pacote completo não deve ser apresentado como integralmente MIT. Consulte [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
 
 Fotografias, logotipos, marcas, depoimentos e casos clínicos não estão incluídos na concessão MIT. Para adaptar o template a outra clínica, substitua esses materiais por conteúdo com autorização de uso.

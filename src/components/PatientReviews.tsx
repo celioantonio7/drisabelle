@@ -1,4 +1,5 @@
 import DepthCarousel from './DepthCarousel'
+import { assetUrl } from '../utils/assets'
 import './PatientReviews.css'
 
 // Excerpts transcribed from the Google review screenshots supplied by the user.
@@ -19,11 +20,17 @@ export default function PatientReviews() {
         renderItem={index => {
           const review = REVIEWS[index]
           return <article className="patient-review">
-            <span className="patient-review-avatar" aria-hidden="true">{review.initials}</span>
-            <h3>{review.name}</h3>
-            <span className="patient-review-stars" aria-label="5 de 5 estrelas">★★★★★</span>
-            <blockquote>“{review.text}”</blockquote>
-            <span className="patient-review-source">Trecho de avaliação no Google</span>
+            <div className="patient-review-cover" aria-hidden="true">
+              <img src={assetUrl('/img/clinica.webp')} alt="" loading="lazy" />
+              <span className="patient-review-cover-label">CUIDADO EM CADA DETALHE</span>
+              <span className="patient-review-avatar">{review.initials}</span>
+            </div>
+            <div className="patient-review-content">
+              <h3>{review.name}</h3>
+              <span className="patient-review-stars" aria-label="5 de 5 estrelas">★★★★★</span>
+              <blockquote>“{review.text}”</blockquote>
+              <span className="patient-review-source">Trecho de avaliação no Google</span>
+            </div>
           </article>
         }} />
     </aside>

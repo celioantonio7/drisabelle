@@ -1,0 +1,69 @@
+.liquid-glass-definitions { position: absolute; overflow: hidden; pointer-events: none; }
+/* The optical layer is separate from the text, photos and interactive hit areas. */
+#inicio .hero-card-pos.hero-glass-card,
+#especialidades .spec-card-pos {
+  isolation: isolate;
+  background: linear-gradient(135deg, #f8fbffc9, #e8f2ff9c 55%, #c8dfff9c);
+  border: 1px solid #fffffff2;
+  border-radius: 30px;
+  box-shadow: inset 0 2px 1px #fff, inset 0 -2px 2px #91bdf55c, 0 12px 30px #276ef11c;
+}
+#inicio .hero-card-pos.hero-glass-card::before,
+#especialidades .spec-card-pos::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background:
+    radial-gradient(ellipse at 15% -12%, #fff9, #fff0 57%),
+    radial-gradient(ellipse at 95% 110%, #91bdf54d, #91bdf500 60%);
+  pointer-events: none;
+  z-index: -1;
+}
+#inicio .hero-card-pos.hero-glass-card::after,
+#especialidades .spec-card-pos::after {
+  content: '';
+  position: absolute;
+  inset: 1px;
+  border-radius: inherit;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 700 300' preserveAspectRatio='none' fill='none'%3E%3Cpath d='M10 196C95 282 172 228 240 298M505 2C552 20 536 78 603 68S664 46 698 54M700 116C590 103 530 178 518 240S477 295 430 300' stroke='white' stroke-opacity='.72' stroke-width='1.6'/%3E%3Cpath d='M5 230C83 290 169 260 194 298' stroke='%2391BDF5' stroke-opacity='.4' stroke-width='18'/%3E%3C/svg%3E") center / 100% 100%;
+  pointer-events: none;
+  z-index: -1;
+  opacity: .7;
+}
+#inicio .hero-card-texts { min-width: 0; }
+#inicio .hero-card-icon-pill { background: linear-gradient(145deg,#f8fbffeb,#c8dfffba); border: 1px solid #ffffffe8; box-shadow: inset 0 2px 2px #fff, 0 5px 13px #276ef126; border-radius: 15px; }
+#inicio .hero-card-round-arrow { color: #276ef1; background: linear-gradient(150deg,#fff,#d9eaff); box-shadow: inset 0 2px 1px #fff, 0 5px 15px #276ef12b; border-color: #fff; }
+#faq .faq-card-face.faq-card-front {
+  overflow: hidden;
+  border-radius: 30px 46px 30px 30px;
+  border-color: #fffffff2;
+  box-shadow: inset 0 2px 1px #fff, inset 0 -1px 1px #91bdf559, 0 12px 25px #276ef11c;
+}
+#faq .card-front-frosted { background: linear-gradient(142deg,#f8fbffe6,#e8f2ffc9 62%,#c8dfffb3); }
+#faq .faq-card-front::after {
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 440 250' preserveAspectRatio='none' fill='none'%3E%3Cpath d='M3 218C80 273 160 269 263 183S368 101 437 103M312 0C345 7 330 68 368 79S421 80 439 103' stroke='white' stroke-width='1.8' stroke-opacity='.9'/%3E%3Cpath d='M102 250C222 198 309 112 439 87' stroke='%2391BDF5' stroke-width='44' stroke-opacity='.12'/%3E%3C/svg%3E") center / 100% 100%;
+  opacity: .85;
+  z-index: 0;
+}
+#faq .faq-card-top-row, #faq .faq-card-question { position: relative; z-index: 1; }
+#faq .faq-card-action-btn { background: linear-gradient(140deg,#fff,#e8f2ff); color: #276ef1; border: 1px solid #fffffff2; box-shadow: 0 5px 12px #276ef133, inset 0 2px 1px #fff; }
+#faq .card-front-frosted .faq-card-num { color: #276ef1; }
+#inicio .hero-main-cta, #contato .hero-main-cta, #especialidades .spec-card-action-circle {
+  box-shadow: inset 0 1px 1px #ffffff80, 0 10px 24px #276ef129;
+}
+@supports (backdrop-filter: url('#clinic-liquid-refraction')) {
+  @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+    #inicio .hero-card-pos:hover::before,
+    #especialidades .spec-card-pos:hover::before { backdrop-filter: url('#clinic-liquid-refraction') blur(12px); }
+  }
+}
+@media (max-width: 959px) {
+  #inicio .hm-mini-card.hero-glass-card { background: linear-gradient(140deg,#f8fbffdf,#e8f2ffb8,#c8dfff8a); border: 1px solid #fff; box-shadow: inset 0 2px 1px #fff, 0 7px 18px #276ef11a; }
+}
+/* A pale glass front with the existing blue folder body behind it. */
+#experiencia .exp-c3-folder-stage .folder-front .folder-face-outer {
+  background: linear-gradient(145deg,#fffffff5,#f8fbffed 58%,#e8f2ffeb);
+  border: 1px solid #ffffffed;
+  box-shadow: inset 0 2px 1px #fff, inset 0 -1px 1px #91bdf54d, 0 12px 26px #0b234b1f;
+}

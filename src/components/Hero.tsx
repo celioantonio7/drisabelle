@@ -1,3 +1,4 @@
+import SectionBackground from './SectionBackground'
 import { useEffect, useRef, useState } from 'react'
 import { ChevronDown, ArrowDown, Lock, Play } from 'lucide-react'
 import { ToothIcon, FaceIcon, ShieldIcon, DiamondIcon } from './Icons'
@@ -48,6 +49,7 @@ export default function Hero({ onOpenVideo }: HeroProps) {
       className={`hero-stage-wrapper ${inView ? 'is-section-inview' : ''}`}
       aria-label="Apresentação"
     >
+      <SectionBackground variant="static" />
       {/* Full-bleed Luxury Clinic Background Layer */}
       <div className="hero-full-bg-layer" aria-hidden="true">
         <img
