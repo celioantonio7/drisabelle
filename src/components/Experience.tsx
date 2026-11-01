@@ -185,6 +185,7 @@ export default function Experience({ onOpenVideo }: ExperienceProps) {
 
         <div className="exp-card-pos exp-c3-pos exp-c3-folder-stage">
           <Folder
+            frontLabel="Transformações"
             mode="flap"
             variant="solid"
             layout="spread"
@@ -324,8 +325,9 @@ export default function Experience({ onOpenVideo }: ExperienceProps) {
         <div className="em-navy-card">
           <div className="em-navy-folder-wrap">
             <Folder
+              frontLabel="Transformações"
               mode="flap"
-              variant="glass"
+              variant="solid"
               layout="spread"
               color="#3d8bff"
               paperColor="#ffffff"

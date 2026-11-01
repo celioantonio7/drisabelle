@@ -50,8 +50,29 @@ export default function SerpentineTextScroll() {
     const mm = gsap.matchMedia()
     mm.add('(max-width: 767px)', () => {
       const svg = section.querySelector('svg')
-      svg?.setAttribute('viewBox', '0 0 900 440')
-      return () => svg?.setAttribute('viewBox', '0 0 2400 440')
+      if (!svg) return
+      const fitMobile = () => {
+        // Keep equal X/Y scale: the old 900 x 440 box squeezed mobile letters.
+        const height = 900 * section.clientHeight / Math.max(1, section.clientWidth)
+        const center = height / 2 - 34
+        svg.setAttribute('viewBox', `0 0 900 ${height}`)
+        svg.querySelectorAll<SVGPathElement>('[data-wave]').forEach(node => {
+          const role = node.dataset.wave
+          const y = role === 'top' ? center - 60 : role === 'bottom' ? center + 60 : center
+          node.setAttribute('d', generateWavePath(0, y, role === 'top' || role === 'bottom' ? 60 : 80))
+        })
+      }
+      fitMobile()
+      const observer = new ResizeObserver(fitMobile)
+      observer.observe(section)
+      return () => {
+        observer.disconnect()
+        svg.setAttribute('viewBox', '0 0 2400 440')
+        svg.querySelectorAll<SVGPathElement>('[data-wave]').forEach(node => {
+          const role = node.dataset.wave
+          node.setAttribute('d', generateWavePath(0, role === 'top' ? 160 : role === 'bottom' ? 280 : 220, role === 'top' || role === 'bottom' ? 120 : 140))
+        })
+      }
     })
     let disposed = false
     let refreshTimer = 0
@@ -160,14 +181,18 @@ export default function SerpentineTextScroll() {
             </linearGradient>
 
             <path
+              data-wave="main"
               id={mainPathId}
               d={generateWavePath(0, 220, 140)}
               fill="none"
             />
           </defs>
 
+          <path data-wave="main" className="serpentine-ribbon" d={generateWavePath(0, 220, 140)} transform="translate(0 34)" />
+
           {/* Upper dashed hairline spline matching 01_serpentine_line.webp */}
           <path
+            data-wave="top"
             ref={topSplineRef}
             d={generateWavePath(0, 160, 120)}
             fill="none"
@@ -179,6 +204,7 @@ export default function SerpentineTextScroll() {
 
           {/* Lower atmospheric guide spline */}
           <path
+            data-wave="bottom"
             ref={botSplineRef}
             d={generateWavePath(0, 280, 120)}
             fill="none"
@@ -189,6 +215,7 @@ export default function SerpentineTextScroll() {
 
           {/* Existing primary curve, drawn from left to right. */}
           <path
+            data-wave="main"
             ref={mainPathRef}
             d={generateWavePath(0, 220, 140)}
             fill="none"

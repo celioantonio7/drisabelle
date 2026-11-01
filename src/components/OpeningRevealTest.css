@@ -1,0 +1,2 @@
+.opening-reveal-test { position: fixed; inset: 0; width: 100%; height: 100dvh; z-index: 99999998; pointer-events: none; }
+@media (prefers-reduced-motion: reduce) { .opening-reveal-test { display: none; } }

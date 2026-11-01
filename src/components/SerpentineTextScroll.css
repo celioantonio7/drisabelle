@@ -75,6 +75,9 @@
 }
 
 @media (max-width: 767px) {
-  .serpentine-text-content { font-size: 64px; }
-  .serpentine-text-content tspan { font-size: inherit; }
+  .serpentine-text-content { font-size: 36px; }
+  .st-sans-bold { font-size: 28px; letter-spacing: .1em; }
 }
+
+/* A quiet ice-blue ribbon separates the moving words from photos beneath. */
+.serpentine-ribbon { fill: none; stroke: #e8f2ff; stroke-opacity: .88; stroke-width: 84; stroke-linecap: round; }

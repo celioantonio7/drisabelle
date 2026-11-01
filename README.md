@@ -60,6 +60,8 @@ Mantenha telefone, endereço e identidade consistentes em `config/site.json`, `s
 
 O elemento deve estar dentro de uma seção com `position: relative`. Um único renderizador WebGL é compartilhado e carregado sob demanda em dispositivos elegíveis. O ColorBends das seções e o Aurora do preload também funcionam no mobile, com resolução reduzida e sem interação de mouse. Em movimento reduzido, economia de dados, ausência de WebGL ou desempenho insuficiente, o fundo permanece estático. O canvas pausa fora da seção ativa e com a aba oculta.
 
+Para comparar aberturas SVG após a assinatura, use `?abertura=curva`, `?abertura=arco` ou `?abertura=paineis`. Sem esse parâmetro, a abertura padrão permanece. Os testes aguardam fontes e imagens iniciais, com limite de espera, e respeitam movimento reduzido.
+
 `src/LiquidGlass.css` define o acabamento dos cards. A refração SVG fica na camada decorativa de elementos selecionados durante hover; os textos mantêm uma camada separada. O fallback usa gradientes, bordas e glassmorphism CSS.
 
 A velocidade do loop parado da serpentina é definida por `IDLE_SPEED` em `SerpentineTextScroll.tsx`, independentemente da animação ligada ao scroll.

@@ -3,7 +3,7 @@
 #inicio .hero-card-pos.hero-glass-card,
 #especialidades .spec-card-pos {
   isolation: isolate;
-  background: linear-gradient(135deg, #f8fbffc9, #e8f2ff9c 55%, #c8dfff9c);
+  background: linear-gradient(135deg, #f8fbff80, #e8f2ff4d 55%, #c8dfff66);
   border: 1px solid #fffffff2;
   border-radius: 30px;
   box-shadow: inset 0 2px 1px #fff, inset 0 -2px 2px #91bdf55c, 0 12px 30px #276ef11c;
@@ -40,7 +40,7 @@
   border-color: #fffffff2;
   box-shadow: inset 0 2px 1px #fff, inset 0 -1px 1px #91bdf559, 0 12px 25px #276ef11c;
 }
-#faq .card-front-frosted { background: linear-gradient(142deg,#f8fbffe6,#e8f2ffc9 62%,#c8dfffb3); }
+#faq .card-front-frosted { background: linear-gradient(142deg,#f8fbffa6,#e8f2ff73 62%,#c8dfff66); }
 #faq .faq-card-front::after {
   background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 440 250' preserveAspectRatio='none' fill='none'%3E%3Cpath d='M3 218C80 273 160 269 263 183S368 101 437 103M312 0C345 7 330 68 368 79S421 80 439 103' stroke='white' stroke-width='1.8' stroke-opacity='.9'/%3E%3Cpath d='M102 250C222 198 309 112 439 87' stroke='%2391BDF5' stroke-width='44' stroke-opacity='.12'/%3E%3C/svg%3E") center / 100% 100%;
   opacity: .85;
@@ -59,11 +59,13 @@
   }
 }
 @media (max-width: 959px) {
-  #inicio .hm-mini-card.hero-glass-card { background: linear-gradient(140deg,#f8fbffdf,#e8f2ffb8,#c8dfff8a); border: 1px solid #fff; box-shadow: inset 0 2px 1px #fff, 0 7px 18px #276ef11a; }
+  #inicio .hm-mini-card.hero-glass-card { background: linear-gradient(140deg,#f8fbff99,#e8f2ff66,#c8dfff4d); border: 1px solid #fff; box-shadow: inset 0 2px 1px #fff, 0 7px 18px #276ef11a; }
 }
 /* A pale glass front with the existing blue folder body behind it. */
-#experiencia .exp-c3-folder-stage .folder-front .folder-face-outer {
-  background: linear-gradient(145deg,#fffffff5,#f8fbffed 58%,#e8f2ffeb);
+#experiencia :is(.exp-c3-folder-stage, .em-navy-folder-wrap) .folder-front .folder-face-outer {
+  background: linear-gradient(145deg,#ffffff70,#f8fbff29 58%,#e8f2ff4d);
+  backdrop-filter: blur(5px) saturate(125%);
+  -webkit-backdrop-filter: blur(5px) saturate(125%);
   border: 1px solid #ffffffed;
   box-shadow: inset 0 2px 1px #fff, inset 0 -1px 1px #91bdf54d, 0 12px 26px #0b234b1f;
 }
@@ -79,7 +81,7 @@
 #contato .footer-pill-bar,
 #contato .footer-location-caption,
 #contato .fm-drawer-card {
-  background: linear-gradient(135deg, #ffffff70, #e8f2ff38 58%, #ffffff59);
+  background: linear-gradient(135deg, #ffffff59, #e8f2ff26 58%, #ffffff40);
   border: 1px solid #ffffffeb;
   backdrop-filter: blur(10px) saturate(135%);
   -webkit-backdrop-filter: blur(10px) saturate(135%);
@@ -110,3 +112,8 @@
   #resultados .patient-reviews .depth-carousel__card,
   #contato .fm-drawer-card { background: #f0f6ff; }
 }
+
+#experiencia .folder-front-caption { position: absolute; left: 22px; right: 18px; bottom: 22px; color: #102340; font-size: 1.15rem; font-weight: 650; line-height: 1.2; text-shadow: 0 1px 1px #ffffffa6; pointer-events: none; }
+#experiencia .folder-front-caption small { display: block; margin-top: 5px; font-size: .72rem; font-weight: 500; }
+
+#experiencia :is(.exp-c3-folder-stage, .em-navy-folder-wrap) .folder-back-fill { background: linear-gradient(180deg,#276ef1b3,#0056d699); }

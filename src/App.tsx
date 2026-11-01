@@ -1,3 +1,4 @@
+import OpeningRevealTest, { type OpeningVariant } from './components/OpeningRevealTest'
 import LiquidGlassDefinitions from './components/LiquidGlassDefinitions'
 import './GlassSurfaces.css'
 import './LiquidGlass.css'
@@ -19,6 +20,11 @@ import BackToTopFloat from './components/BackToTopFloat'
 import SectionIndexStrip from './components/SectionIndexStrip'
 import NotFound404 from './components/NotFound404'
 import { useAwwwardsScrollSystem } from './animations/useAwwwardsScrollSystem'
+
+function openingTestVariant(): OpeningVariant | null {
+  const value = new URLSearchParams(window.location.search).get('abertura')
+  return value === 'curva' || value === 'arco' || value === 'paineis' ? value : null
+}
 
 function checkIsNotFound(): boolean {
   if (typeof window === 'undefined') return false
@@ -42,6 +48,7 @@ export default function App() {
   useDoctorPortraitMotion()
   const [videoOpen, setVideoOpen] = useState(false)
   const [isNotFound, setIsNotFound] = useState<boolean>(() => checkIsNotFound())
+  const [openingVariant] = useState(openingTestVariant)
   const [isReady, setIsReady] = useState(false)
   const handlePreloaderComplete = useCallback(() => setIsReady(true), [])
 
@@ -66,6 +73,7 @@ export default function App() {
     <div className={`site-wrapper ${isReady ? 'is-page-ready' : 'is-page-preloading'}`}>
       {/* Preloader de Assinatura Caligráfica — Página só abre após 100% concluído */}
       <SignaturePreloader onComplete={handlePreloaderComplete} />
+      {openingVariant && <OpeningRevealTest ready={isReady} variant={openingVariant} />}
 
       <LiquidGlassDefinitions />
 
