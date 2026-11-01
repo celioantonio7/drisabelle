@@ -538,3 +538,34 @@
   background: #004dc0;
   box-shadow: 0 14px 30px rgba(0, 86, 214, 0.38);
 }
+
+
+/* Keep scroll reveals on the outer card and 3D rotation on the inner surface. */
+.faq-flip-card { display: block; width: 100%; padding: 0; border: 0; background: transparent; text-align: left; font: inherit; color: inherit; height: 155px; }
+.faq-flip-card-inner { transition: none; }
+.faq-flip-card.is-flipped .faq-flip-card-inner { transform: none; }
+.faq-card-face { height: auto; min-height: 100%; bottom: auto; gap: 12px; }
+.faq-card-answer { animation: none; margin: 0; font-size: .875rem; }
+.faq-card-question { margin: 0; text-wrap: pretty; }
+.faq-card-front::after { content: ''; position: absolute; inset: 0; border-radius: inherit; background: url('/04_card_gloss.svg') center / cover; opacity: .25; pointer-events: none; }
+.card-front-frosted { background: linear-gradient(140deg, #ffffff9c, #dce7ff80); backdrop-filter: blur(16px); }
+.faq-bento-section { background: radial-gradient(ellipse at 75% 55%, #b5cdf5 0%, #eef2ff 50%, #f9fbff 100%); }
+@media (min-width: 1024px) {
+  .faq-bento-layout { grid-template-columns: minmax(210px, .85fr) minmax(340px, 1.4fr) minmax(240px, 1fr); gap: 20px; align-items: center; }
+  .faq-bento-section { padding: 64px 0; }
+  .faq-cards-grid { gap: 12px; }
+  .faq-col-right { gap: 12px; }
+  .faq-side-doctor-card { height: 240px; border-radius: 34px 34px 28px 34px; }
+}
+@media (max-width: 767px) {
+  .faq-cards-grid { grid-template-columns: 1fr; }
+  .faq-flip-card.is-wide-card { grid-column: auto; }
+  .faq-bg-orb:not(.orb-1) { display: none; }
+  .faq-bg-marble-arc { display: none; }
+  .faq-bento-section { padding: 48px 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .faq-flip-card:hover .faq-card-front { transform: none; }
+}
+.faq-card-face { height: 100%; min-height: 155px; }
+.faq-card-action-btn { flex-shrink: 0; }

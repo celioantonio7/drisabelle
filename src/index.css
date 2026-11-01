@@ -5955,27 +5955,7 @@ button:hover > .lf-attention8-wrap .lf-attention8-primary {
   }
 }
 
-.spec-capsule-backdrop {
-  display: none;
-}
-
 @media (min-width: 1024px) {
-  .spec-capsule-backdrop {
-    display: block;
-    position: absolute;
-    right: 68px;
-    top: 52px;
-    width: 245px;
-    height: 360px;
-    border-radius: 999px 999px 36px 36px;
-    background: linear-gradient(180deg, rgba(244, 228, 218, 0.55) 0%, rgba(235, 222, 214, 0.25) 100%);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 255, 255, 0.38);
-    z-index: 12;
-    pointer-events: none;
-  }
-
   .spec-floating-planning-card {
     display: flex;
     position: absolute;
@@ -6968,4 +6948,155 @@ button:hover > .lf-attention8-wrap .lf-attention8-primary {
   letter-spacing: 0.08em;
   padding: 3px 8px;
   border-radius: 999px;
+}
+
+/* Viewport-aware opening composition; retain the original portrait and cards. */
+@media (min-width: 1024px) {
+  #inicio.hero-stage-wrapper { min-height: 0; height: max(640px, 100svh); padding: 82px 0 0; }
+  .hero-master-canvas { height: 100%; }
+  .hero-col-left { top: 6%; }
+  .hero-col-center { top: 0; bottom: 0; height: 100%; }
+  .hero-doctor-image { height: 100%; max-height: none; }
+  .hero-headline { font-size: clamp(2.4rem, 3.3vw, 4rem); }
+  .hero-pill-badge { margin-bottom: 14px; }
+  .hero-lead-text { font-size: clamp(.85rem, 1.1vw, 1rem); }
+  .hero-clinic-teaser { margin-top: 18px; }
+  .exp-col-lead { z-index: 30; }
+  .exp-action-group { position: relative; z-index: 2; }
+  .exp-c4-pos { top: auto; bottom: 22px; }
+}
+@media (min-width: 1024px) and (max-height: 760px) {
+  .hero-headline { font-size: clamp(2rem, 3vw, 3rem); margin-bottom: 12px; }
+  .hero-trust-lock { margin-top: 10px; }
+  .hero-clinic-teaser { margin-top: 12px; }
+  .exp-headline { font-size: 2.7rem; }
+  .exp-lead-paragraphs { font-size: .86rem; }
+}
+#sobre { scroll-margin-top: 96px; }
+@media (max-width: 1023px) {
+  #inicio.hero-stage-wrapper { min-height: 0; padding-bottom: 0; }
+  .hero-mobile-only { padding-bottom: 18px; }
+  .hm-top-split { grid-template-columns: 1.15fr .85fr; margin-bottom: 12px; }
+  .hm-left-copy { display: contents; }
+  .hm-eyebrow { grid-column: 1; margin: 8px 0 6px; }
+  .hm-headline { grid-column: 1; margin-bottom: 4px; }
+  .hm-lead { grid-column: 1 / -1; margin-top: 8px; font-size: .82rem; }
+  .hm-right-arch-wrap { grid-column: 2; grid-row: 1 / 3; }
+  .hm-right-arch-photo { height: 260px; }
+  .hm-video-banner { height: 92px; margin-bottom: 10px; }
+  .hm-mini-card { padding: 10px 8px; gap: 4px; }
+  .hm-social-proof-pill { padding: 8px 12px; margin-bottom: 10px; }
+  .hm-scroll-cue { margin-top: 8px; }
+}
+
+/* Hero glass: transparent body, frosted backdrop and a restrained edge reflection. */
+#inicio .hero-glass-card {
+  background: linear-gradient(125deg, rgba(255,255,255,.64), rgba(223,237,255,.25) 52%, rgba(255,255,255,.42));
+  backdrop-filter: blur(22px) saturate(160%);
+  -webkit-backdrop-filter: blur(22px) saturate(160%);
+  border: 1px solid rgba(255,255,255,.88);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.95), inset 0 -1px 0 rgba(255,255,255,.28), 0 12px 32px rgba(27,71,132,.13), 0 2px 6px rgba(27,71,132,.06);
+}
+#inicio .hero-glass-card:hover {
+  background: linear-gradient(125deg, rgba(255,255,255,.76), rgba(215,234,255,.36) 52%, rgba(255,255,255,.52));
+  box-shadow: inset 0 1px 0 #fff, 0 18px 38px rgba(27,71,132,.18);
+}
+#inicio .hero-card-icon-pill {
+  background: rgba(235,245,255,.5);
+  border: 1px solid rgba(255,255,255,.8);
+  box-shadow: inset 0 1px 1px #fff, 0 4px 12px rgba(0,86,214,.06);
+}
+
+/* Keep the exploration hint clear of the serpentine lettering. */
+.hero-bottom-exploration { bottom: 44px; }
+.hero-portal-expanding-disk { display: none; }
+.about-stack-scroll-wrapper { isolation: isolate; }
+.about-stacked-card { cursor: grab; }
+.about-stacked-card:active { cursor: grabbing; }
+.about-stacked-card:focus-visible { outline: 3px solid #0056d6; outline-offset: 4px; }
+@media (max-width: 1023px) {
+  .hm-scroll-cue { margin-bottom: 40px; }
+}
+.about-stack-scroll-wrapper { margin-top: 38px; }
+@media (max-width: 768px) {
+  .about-stack-scroll-wrapper { margin-top: 28px; }
+}
+.footer-signature-rule { width: 72px; height: 1px; border: 0; background: #0056d6; margin: 22px auto; opacity: .45; }
+#inicio .hero-full-bg-img { object-position: 74% center; opacity: 1; }
+#inicio .hero-full-bg-overlay { background: linear-gradient(90deg, rgba(245,249,255,.94) 0%, rgba(245,249,255,.78) 32%, rgba(235,244,255,.22) 65%, rgba(225,238,255,.12) 100%); }
+#inicio .hero-clinic-backdrop-blur { opacity: .65; filter: none; }
+#inicio .hero-clinic-bg-glow { background: linear-gradient(90deg, #edf5ff88, #ffffff22); }
+#inicio .hero-card-round-arrow, .spec-plan-arrow { min-width: 44px; min-height: 44px; flex-shrink: 0; position: relative; z-index: 2; }
+.spec-floating-preenchimento-card { overflow: visible; }
+.spec-floating-preenchimento-card .spec-plan-arrow { margin-top: 2px; margin-bottom: 0; }
+@media (min-width: 1024px) {
+  .spec-floating-preenchimento-card { top: 76px; right: clamp(18px, 3vw, 54px); }
+}
+@media (max-width: 1023px) {
+  .spec-floating-preenchimento-card { position: relative; inset: auto; width: min(100%, 310px) !important; margin: 18px auto 28px; }
+}
+@media (min-width: 1024px) {
+  .spec-floating-preenchimento-card { top: 28px; }
+  .spec-floating-preenchimento-card .spec-plan-thumb-box { height: 104px; }
+}
+#inicio .hero-explore-btn, #inicio .hero-explore-round, #inicio .hm-scroll-circle {
+  background: none; border: 0; box-shadow: none;
+  backdrop-filter: none; -webkit-backdrop-filter: none;
+  padding: 0; border-radius: 0;
+}
+#inicio .hero-explore-round svg, #inicio .hm-scroll-circle svg { width: 22px; height: 22px; }
+/* The complete About composition stays still while its cards stack. */
+.site-wrapper, body { overflow-x: clip; }
+#sobre.about-section { overflow: clip; padding: 28px 0; }
+#sobre .about-stack-scroll-wrapper { height: var(--about-deck-height, 190px); margin: 26px 0 12px; }
+#sobre .about-stack-scroll-deck { position: relative; top: auto; }
+#sobre .about-title { font-size: clamp(2rem, 3vw, 2.6rem); margin-bottom: 8px; }
+#sobre .section-eyebrow { margin-bottom: 8px; }
+#sobre .about-mandic-sub { margin-bottom: 8px; font-size: .85rem; line-height: 1.4; }
+#sobre .about-highlight-sub { margin-bottom: 10px; font-size: 1.15rem; line-height: 1.3; }
+#sobre .about-text p { margin-bottom: 10px; font-size: .86rem; line-height: 1.45; }
+#sobre .about-desktop-extra-p { display: block; }
+#sobre .about-photo-wrap { height: clamp(300px, 62svh, 490px); }
+#sobre .about-cta-wrap .hero-main-cta { padding-top: 10px; padding-bottom: 10px; }
+@media (max-width: 959px) {
+  #sobre.about-section { padding: 20px 0; }
+  #sobre .about-mobile-header { display: none; }
+  #sobre .about-desktop-header { display: block; min-height: 110px; padding-right: 106px; }
+  #sobre .about-grid { display: block; position: relative; }
+  #sobre .about-media-col { position: absolute; top: 0; right: 0; width: 92px; z-index: 2; }
+  #sobre .about-photo-card { padding: 4px; border-radius: 24px 8px 24px 8px; }
+  #sobre .about-photo-wrap { height: 108px; border-radius: 20px 6px 20px 6px; }
+  #sobre .about-title { font-size: 1.9rem; line-height: 1.08; }
+  #sobre .about-highlight-sub { font-size: 1.05rem; }
+  #sobre .about-text p { font-size: .82rem; line-height: 1.4; }
+  #sobre .about-stack-scroll-wrapper { margin-top: 22px; }
+}
+@media (max-width: 959px) {
+  #sobre .about-desktop-header { min-height: 122px; }
+}
+
+/* A single frosted surface for the harmonization card. */
+#harmonizacao.spec-floating-preenchimento-card {
+  background: linear-gradient(135deg, rgba(255,255,255,.55), rgba(255,244,237,.22) 55%, rgba(255,255,255,.36));
+  backdrop-filter: blur(22px) saturate(140%);
+  -webkit-backdrop-filter: blur(22px) saturate(140%);
+  border: 1px solid rgba(255,255,255,.85);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.95), inset 0 -1px 0 rgba(255,255,255,.3), 0 18px 38px rgba(35,39,55,.13);
+}
+#harmonizacao.spec-floating-preenchimento-card:hover {
+  background: linear-gradient(135deg, rgba(255,255,255,.66), rgba(255,244,237,.3) 55%, rgba(255,255,255,.44));
+}
+#harmonizacao .spec-plan-text { color: #334155; }
+.footer-expandable-drawer[hidden] { display: none; }
+.rm-ba-viewport { touch-action: pan-y; cursor: ew-resize; }
+.rm-ba-viewport:focus-visible { outline: 3px solid #0056d6; outline-offset: 4px; }
+.rm-ba-viewport { user-select: none; -webkit-user-select: none; }
+.rm-ba-viewport img, .rm-ba-before-clip, .rm-ba-divider, .rm-ba-pill { pointer-events: none; -webkit-user-drag: none; }
+.rm-ba-card.hero-glass-card:hover { transform: none; }
+/* One GSAP pin at the boundary; native sticky holds the complete About stage. */
+.about-sticky-track { position: relative; height: calc(var(--about-stage-height, 640px) + 60svh); }
+.about-sticky-track > #sobre { position: sticky; top: var(--about-sticky-top, 80px); }
+@media (prefers-reduced-motion: reduce) {
+  .about-sticky-track { height: auto; }
+  .about-sticky-track > #sobre { position: relative; top: auto; }
 }

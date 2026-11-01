@@ -4,7 +4,7 @@ import {
   useMagneticButton,
   useCardTilt,
 } from '../animations/hooks'
-import { gsap, useGSAP } from '../animations/gsap'
+import { useEditorialReveal } from '../animations/useEditorialReveal'
 import FluidRevealCanvas from './FluidRevealCanvas'
 import AboutStackedCards from './AboutStackedCards'
 import { AttentionArrow } from './LottieflowIcons'
@@ -16,37 +16,7 @@ export default function About() {
   useMagneticButton(rootRef)
   useCardTilt(rootRef)
 
-  // Ao rolar a página, a foto dela sobe de baixo suavemente e para no ponto certo
-  useGSAP(
-    () => {
-      if (!rootRef.current) return
-      const photoCard = rootRef.current.querySelector('.about-photo-card')
-      if (!photoCard) return
-
-      const mm = gsap.matchMedia()
-      mm.add('(prefers-reduced-motion: no-preference)', () => {
-        gsap.fromTo(
-          photoCard,
-          { y: 110, opacity: 0.75 },
-          {
-            y: 0,
-            opacity: 1,
-            ease: 'power2.out',
-            scrollTrigger: {
-              trigger: rootRef.current,
-              start: 'top 85%',
-              end: 'top 30%',
-              scrub: 0.65,
-              invalidateOnRefresh: true,
-            },
-          },
-        )
-      })
-
-      return () => mm.revert()
-    },
-    { scope: rootRef },
-  )
+  useEditorialReveal(rootRef, 'about')
 
   return (
     <section ref={rootRef} id="sobre" className="about-section" aria-label="Sobre a Dra. Isabella Ferro">

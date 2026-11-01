@@ -1,4 +1,9 @@
-import { useState, useRef, useEffect } from 'react'
+import ResultsAside from './ResultsAside'
+import { useMotion } from '../animations/useMotion'
+import { gsap } from '../animations/gsap'
+import './ResultsAtmosphere.css'
+import PatientReviews from './PatientReviews'
+import { useState, useRef, useEffect, useMemo, useCallback } from 'react'
 import { createPortal } from 'react-dom'
 import { ArrowRight, X } from 'lucide-react'
 import { WhatsAppIcon, DiamondIcon } from './Icons'
@@ -105,18 +110,7 @@ const CASES_DATA: CaseItem[] = [
     desc: 'Realce dos pontos de sustentação da face para um semblante mais leve, descansado e proporcional.',
     category: 'Full Face',
   },
-  {
-    id: 7,
-    antesImg: assetUrl('/img/cases/case2_antes.jpg'),
-    depoisImg: assetUrl('/img/exemploresina_clean.png'),
-    pairImg: assetUrl('/img/exemploresina_clean.png'),
-    tag: 'Lentes em Resina',
-    title: 'Facetas em Resina Composta',
-    quote:
-      'Escultura direta com anatomia natural, textura acetinada e alinhamento impecável do sorriso. 🤍',
-    desc: 'Transformação estética minimamente invasiva com estratificação policromática direta executada pela Dra. Isabella Ferro.',
-    category: 'Resina',
-  },
+
 ]
 
 /**
@@ -248,10 +242,67 @@ function HexFluidImage({
   return <canvas ref={canvasRef} className={className} aria-label={alt} />
 }
 
+function BeforeAfterComparison({ lockedRef }: { lockedRef: { current: boolean } }) {
+  const [sliderPos, setSliderPos] = useState(50)
+  const comparisonStartRef = useRef<{ x: number; y: number } | null>(null)
+  useEffect(() => {
+    const release = () => { lockedRef.current = false; comparisonStartRef.current = null }
+    window.addEventListener('pointerup', release)
+    window.addEventListener('pointercancel', release)
+    return () => {
+      release()
+      window.removeEventListener('pointerup', release)
+      window.removeEventListener('pointercancel', release)
+    }
+  }, [lockedRef])
+  return (
+            <div
+              className="rm-ba-viewport"
+              role="slider" tabIndex={0} aria-label="Comparar antes e depois" aria-valuemin={10} aria-valuemax={90} aria-valuenow={Math.round(sliderPos)}
+              onPointerDown={e => {
+                lockedRef.current = true
+                comparisonStartRef.current = { x: e.clientX, y: e.clientY }
+              }}
+              onPointerMove={e => {
+                const start = comparisonStartRef.current
+                if (!start || Math.abs(e.clientX - start.x) < Math.abs(e.clientY - start.y)) return
+                const r = e.currentTarget.getBoundingClientRect()
+                setSliderPos(Math.max(10, Math.min(90, ((e.clientX - r.left) / r.width) * 100)))
+              }}
+              onPointerUp={() => { lockedRef.current = false; comparisonStartRef.current = null }}
+              onPointerCancel={() => { lockedRef.current = false; comparisonStartRef.current = null }}
+              onKeyDown={e => {
+                if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+                  e.preventDefault()
+                  setSliderPos(value => Math.max(10, Math.min(90, value + (e.key === 'ArrowRight' ? 5 : -5))))
+                }
+              }}
+            >
+              <img draggable={false} src={assetUrl('/img/exemploresina_clean.png')} alt="Depois — Lentes em Resina" className="rm-ba-img-full" />
+              <div
+                className="rm-ba-before-clip"
+                style={{ clipPath: `inset(0 ${100 - sliderPos}% 0 0)` }}
+              >
+                <img
+                  src={assetUrl('/img/cases/case2_antes.jpg')}
+                  draggable={false}
+                  alt="Antes"
+                  className="rm-ba-img-full"
+                />
+              </div>
+              <span className="rm-ba-pill rm-ba-pill-left">Antes</span>
+              <span className="rm-ba-pill rm-ba-pill-right">Depois</span>
+              <div className="rm-ba-divider" style={{ left: `${sliderPos}%` }}>
+                <span className="rm-ba-handle">&lt; &gt;</span>
+              </div>
+            </div>
+  )
+}
+
 export default function Results() {
   const rootRef = useRef<HTMLElement>(null)
   const [selectedCase, setSelectedCase] = useState<CaseItem | null>(null)
-  const [sliderPos, setSliderPos] = useState(50)
+  const comparisonLockedRef = useRef(false)
   const [inView, setInView] = useState(false)
 
   useEffect(() => {
@@ -286,11 +337,18 @@ export default function Results() {
   }, [selectedCase])
 
   useMagneticButton(rootRef)
+  useMotion(rootRef, ({ motion }, root) => {
+    if (!motion) return
+    gsap.fromTo(root, { '--results-curve-shift': '-8px' }, {
+      '--results-curve-shift': '8px', ease: 'none',
+      scrollTrigger: { trigger: root, start: 'top bottom', end: 'bottom top', scrub: 1 },
+    })
+  })
 
   // Clean images (zero watermark) for the 3D Spiral Slider
-  const spiralImages = CASES_DATA.map((c) => c.depoisImg)
-  const leftHexagons = CASES_DATA.slice(0, 3)
-  const rightHexagons = CASES_DATA.slice(3, 6)
+  const spiralImages = useMemo(() => CASES_DATA.map((c) => c.depoisImg), [])
+  const selectSpiralCase = useCallback((idx: number) => setSelectedCase(CASES_DATA[idx % CASES_DATA.length]), [])
+
 
   return (
     <section
@@ -343,99 +401,40 @@ export default function Results() {
 
         {/* ================= 3D SPIRAL SLIDER & LATERAL HONEYCOMB ================= */}
         <div className="results-showcase-layout results-anim-up">
-          {/* Left Honeycomb Column (Colmeia Esquerda — Fotos 100% Limpas: Antes na frente -> Depois ao passar o mouse) */}
+          {/* Independent testimonial depth carousel; central spiral is preserved. */}
           <div className="colmeia-column colmeia-left">
-            <div className="colmeia-hex-stack">
-              {leftHexagons.map((item, idx) => (
-                <div
-                  key={item.id}
-                  onClick={() => setSelectedCase(item)}
-                  className={`colmeia-hex-wrapper ${idx === 1 ? 'is-offset-left' : ''}`}
-                  role="button"
-                  tabIndex={0}
-                  aria-label={item.title}
-                  onKeyDown={(e) => e.key === 'Enter' && setSelectedCase(item)}
-                >
-                  <div className="colmeia-hex-shape">
-                    <HexFluidImage
-                      topSrc={item.antesImg}
-                      bottomSrc={item.depoisImg}
-                      alt={item.title}
-                    />
-                  </div>
-                </div>
-              ))}
-            </div>
+            <PatientReviews />
+            <button type="button" className="results-comparison-summary" onClick={() => setSelectedCase(CASES_DATA[1])}>
+              <span className="results-summary-label">ANTES E DEPOIS</span>
+              <span className="results-summary-photos">
+                <span><img src={CASES_DATA[1].antesImg} alt="Antes das lentes em porcelana" /><small>Antes</small></span>
+                <span><img src={CASES_DATA[1].depoisImg} alt="Depois das lentes em porcelana" /><small>Depois</small></span>
+              </span>
+              <span className="results-summary-caption">Resultados naturais, harmônicos e duradouros.</span>
+            </button>
           </div>
 
           {/* Center 3D Spiral Slider — Floating freely without container box */}
           <div className="spiral-center-column spiral-floating-free">
             <WobbleSpiralCanvas
               images={spiralImages}
-              onSelect={(idx) => setSelectedCase(CASES_DATA[idx % CASES_DATA.length])}
+              onSelect={selectSpiralCase}
+              interactionLockedRef={comparisonLockedRef}
               pinnedTriggerSelector="#resultados"
             />
           </div>
 
-          {/* Right Honeycomb Column (Colmeia Direita — Fotos 100% Limpas: Antes na frente -> Depois ao passar o mouse) */}
           <div className="colmeia-column colmeia-right">
-            <div className="colmeia-hex-stack">
-              {rightHexagons.map((item, idx) => (
-                <div
-                  key={item.id}
-                  onClick={() => setSelectedCase(item)}
-                  className={`colmeia-hex-wrapper ${idx === 1 ? 'is-offset-right' : ''}`}
-                  role="button"
-                  tabIndex={0}
-                  aria-label={item.title}
-                  onKeyDown={(e) => e.key === 'Enter' && setSelectedCase(item)}
-                >
-                  <div className="colmeia-hex-shape">
-                    <HexFluidImage
-                      topSrc={item.antesImg}
-                      bottomSrc={item.depoisImg}
-                      alt={item.title}
-                    />
-                  </div>
-                </div>
-              ))}
-            </div>
+            <ResultsAside />
           </div>
         </div>
 
         {/* ================= MOBILE FEATURED CARDS (Exact match to 06_resultados_mobile.png, Clean Images) ================= */}
         <div className="rm-cards-stack">
+          <PatientReviews />
           {/* 1. Interactive Before / After Card (Lentes em Porcelana — Antes vs Depois reais da mesma imagem) */}
           <div className="rm-ba-card hero-glass-card">
-            <div
-              className="rm-ba-viewport"
-              onMouseMove={(e) => {
-                const r = e.currentTarget.getBoundingClientRect()
-                setSliderPos(Math.max(10, Math.min(90, ((e.clientX - r.left) / r.width) * 100)))
-              }}
-              onTouchMove={(e) => {
-                if (!e.touches[0]) return
-                const r = e.currentTarget.getBoundingClientRect()
-                setSliderPos(Math.max(10, Math.min(90, ((e.touches[0].clientX - r.left) / r.width) * 100)))
-              }}
-            >
-              <img src={assetUrl('/img/exemploresina_clean.png')} alt="Depois — Lentes em Resina" className="rm-ba-img-full" />
-              <div
-                className="rm-ba-before-clip"
-                style={{ clipPath: `inset(0 ${100 - sliderPos}% 0 0)` }}
-              >
-                <img
-                  src={assetUrl('/img/cases/case2_antes.jpg')}
-                  alt="Antes"
-                  className="rm-ba-img-full"
-                />
-              </div>
-              <span className="rm-ba-pill rm-ba-pill-left">Antes</span>
-              <span className="rm-ba-pill rm-ba-pill-right">Depois</span>
-              <div className="rm-ba-divider" style={{ left: `${sliderPos}%` }}>
-                <span className="rm-ba-handle">&lt; &gt;</span>
-              </div>
-            </div>
+            <BeforeAfterComparison lockedRef={comparisonLockedRef} />
 
             <div className="rm-ba-footer" onClick={() => setSelectedCase(CASES_DATA[0])}>
               <div>
@@ -449,6 +448,8 @@ export default function Results() {
               </span>
             </div>
           </div>
+
+          <ResultsAside />
 
           {/* 2. Harmonização do Sorriso & Facial (Split Left Text / Right Clean Photo) */}
           <div

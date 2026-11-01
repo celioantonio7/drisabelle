@@ -6,6 +6,7 @@ interface WobbleSpiralCanvasProps {
   images: string[]
   onSelect?: (index: number) => void
   className?: string
+  interactionLockedRef?: { current: boolean }
   pinnedTriggerSelector?: string
 }
 
@@ -64,6 +65,7 @@ export default function WobbleSpiralCanvas({
   onSelect,
   className = '',
   pinnedTriggerSelector,
+  interactionLockedRef,
 }: WobbleSpiralCanvasProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -160,18 +162,24 @@ export default function WobbleSpiralCanvas({
 
     // Connect to GSAP ScrollTrigger Pinned Section
     let st: ScrollTrigger | null = null
-    const triggerEl = pinnedTriggerSelector
+    const sectionTrigger = pinnedTriggerSelector
       ? (document.querySelector(pinnedTriggerSelector) as HTMLElement | null)
       : null
+    // On mobile, only the central carousel is pinned. The comparison and
+    // testimonials below it must remain reachable in normal document flow.
+    const triggerEl = sectionTrigger && window.innerWidth < 768
+      ? container.closest<HTMLElement>('.spiral-center-column') ?? container
+      : sectionTrigger
 
     if (triggerEl) {
       st = ScrollTrigger.create({
         trigger: triggerEl,
-        start: 'top top',
+        start: window.innerWidth < 768 ? 'top 90px' : 'top top',
         end: () => (window.innerWidth < 768 ? '+=950' : '+=1500'),
         pin: true,
         scrub: 0.75,
         onUpdate: (self) => {
+          if (interactionLockedRef?.current) return
           state.scrollRotation = self.progress * (cardCount / 2)
         },
       })
@@ -183,6 +191,7 @@ export default function WobbleSpiralCanvas({
     let didMove = false
 
     const onPointerDown = (e: MouseEvent | TouchEvent) => {
+      if (interactionLockedRef?.current) return
       isDragging = true
       didMove = false
       startY = 'touches' in e ? e.touches[0].clientY : e.clientY
@@ -190,7 +199,7 @@ export default function WobbleSpiralCanvas({
     }
 
     const onPointerMove = (e: MouseEvent | TouchEvent) => {
-      if (!isDragging) return
+      if (!isDragging || interactionLockedRef?.current) return
       const isTouch = 'touches' in e
       const currentY = isTouch ? e.touches[0].clientY : e.clientY
       const currentX = isTouch ? e.touches[0].clientX : e.clientX
@@ -279,7 +288,9 @@ export default function WobbleSpiralCanvas({
       animationId = requestAnimationFrame(animate)
       if (!isVisible) return
 
-      if (triggerEl) {
+      if (interactionLockedRef?.current) {
+        // Keep this frame stationary while a different control owns the gesture.
+      } else if (triggerEl) {
         const target = state.scrollRotation + state.dragOffset
         state.rotation += (target - state.rotation) * settings.smoothing
       } else {
@@ -344,7 +355,7 @@ export default function WobbleSpiralCanvas({
       }
       renderer.dispose()
     }
-  }, [images, onSelect, pinnedTriggerSelector])
+  }, [images, onSelect, pinnedTriggerSelector, interactionLockedRef])
 
   return (
     <div ref={containerRef} className={`spiral-3d-stage ${className}`}>

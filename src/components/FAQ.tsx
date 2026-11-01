@@ -1,9 +1,9 @@
-import { useRef, useState } from 'react'
+import { useRef, useState, useLayoutEffect } from 'react'
 import { Plus, RotateCcw, ArrowRight } from 'lucide-react'
 import { FAQ, WHATSAPP_URL } from '../data'
 import { useMotion } from '../animations/useMotion'
 import { useMagneticButton } from '../animations/hooks'
-import { gsap } from '../animations/gsap'
+import { gsap, ScrollTrigger } from '../animations/gsap'
 import { WhatsAppIcon } from './Icons'
 import { assetUrl } from '../utils/assets'
 import './FAQ.css'
@@ -19,6 +19,13 @@ export default function FAQSection() {
   useMotion(rootRef, ({ motion, desktop }, root) => {
     if (!motion) return
 
+    gsap.fromTo(root.querySelector('.faq-main-title'), { opacity: 0, y: 20, clipPath: 'inset(0 0 100% 0)' }, {
+      opacity: 1, y: 0, clipPath: 'inset(0 0 0% 0)', duration: .8,
+      scrollTrigger: { trigger: root, start: 'top 80%', once: true },
+    })
+    gsap.fromTo(root.querySelector('.faq-bg-spline-wrap'), { xPercent: -4 }, {
+      xPercent: 4, ease: 'none', scrollTrigger: { trigger: root, start: 'top bottom', end: 'bottom top', scrub: 1 },
+    })
     if (desktop) {
       const cards = root.querySelectorAll('.faq-flip-card, .faq-side-doctor-card, .faq-side-cta-card')
       if (cards.length > 0) {
@@ -43,19 +50,63 @@ export default function FAQSection() {
     }
   })
 
+  const animationLock = useRef(false)
+  useLayoutEffect(() => {
+    const root = rootRef.current
+    if (!root) return
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const context = gsap.context(() => {
+      const cards = root.querySelectorAll<HTMLElement>('.faq-flip-card')
+      const timeline = gsap.timeline({ onComplete: () => {
+        animationLock.current = false
+        setIsAnimating(false)
+        ScrollTrigger.refresh()
+      } })
+      cards.forEach((card, index) => {
+        const back = card.querySelector<HTMLElement>('.faq-card-back')!
+        const front = card.querySelector<HTMLElement>('.faq-card-front')!
+        const open = index === flippedIndex
+        const face = open ? back : front
+        face.style.height = 'auto'
+        const height = Math.max(155, face.scrollHeight)
+        face.style.height = ''
+        timeline.to(card, { height, duration: reduced ? 0 : 0.75, ease: 'power3.inOut' }, 0)
+        timeline.to(card.querySelector('.faq-flip-card-inner'), {
+          rotateY: open ? 180 : 0, duration: reduced ? 0 : 0.75, ease: 'power3.inOut',
+        }, 0)
+        if (open) timeline.fromTo(back.querySelector('p'), { opacity: 0 },
+          { opacity: 1, duration: reduced ? 0 : 0.25 }, reduced ? 0 : 0.4)
+      })
+    }, root)
+    return () => context.kill(false)
+  }, [flippedIndex])
+
+  useLayoutEffect(() => {
+    const grid = rootRef.current?.querySelector('.faq-cards-grid')
+    if (!grid) return
+    let lastWidth = grid.getBoundingClientRect().width
+    const observer = new ResizeObserver(() => {
+      const width = grid.getBoundingClientRect().width
+      if (Math.abs(width - lastWidth) < 1) return
+      lastWidth = width
+      grid.querySelectorAll<HTMLElement>('.faq-flip-card').forEach(card => {
+        const face = card.querySelector<HTMLElement>(card.getAttribute('aria-expanded') === 'true' ? '.faq-card-back' : '.faq-card-front')!
+        face.style.height = 'auto'
+        const height = Math.max(155, face.scrollHeight)
+        face.style.height = ''
+        gsap.set(card, { height })
+      })
+      ScrollTrigger.refresh()
+    })
+    observer.observe(grid)
+    return () => observer.disconnect()
+  }, [])
+
   const handleCardClick = (idx: number) => {
-    if (isAnimating) return
+    if (animationLock.current) return
+    animationLock.current = true
     setIsAnimating(true)
-
-    if (flippedIndex === idx) {
-      setFlippedIndex(null)
-    } else {
-      setFlippedIndex(idx)
-    }
-
-    setTimeout(() => {
-      setIsAnimating(false)
-    }, 750)
+    setFlippedIndex(current => current === idx ? null : idx)
   }
 
   return (
@@ -145,26 +196,22 @@ export default function FAQSection() {
                 const isWideCard = idx === 4
 
                 return (
-                  <div
+                  <button
+                    type="button"
                     key={idx}
                     className={`faq-flip-card ${isWideCard ? 'is-wide-card' : ''} ${
                       isFlipped ? 'is-flipped' : ''
                     }`}
                     onClick={() => handleCardClick(idx)}
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter' || e.key === ' ') {
-                        e.preventDefault()
-                        handleCardClick(idx)
-                      }
-                    }}
-                    role="button"
-                    tabIndex={0}
+                    aria-disabled={isAnimating}
+                    aria-controls={`faq-answer-${idx}`}
                     aria-expanded={isFlipped}
                     aria-label={`Pergunta ${numStr}: ${item.q}`}
                   >
                     <div className="faq-flip-card-inner">
                       {/* FRONT FACE (Question) */}
                       <div
+                        aria-hidden={isFlipped}
                         className={`faq-card-face faq-card-front ${
                           isBlueLiquidCard ? 'card-front-blue-liquid' : 'card-front-frosted'
                         }`}
@@ -175,11 +222,12 @@ export default function FAQSection() {
                             <Plus size={16} />
                           </span>
                         </div>
-                        <h3 className="faq-card-question">{item.q}</h3>
+                        <span className="faq-card-question">{item.q}</span>
                       </div>
 
                       {/* BACK FACE (Answer) */}
                       <div
+                        aria-hidden={!isFlipped}
                         className={`faq-card-face faq-card-back ${
                           isBlueLiquidCard ? 'card-back-blue-deep' : 'card-back-navy'
                         }`}
@@ -190,10 +238,10 @@ export default function FAQSection() {
                             <RotateCcw size={14} />
                           </span>
                         </div>
-                        <p className="faq-card-answer">{item.a}</p>
+                        <p id={`faq-answer-${idx}`} className="faq-card-answer" aria-hidden={!isFlipped}>{item.a}</p>
                       </div>
                     </div>
-                  </div>
+                  </button>
                 )
               })}
             </div>

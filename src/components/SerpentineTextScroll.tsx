@@ -1,4 +1,4 @@
-import { useRef, useId, useEffect } from 'react'
+import { useRef, useId } from 'react'
 import { gsap, useGSAP, ScrollTrigger } from '../animations/gsap'
 import './SerpentineTextScroll.css'
 
@@ -37,136 +37,86 @@ export default function SerpentineTextScroll() {
   const textPathRef = useRef<SVGTextPathElement>(null)
   const textGroupRef = useRef<SVGGElement>(null)
 
-  const offsetRef = useRef<number>(0)
-  const scrollBoostRef = useRef<number>(0)
-  const lastScrollYRef = useRef<number>(0)
-
   const uid = useId().replace(/:/g, '')
   const mainPathId = `serpentine-curve-${uid}`
   const gradLineId = `serp-line-grad-${uid}`
 
-  // Infinite continuous glide + scroll acceleration loop
-  useEffect(() => {
-    let rafId = 0
-    let lastTime = performance.now()
-
-    const loop = (currentTime: number) => {
-      const delta = Math.min(32, currentTime - lastTime)
-      lastTime = currentTime
-
-      // Base idle speed (continuous infinite crawl along curve)
-      const baseSpeed = 0.038 * (delta / 16.66)
-
-      // Decay scroll boost smoothly back to 0
-      scrollBoostRef.current *= 0.94
-
-      // Advance offset
-      offsetRef.current += baseSpeed + scrollBoostRef.current
-
-      // Wrap around percentage to prevent overflow
-      if (offsetRef.current > 1000) offsetRef.current %= 100
-      if (offsetRef.current < -1000) offsetRef.current %= 100
-
-      if (textPathRef.current) {
-        textPathRef.current.setAttribute('startOffset', `${offsetRef.current}%`)
+  useGSAP(() => {
+    const section = sectionRef.current
+    const path = mainPathRef.current
+    const composition = section?.parentElement?.parentElement
+    if (!section || !path || !composition) return
+    const mm = gsap.matchMedia()
+    mm.add('(max-width: 767px)', () => {
+      const svg = section.querySelector('svg')
+      svg?.setAttribute('viewBox', '0 0 900 440')
+      return () => svg?.setAttribute('viewBox', '0 0 2400 440')
+    })
+    mm.add('(prefers-reduced-motion: no-preference)', () => {
+      const length = path.getTotalLength()
+      const timeline = gsap.timeline({ scrollTrigger: {
+        id: 'hero-serpentine', trigger: composition,
+        start: () => `top+=${(section.parentElement?.offsetHeight ?? 0) - window.innerHeight * 0.7} top`, end: '+=80%', pin: true,
+        scrub: 1, anticipatePin: 1, invalidateOnRefresh: true,
+      } })
+      let phase = 0
+      let repeatWidth = 0
+      const measureText = () => {
+        const text = textPathRef.current?.parentElement as SVGTextElement | null
+        repeatWidth = text ? text.getComputedTextLength() / REPETITION_COUNT : 0
       }
-
-      rafId = requestAnimationFrame(loop)
-    }
-
-    rafId = requestAnimationFrame(loop)
-
-    const onScroll = () => {
-      const currentY = window.scrollY
-      const deltaY = currentY - lastScrollYRef.current
-      lastScrollYRef.current = currentY
-
-      // Add scroll velocity to the animation
-      scrollBoostRef.current += deltaY * 0.04
-      scrollBoostRef.current = Math.max(-2.5, Math.min(2.5, scrollBoostRef.current))
-    }
-
-    lastScrollYRef.current = window.scrollY
-    window.addEventListener('scroll', onScroll, { passive: true })
-
-    return () => {
-      cancelAnimationFrame(rafId)
-      window.removeEventListener('scroll', onScroll)
-    }
-  }, [])
-
-  useGSAP(
-    () => {
-      const section = sectionRef.current
-      const mainPath = mainPathRef.current
-      const topSpline = topSplineRef.current
-      const botSpline = botSplineRef.current
-      const textGroup = textGroupRef.current
-
-      if (!section || !mainPath) return
-
-      const mm = gsap.matchMedia()
-
-      mm.add('(prefers-reduced-motion: no-preference)', () => {
-        const physics = { bend: 0, skew: 0 }
-
-        const applyPhysics = () => {
-          const b = physics.bend
-          mainPath.setAttribute('d', generateWavePath(b, 220, 140))
-
-          if (topSpline) {
-            topSpline.setAttribute('d', generateWavePath(b * 0.7, 160, 120))
-          }
-          if (botSpline) {
-            botSpline.setAttribute('d', generateWavePath(b * 0.7, 280, 120))
-          }
-          if (textGroup) {
-            textGroup.setAttribute('transform', `skewX(${physics.skew})`)
-          }
+      measureText()
+      let alive = true
+      document.fonts.ready.then(() => { if (alive) measureText() })
+      const glide = () => {
+        const trigger = timeline.scrollTrigger
+        const textPath = textPathRef.current
+        if (!trigger || !textPath || document.hidden) return
+        if (window.scrollY < trigger.end || timeline.progress() < .999) {
+          phase = 0
+          return
         }
-
-        const setBend = gsap.quickTo(physics, 'bend', {
-          duration: 0.65,
-          ease: 'power3.out',
-          onUpdate: applyPhysics,
-        })
-
-        const setSkew = gsap.quickTo(physics, 'skew', {
-          duration: 0.55,
-          ease: 'power3.out',
-          onUpdate: applyPhysics,
-        })
-
-        ScrollTrigger.create({
-          trigger: section,
-          start: 'top bottom',
-          end: 'bottom top',
-          onUpdate: (self) => {
-            const v = self.getVelocity()
-            const clampedV = Math.max(-2200, Math.min(2200, v))
-            const targetBend = (clampedV / 2200) * 45
-            const targetSkew = -(clampedV / 2200) * 8
-
-            setBend(targetBend)
-            setSkew(targetSkew)
-          },
-          onLeave: () => {
-            setBend(0)
-            setSkew(0)
-          },
-          onLeaveBack: () => {
-            setBend(0)
-            setSkew(0)
-          },
-        })
-      })
-
-      return () => {
-        mm.revert()
+        const bounds = section.getBoundingClientRect()
+        if (bounds.bottom <= 0 || bounds.top >= window.innerHeight || repeatWidth <= 0) return
+        phase = (phase + Math.min(gsap.ticker.deltaRatio(60), 3) * 32 / 60) % repeatWidth
+        textPath.setAttribute('startOffset', `${-length * .12 - phase}`)
       }
-    },
-    { scope: sectionRef },
-  )
+      gsap.ticker.add(glide)
+      // The About pin adds space inside this composition. Keep the outer spacer
+      // large enough for that content instead of letting the next section cover it.
+      let refreshFrame = 0
+      const syncSpacer = () => {
+        const trigger = timeline.scrollTrigger
+        const spacer = composition.parentElement
+        if (!trigger || !spacer?.classList.contains('pin-spacer')) return
+        const height = Math.ceil(composition.offsetHeight + trigger.end - trigger.start)
+        if (spacer.style.minHeight === `${height}px`) return
+        spacer.style.minHeight = `${height}px`
+        cancelAnimationFrame(refreshFrame)
+        refreshFrame = requestAnimationFrame(() => ScrollTrigger.refresh())
+      }
+      const observer = new ResizeObserver(syncSpacer)
+      observer.observe(composition)
+      syncSpacer()
+      timeline.fromTo(path, { strokeDasharray: length, strokeDashoffset: length },
+        { strokeDashoffset: 0, duration: 1, ease: 'none' }, 0)
+      if (textPathRef.current) timeline.fromTo(textPathRef.current,
+        { attr: { startOffset: '0%' } },
+        { attr: { startOffset: '-12%' }, duration: 1, ease: 'none' }, 0)
+      return () => {
+        alive = false
+        gsap.ticker.remove(glide)
+        observer.disconnect()
+        cancelAnimationFrame(refreshFrame)
+        composition.parentElement?.style.removeProperty('min-height')
+      }
+    })
+    const refresh = () => ScrollTrigger.refresh()
+    document.fonts.ready.then(refresh)
+    const images = Array.from(composition.querySelectorAll('img'))
+    images.forEach(img => img.addEventListener('load', refresh))
+    return () => { mm.revert(); images.forEach(img => img.removeEventListener('load', refresh)) }
+  }, { scope: sectionRef })
 
   return (
     <section
@@ -180,7 +130,7 @@ export default function SerpentineTextScroll() {
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
           className="serpentine-svg-canvas"
-          preserveAspectRatio="xMidYMid meet"
+          preserveAspectRatio="none"
         >
           <defs>
             <linearGradient id={gradLineId} x1="0" y1="1" x2="1" y2="0">
@@ -191,7 +141,6 @@ export default function SerpentineTextScroll() {
 
             <path
               id={mainPathId}
-              ref={mainPathRef}
               d={generateWavePath(0, 220, 140)}
               fill="none"
             />
@@ -218,8 +167,9 @@ export default function SerpentineTextScroll() {
             strokeOpacity="0.25"
           />
 
-          {/* Main bold serpentine wave path */}
+          {/* Existing primary curve, drawn from left to right. */}
           <path
+            ref={mainPathRef}
             d={generateWavePath(0, 220, 140)}
             fill="none"
             stroke={`url(#${gradLineId})`}
@@ -230,7 +180,7 @@ export default function SerpentineTextScroll() {
 
           {/* Big, bold, impactful continuous textPath */}
           <g ref={textGroupRef} className="serpentine-text-group">
-            <text className="serpentine-text-content" dy="-14">
+            <text className="serpentine-text-content" dy="34">
               <textPath
                 ref={textPathRef}
                 href={`#${mainPathId}`}

@@ -239,11 +239,8 @@ export default function Specialties() {
               />
             </div>
 
-            {/* Translucent Vertical Capsule Arch Rising Behind the Glass Card */}
-            <div className="spec-capsule-backdrop" aria-hidden="true" />
-
             {/* Floating Preenchimento Labial / Harmonização Glass Card (Com preenchimento_clean.png) */}
-            <div className="spec-floating-planning-card spec-floating-preenchimento-card hero-glass-card" data-tilt>
+            <div id="harmonizacao" className="spec-floating-planning-card spec-floating-preenchimento-card hero-glass-card" data-tilt>
               <div className="spec-plan-thumb-box">
                 <img
                   src={assetUrl('/img/preenchimento_clean.png')}
@@ -277,7 +274,7 @@ export default function Specialties() {
         {/* ================= MIDDLE ROW: GEOMETRIC SCULPTED CARDS 01 & 02 ================= */}
         <div id="spec-cards" className="spec-cards-row">
           {/* CARD 01: LENTES EM RESINA */}
-          <div className="spec-card-pos spec-card-01-pos" data-spec-reveal data-tilt>
+          <div id="lentes-resina" className="spec-card-pos spec-card-01-pos" data-spec-reveal data-tilt>
             <div className="spec-card-inner">
               <div className="spec-card-text-side">
                 <span className="spec-card-index">01</span>
@@ -315,7 +312,7 @@ export default function Specialties() {
           </div>
 
           {/* CARD 02: LENTES EM PORCELANA */}
-          <div className="spec-card-pos spec-card-02-pos" data-spec-reveal data-tilt>
+          <div id="lentes-porcelana" className="spec-card-pos spec-card-02-pos" data-spec-reveal data-tilt>
             <div className="spec-card-inner spec-card-02-inner">
               <div className="spec-card-text-side">
                 <span className="spec-card-index">02</span>

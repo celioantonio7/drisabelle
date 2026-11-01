@@ -1,4 +1,6 @@
-import { useEffect, useState } from 'react'
+import './GlassSurfaces.css'
+import { useDoctorPortraitMotion } from './animations/useDoctorPortraitMotion'
+import { useCallback, useEffect, useState } from 'react'
 import SignaturePreloader from './components/SignaturePreloader'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
@@ -14,7 +16,6 @@ import WhatsAppFloat from './components/WhatsAppFloat'
 import BackToTopFloat from './components/BackToTopFloat'
 import SectionIndexStrip from './components/SectionIndexStrip'
 import NotFound404 from './components/NotFound404'
-import CinematicTransition from './components/CinematicTransition'
 import { useAwwwardsScrollSystem } from './animations/useAwwwardsScrollSystem'
 
 function checkIsNotFound(): boolean {
@@ -36,9 +37,11 @@ function checkIsNotFound(): boolean {
 }
 
 export default function App() {
+  useDoctorPortraitMotion()
   const [videoOpen, setVideoOpen] = useState(false)
   const [isNotFound, setIsNotFound] = useState<boolean>(() => checkIsNotFound())
   const [isReady, setIsReady] = useState(false)
+  const handlePreloaderComplete = useCallback(() => setIsReady(true), [])
 
   // Ativa o sistema premium de animações GSAP + ScrollTrigger após o preloader
   useAwwwardsScrollSystem(isReady)
@@ -60,7 +63,7 @@ export default function App() {
   return (
     <div className={`site-wrapper ${isReady ? 'is-page-ready' : 'is-page-preloading'}`}>
       {/* Preloader de Assinatura Caligráfica — Página só abre após 100% concluído */}
-      <SignaturePreloader onComplete={() => setIsReady(true)} />
+      <SignaturePreloader onComplete={handlePreloaderComplete} />
 
       {/* Barra de Navegação */}
       <Navbar />
@@ -70,22 +73,22 @@ export default function App() {
 
       {/* Conteúdo Principal — Ordem exata do menu e das referências 01..07 */}
       <main id="main-content">
-        {/* 01: Hero Section */}
-        <Hero onOpenVideo={() => setVideoOpen(true)} />
-
-        {/* Serpentine Text Scroll — Transição Artística e Dinâmica */}
-        <SerpentineTextScroll />
-
-        {/* 02: Sobre a Dra. Isabella Ferro */}
-        <About />
+        {/* Hero and About share a pin wrapper so the boundary never opens a blank gap. */}
+        <div className="hero-transition-composition">
+          <div className="hero-transition-opening">
+            <Hero onOpenVideo={() => setVideoOpen(true)} />
+            <SerpentineTextScroll />
+          </div>
+          <div className="about-sticky-track">
+            <About />
+          </div>
+        </div>
 
         {/* 03: Especialidades (Lentes em Resina, Porcelana e Harmonização) */}
         <Specialties />
 
-        {/* 04: Experiência além do procedimento (Com Transição Cinematográfica de Viewport) */}
-        <CinematicTransition>
-          <Experience onOpenVideo={() => setVideoOpen(true)} />
-        </CinematicTransition>
+        {/* 04: Experiência além do procedimento */}
+        <Experience onOpenVideo={() => setVideoOpen(true)} />
 
         {/* 05: Perguntas Frequentes (FAQ) */}
         <FAQSection />

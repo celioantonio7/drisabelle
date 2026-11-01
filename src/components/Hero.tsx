@@ -51,7 +51,7 @@ export default function Hero({ onOpenVideo }: HeroProps) {
       {/* Full-bleed Luxury Clinic Background Layer */}
       <div className="hero-full-bg-layer" aria-hidden="true">
         <img
-          src={assetUrl('/img/bg-clinica.jpg')}
+          src={assetUrl('/img/clinica.jpg')}
           alt=""
           className="hero-full-bg-img"
         />
@@ -276,10 +276,7 @@ export default function Hero({ onOpenVideo }: HeroProps) {
             <span className="hero-explore-round">
               <ChevronDown width={16} height={16} />
             </span>
-            <span className="hero-explore-text">
-              <span>SCROLL</span>
-              <span>PARA EXPLORAR</span>
-            </span>
+
           </div>
         </div>
       </div>
@@ -314,8 +311,8 @@ export default function Hero({ onOpenVideo }: HeroProps) {
           <div className="hm-right-arch-wrap">
             <div className="hm-right-arch-photo">
               <img
-                src={assetUrl('/img/skincare-sorriso.jpg')}
-                alt="Sorriso natural de alto padrão"
+                src={assetUrl('/img/dra_master_hero.png')}
+                alt="Dra. Isabella Ferro"
                 className="hm-arch-img"
               />
             </div>
@@ -439,11 +436,9 @@ export default function Hero({ onOpenVideo }: HeroProps) {
 
         {/* Bottom Scroll Cue — Non-clickable floating notice */}
         <div className="hm-scroll-cue hero-scroll-float-only" aria-hidden="true">
-          <span className="hm-scroll-line" />
           <span className="hm-scroll-circle">
             <ArrowDown width={14} height={14} />
           </span>
-          <span className="hm-scroll-label">SCROLL PARA EXPLORAR</span>
         </div>
       </div>
     </section>

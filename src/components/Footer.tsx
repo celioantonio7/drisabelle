@@ -1,3 +1,5 @@
+import './FooterCompact.css'
+import { useEditorialReveal } from '../animations/useEditorialReveal'
 import { useEffect, useRef, useState } from 'react'
 import { ArrowUp, ChevronDown, ChevronUp, ChevronRight, X } from 'lucide-react'
 import {
@@ -18,6 +20,7 @@ export default function Footer() {
   const footerRef = useRef<HTMLElement>(null)
 
   useMagneticButton(footerRef)
+  useEditorialReveal(footerRef, 'signature')
 
   useEffect(() => {
     if (expanded) {
@@ -39,13 +42,7 @@ export default function Footer() {
     e.preventDefault()
     setExpanded(false)
     document.body.style.overflow = ''
-    scrollToId(id)
-    const target = document.getElementById(id)
-    if (target) {
-      setTimeout(() => {
-        target.scrollIntoView({ behavior: 'smooth', block: id === 'contato' ? 'end' : 'start' })
-      }, 50)
-    }
+    requestAnimationFrame(() => scrollToId(id, { immediate: true }))
   }
 
   return (
@@ -90,11 +87,11 @@ export default function Footer() {
       <div className="section-container faq-container-layer">
         {/* ================= PRE-FOOTER CTA ("Seu sorriso é sua assinatura.") ================= */}
         <div className="footer-signature-cta" data-footer-reveal>
-          <span className="footer-cta-eyebrow">C O N T A T O</span>
           <h2 className="footer-cta-headline">
             <span>Seu sorriso é</span> <br />
             <span className="text-accent-blue">sua assinatura.</span>
           </h2>
+          <hr className="footer-signature-rule" />
           <p className="footer-cta-sub">
             Invista em você com quem entende de estética, precisão e elegância.
           </p>
@@ -108,6 +105,7 @@ export default function Footer() {
             <span>Agendar Avaliação Exclusiva</span>
             <AttentionArrow size={18} />
           </a>
+
         </div>
 
         {/* ================= COLLAPSIBLE PILL BAR AT THE BOTTOM (Desktop & Mobile) ================= */}
@@ -166,6 +164,8 @@ export default function Footer() {
       {/* ================= FULLSCREEN UPWARD FOOTER OVERLAY (Sem Rolagem, Abre Para Cima 100vh) ================= */}
       <div
         className={`footer-expandable-drawer ${expanded ? 'is-expanded' : ''}`}
+        hidden={!expanded}
+        inert={!expanded}
         aria-hidden={!expanded}
       >
         {/* Atmospheric Silk Waves & Diagonal Curves Inside Expanded Footer (Exact Match to Reference) */}
@@ -212,7 +212,7 @@ export default function Footer() {
               type="button"
               onClick={() => {
                 setExpanded(false)
-                window.setTimeout(() => window.scrollTo({ top: 0, behavior: 'smooth' }), 80)
+                requestAnimationFrame(() => scrollToId('inicio', { immediate: true }))
               }}
               className="footer-back-top-round-btn"
               aria-label="Voltar ao topo"
@@ -250,12 +250,12 @@ export default function Footer() {
               <h4 className="footer-col-h">ESPECIALIDADES</h4>
               <span className="footer-col-rule" aria-hidden="true" />
               <ul className="footer-col-list">
-                <li><a href="#especialidades" onClick={(e) => handleNav(e, 'especialidades')}>Lentes de Resina</a></li>
-                <li><a href="#especialidades" onClick={(e) => handleNav(e, 'especialidades')}>Lentes de Porcelana</a></li>
-                <li><a href="#especialidades" onClick={(e) => handleNav(e, 'especialidades')}>Harmonização do Sorriso</a></li>
+                <li><a href="#lentes-resina" onClick={(e) => handleNav(e, 'lentes-resina')}>Lentes de Resina</a></li>
+                <li><a href="#lentes-porcelana" onClick={(e) => handleNav(e, 'lentes-porcelana')}>Lentes de Porcelana</a></li>
+                <li><a href="#harmonizacao" onClick={(e) => handleNav(e, 'harmonizacao')}>Harmonização do Sorriso</a></li>
                 <li><a href="#especialidades" onClick={(e) => handleNav(e, 'especialidades')}>Clareamento Dental</a></li>
-                <li><a href="#especialidades" onClick={(e) => handleNav(e, 'especialidades')}>Facetas Dentárias</a></li>
-                <li><a href="#experiencia" onClick={(e) => handleNav(e, 'experiencia')}>Outros Tratamentos</a></li>
+                <li><a href="#spec-cards" onClick={(e) => handleNav(e, 'spec-cards')}>Facetas Dentárias</a></li>
+                <li><a href="#especialidades" onClick={(e) => handleNav(e, 'especialidades')}>Outros Tratamentos</a></li>
               </ul>
             </div>
 
@@ -332,19 +332,19 @@ export default function Footer() {
               <h4 className="fm-drawer-card-title">ESPECIALIDADES</h4>
               <ul className="fm-drawer-list">
                 <li>
-                  <a href="#especialidades" onClick={(e) => handleNav(e, 'especialidades')} className="fm-drawer-row">
+                  <a href="#lentes-resina" onClick={(e) => handleNav(e, 'lentes-resina')} className="fm-drawer-row">
                     <span>Lentes de Resina</span>
                     <ChevronRight size={15} className="fm-drawer-chevron" />
                   </a>
                 </li>
                 <li>
-                  <a href="#especialidades" onClick={(e) => handleNav(e, 'especialidades')} className="fm-drawer-row">
+                  <a href="#lentes-porcelana" onClick={(e) => handleNav(e, 'lentes-porcelana')} className="fm-drawer-row">
                     <span>Lentes de Porcelana</span>
                     <ChevronRight size={15} className="fm-drawer-chevron" />
                   </a>
                 </li>
                 <li>
-                  <a href="#especialidades" onClick={(e) => handleNav(e, 'especialidades')} className="fm-drawer-row">
+                  <a href="#harmonizacao" onClick={(e) => handleNav(e, 'harmonizacao')} className="fm-drawer-row">
                     <span>Harmonização do Sorriso</span>
                     <ChevronRight size={15} className="fm-drawer-chevron" />
                   </a>
@@ -356,13 +356,13 @@ export default function Footer() {
                   </a>
                 </li>
                 <li>
-                  <a href="#especialidades" onClick={(e) => handleNav(e, 'especialidades')} className="fm-drawer-row">
+                  <a href="#spec-cards" onClick={(e) => handleNav(e, 'spec-cards')} className="fm-drawer-row">
                     <span>Facetas Dentárias</span>
                     <ChevronRight size={15} className="fm-drawer-chevron" />
                   </a>
                 </li>
                 <li>
-                  <a href="#experiencia" onClick={(e) => handleNav(e, 'experiencia')} className="fm-drawer-row">
+                  <a href="#especialidades" onClick={(e) => handleNav(e, 'especialidades')} className="fm-drawer-row">
                     <span>Outros Tratamentos</span>
                     <ChevronRight size={15} className="fm-drawer-chevron" />
                   </a>
@@ -429,12 +429,6 @@ export default function Footer() {
               </div>
             </div>
 
-            {/* 5. BRANDING WATERMARK (Matching screenshot) */}
-            <div className="fm-drawer-bottom-brand" aria-hidden="true">
-              <span className="fm-drawer-eyebrow">&mdash; ODONTOLOGIA ESTÉTICA DE ALTO PADRÃO &mdash;</span>
-              <span className="fm-drawer-sub">SORRISOS QUE TRANSFORMAM</span>
-              <div className="fm-drawer-monumental-name">DRA. ISABELLA FERRO</div>
-            </div>
           </div>
 
           {/* Monumental Interactive TechText Brand Signature at Bottom + Soft Mirror Reflection */}

@@ -1,0 +1,23 @@
+/* Shared optical treatment, scoped to the requested surfaces. */
+#especialidades .spec-card-pos,
+#experiencia .hero-glass-card,
+#experiencia .em-stag-card,
+#faq .card-front-frosted,
+#faq .faq-side-cta-card,
+#resultados .rm-ba-card,
+#resultados .results-comparison-summary,
+#resultados .results-excellence-card,
+#resultados .results-evaluation-card,
+#resultados .patient-reviews .depth-carousel__card {
+  background: linear-gradient(135deg, #ffffffb3 0%, #e8f1ff70 60%, #ffffff8a 100%);
+  border: 1px solid #ffffffdd;
+  backdrop-filter: blur(18px) saturate(135%);
+  -webkit-backdrop-filter: blur(18px) saturate(135%);
+  box-shadow: inset 0 1px 0 #fffffff2, inset 0 -1px 0 #ffffff59, 0 14px 32px #244c8014;
+}
+#resultados .patient-reviews .depth-carousel__card[aria-hidden='true'] .patient-review { visibility: hidden; }
+#faq .card-front-blue-liquid { background: linear-gradient(140deg,#62b7ffb8,#0758d8c9); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); }
+#experiencia .em-navy-card { background: linear-gradient(135deg,#0b234bd9,#164e8c9c); border: 1px solid #ffffff55; backdrop-filter: blur(18px); }
+/* Baseline remains visible; GSAP applies reveal states only on viewport entry. */
+.footer-signature-rule { background: linear-gradient(90deg, #b68b43, #dbc18b); opacity: .8; }
+.footer-cta-headline > span { display: inline-block; }

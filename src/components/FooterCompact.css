@@ -1,0 +1,29 @@
+/* Keep the animated signature as the single brand name in the drawer. */
+@media (max-width: 959px) {
+  .footer-expandable-drawer { height: 100dvh; }
+  .footer-drawer-inner {
+    height: 100dvh;
+    padding: 12px 16px max(16px, env(safe-area-inset-bottom));
+    overflow-y: auto;
+  }
+  .footer-cols-mobile {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 10px;
+    padding: 6px 0 12px;
+    flex-shrink: 0;
+  }
+  .fm-drawer-card { padding: 12px; min-width: 0; }
+  .fm-drawer-card:nth-child(n + 3) { grid-column: 1 / -1; }
+  .fm-drawer-card-title { font-size: .66rem; letter-spacing: .1em; }
+  .fm-drawer-row { min-height: 44px; padding: 7px 0; font-size: .8rem; gap: 4px; }
+  .fm-drawer-contact-left { gap: 8px; }
+  .fm-drawer-contact-texts strong { font-size: .82rem; }
+  .fm-drawer-contact-texts small { font-size: .74rem; }
+  .footer-monumental-stage { margin-top: auto; }
+  .footer-monumental-tech-wrap { height: 64px; }
+}
+@media (max-width: 1023px) {
+  .hm-right-arch-photo { background: linear-gradient(150deg, #eaf4ff, #c8dbf0); }
+  .hm-arch-img { object-fit: cover; object-position: 50% 0%; }
+}

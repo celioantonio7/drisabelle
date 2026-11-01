@@ -98,7 +98,7 @@ export function useAwwwardsScrollSystem(isPageReady: boolean) {
           '.hero-title, .about-title, .spec-headline, .exp-headline, .results-headline, .faq-headline, .footer-cta-headline',
         )
 
-        headlines.forEach((el) => {
+        headlines.filter(el => !el.closest('#sobre, .footer-signature-cta')).forEach((el) => {
           gsap.fromTo(
             el,
             {
@@ -124,7 +124,7 @@ export function useAwwwardsScrollSystem(isPageReady: boolean) {
           '.section-eyebrow, .about-mobile-eyebrow, .about-mandic-sub, .about-highlight-sub, .footer-cta-eyebrow, .footer-cta-sub',
         )
 
-        subtitles.forEach((el) => {
+        subtitles.filter(el => !el.closest('#sobre, .footer-signature-cta')).forEach((el) => {
           gsap.fromTo(
             el,
             { opacity: 0, y: 18 },
@@ -146,7 +146,7 @@ export function useAwwwardsScrollSystem(isPageReady: boolean) {
         // 3. CINEMATIC IMAGE REVEAL (scale 1.08 -> 1, duration 1.2s, power2.out)
         // =========================================================================
         const photoWraps = gsap.utils.toArray<HTMLElement>(
-          '.hero-photo-wrap img, .about-photo-wrap, .exp-media-img, .rm-ba-viewport img',
+          '.hero-photo-wrap img, .exp-media-img, .rm-ba-viewport img',
         )
 
         photoWraps.forEach((img) => {
@@ -224,26 +224,6 @@ export function useAwwwardsScrollSystem(isPageReady: boolean) {
         // =========================================================================
         // 5. SECTION-SPECIFIC TRANSITIONS
         // =========================================================================
-        // Sobre: fade + slide transition
-        const sobreGrid = document.querySelector('.about-grid')
-        if (sobreGrid) {
-          gsap.fromTo(
-            sobreGrid,
-            { opacity: 0.6, y: 30 },
-            {
-              opacity: 1,
-              y: 0,
-              duration: 0.85,
-              ease: 'power2.out',
-              scrollTrigger: {
-                trigger: '#sobre',
-                start: 'top 80%',
-                once: true,
-              },
-            },
-          )
-        }
-
         // Especialidades: header badge pulse
         const specBadge = document.querySelector('.spec-floating-tech-badge')
         if (specBadge) {

@@ -1,20 +1,22 @@
-import { gsap } from '../animations/gsap'
+import { gsap, ScrollTrigger } from '../animations/gsap'
 
-const reduced = () =>
-  typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
-
-export function scrollToId(id: string) {
+export function scrollToId(id: string, options: { immediate?: boolean } = {}) {
   const target = document.getElementById(id)
   if (!target) return
-  const isFooter = id === 'contato'
-  if (reduced()) {
-    target.scrollIntoView({ behavior: 'smooth', block: isFooter ? 'end' : 'start' })
+  gsap.killTweensOf(window)
+  ScrollTrigger.refresh()
+  const navbar = document.querySelector('.nav-wrapper')
+  const offset = navbar ? navbar.getBoundingClientRect().height + 24 : 88
+  let y = id === 'inicio' ? 0 : target.getBoundingClientRect().top + window.scrollY - offset
+  // While an ancestor is pinned, its document position still has scroll distance to consume.
+  ScrollTrigger.getAll().forEach(trigger => {
+    if (id !== 'inicio' && trigger.isActive && trigger.pin?.contains(target)) y += trigger.end - window.scrollY
+  })
+  y = Math.max(0, Math.min(y, ScrollTrigger.maxScroll(window)))
+  if (options.immediate || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    window.scrollTo({ top: y, behavior: 'instant' })
+    ScrollTrigger.update()
     return
   }
-  gsap.to(window, {
-    duration: 1.1,
-    ease: 'power3.inOut',
-    scrollTo: isFooter ? { y: 'max' } : { y: target, offsetY: 70 },
-  })
+  gsap.to(window, { duration: 1.1, ease: 'power3.inOut', scrollTo: { y, autoKill: true } })
 }
-
