@@ -1,10 +1,12 @@
+import CardHoverLight from './CardHoverLight'
 import { CalendarDays, Gem, Heart, ShieldCheck } from 'lucide-react'
 import { ToothIcon } from './Icons'
 import { WHATSAPP_URL } from '../data'
 
 export default function ResultsAside() {
   return <div className="results-feature-rail">
-    <div className="results-excellence-card">
+    <div className="results-excellence-card has-card-light">
+        <CardHoverLight />
       <div className="results-excellence-mark">
         <ToothIcon width={25} height={25} />
         <span>RESULTADOS<br />COM EXCELÊNCIA</span>
@@ -15,7 +17,8 @@ export default function ResultsAside() {
         <li><Heart size={22} /><span>Confiança e bem-estar</span></li>
       </ul>
     </div>
-    <div className="results-evaluation-card">
+    <div className="results-evaluation-card has-card-light">
+        <CardHoverLight />
       <div><CalendarDays size={24} /><p>Pronto(a) para transformar o seu sorriso?</p></div>
       <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">Solicitar avaliação <span aria-hidden="true">→</span></a>
     </div>

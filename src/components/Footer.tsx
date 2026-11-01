@@ -49,7 +49,7 @@ export default function Footer() {
 
   return (
     <footer ref={footerRef} id="contato" className="footer-section" aria-label="Contato e Rodapé">
-      <SectionBackground variant="static" />
+      <SectionBackground variant="color-bends" />
       {/* Atmospheric Silk Blue Waves & Diagonal Hairline SVG Splines (Matching Footer Reference) */}
       <div className="footer-bg-atmosphere" aria-hidden="true">
         <svg viewBox="0 0 1448 680" fill="none" preserveAspectRatio="none" className="footer-bg-svg">

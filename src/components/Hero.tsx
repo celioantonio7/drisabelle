@@ -1,3 +1,4 @@
+import CardHoverLight from './CardHoverLight'
 import SectionBackground from './SectionBackground'
 import { useEffect, useRef, useState } from 'react'
 import { ChevronDown, ArrowDown, Lock, Play } from 'lucide-react'
@@ -214,7 +215,8 @@ export default function Hero({ onOpenVideo }: HeroProps) {
         </div>
 
         {/* FLOATING LIQUID GLASSMORPHISM CARDS */}
-        <div className="hero-card-pos hero-card-planejamento hero-glass-card" data-hero-card data-tilt>
+        <div className="hero-card-pos hero-card-planejamento hero-glass-card has-card-light" data-hero-card data-tilt>
+          <CardHoverLight />
           <div className="hero-card-icon-pill">
             <ToothIcon width={20} height={20} />
           </div>
@@ -227,7 +229,8 @@ export default function Hero({ onOpenVideo }: HeroProps) {
           </a>
         </div>
 
-        <div className="hero-card-pos hero-card-resultados hero-glass-card" data-hero-card data-tilt>
+        <div className="hero-card-pos hero-card-resultados hero-glass-card has-card-light" data-hero-card data-tilt>
+          <CardHoverLight />
           <div className="hero-card-icon-pill">
             <FaceIcon width={20} height={20} />
           </div>
@@ -251,7 +254,8 @@ export default function Hero({ onOpenVideo }: HeroProps) {
         </div>
 
         {/* Right Macro Veneer Card */}
-        <div className="hero-card-pos hero-card-smile-macro hero-glass-card" data-hero-card data-tilt>
+        <div className="hero-card-pos hero-card-smile-macro hero-glass-card has-card-light" data-hero-card data-tilt>
+          <CardHoverLight />
           <div className="hero-macro-top">
             <span className="hero-macro-tag">LENTES EM RESINA E PORCELANA</span>
             <a href="#especialidades" className="hero-macro-link" aria-label="Ver lentes" data-tilt-arrow>

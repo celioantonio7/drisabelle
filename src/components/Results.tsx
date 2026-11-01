@@ -358,7 +358,7 @@ export default function Results() {
       className={`results-section ${inView ? 'is-section-inview' : ''}`}
       aria-label="Resultados e Casos"
     >
-      <SectionBackground variant="mesh-gradient" />
+      <SectionBackground variant="color-bends" />
       <div className="section-container faq-container-layer">
         {/* ================= MOBILE TOP HERO SPLIT ================= */}
         <div className="rm-top-split results-anim-up">

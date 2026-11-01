@@ -52,3 +52,6 @@
 @media (prefers-reduced-motion: reduce) {
   .section-background *, .section-background canvas { animation: none !important; transform: none !important; }
 }
+
+/* 404 shader test: keep the blue light behind readable editorial content. */
+.section-background[data-variant='color-bends'] .section-background__shader { opacity: .24; }

@@ -1,10 +1,19 @@
+import { useEffect, useState } from 'react'
 import { ArrowUpRight, MapPin } from 'lucide-react'
 import { ADDRESS_TEXT, MAPS_EMBED_URL, MAPS_URL } from '../data'
 import './FooterLocationMap.css'
 
 export default function FooterLocationMap() {
+  const [showMap, setShowMap] = useState(() => typeof window !== 'undefined' && window.matchMedia('(min-width: 960px)').matches)
+  useEffect(() => {
+    const desktop = window.matchMedia('(min-width: 960px)')
+    const sync = () => setShowMap(desktop.matches)
+    sync()
+    desktop.addEventListener('change', sync)
+    return () => desktop.removeEventListener('change', sync)
+  }, [])
   return <figure className="footer-location" aria-label="Localização da clínica">
-    <div className="footer-location-shell">
+    {showMap && <div className="footer-location-shell">
       <div className="footer-location-viewport">
         <iframe
           src={`${MAPS_EMBED_URL}&hl=pt-BR`}
@@ -14,7 +23,7 @@ export default function FooterLocationMap() {
           allowFullScreen
         />
       </div>
-    </div>
+    </div>}
     <figcaption className="footer-location-caption">
       <MapPin size={22} aria-hidden="true" />
       <div>

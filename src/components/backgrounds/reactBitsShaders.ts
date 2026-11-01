@@ -3,7 +3,9 @@
 // Sources: https://github.com/DavidHDev/react-bits/tree/main/src/content/Backgrounds
 export const VERTEX = `#version 300 es
 in vec2 aPosition;
+out vec2 vUv;
 void main() {
+  vUv = aPosition * .5 + .5;
   gl_Position = vec4(aPosition, 0.0, 1.0);
 }`
 

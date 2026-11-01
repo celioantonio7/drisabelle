@@ -1,3 +1,4 @@
+import CardHoverLight from './CardHoverLight'
 import DepthCarousel from './DepthCarousel'
 import { assetUrl } from '../utils/assets'
 import './PatientReviews.css'
@@ -19,7 +20,8 @@ export default function PatientReviews() {
         duration={850} autoplay={false} showIndicators={false} className="patient-reviews-carousel"
         renderItem={index => {
           const review = REVIEWS[index]
-          return <article className="patient-review">
+          return <article className="patient-review has-card-light">
+            <CardHoverLight />
             <div className="patient-review-cover" aria-hidden="true">
               <img src={assetUrl('/img/clinica.webp')} alt="" loading="lazy" />
               <span className="patient-review-cover-label">CUIDADO EM CADA DETALHE</span>

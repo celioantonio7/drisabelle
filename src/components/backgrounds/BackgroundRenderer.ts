@@ -1,6 +1,7 @@
+import { COLOR_BENDS_FRAGMENT } from './colorBendsShader'
 import { AURORA, SILK, VERTEX } from './reactBitsShaders'
 
-type ShaderVariant = 'soft-aurora' | 'silk'
+type ShaderVariant = 'soft-aurora' | 'silk' | 'color-bends'
 type Program = { program: WebGLProgram; attribute: number; uniforms: Record<string, WebGLUniformLocation | null> }
 
 // One context shared by every SectionBackground, loaded only on eligible desktops.
@@ -39,7 +40,8 @@ export function createBackgroundRenderer(onSlowDevice: () => void) {
   }
   let aurora: Program
   let silk: Program
-  try { aurora = link(AURORA); silk = link(SILK) } catch (error) {
+  let bends: Program
+  try { aurora = link(AURORA); silk = link(SILK); bends = link('#version 300 es\nprecision highp float;\nout vec4 fragColor;\n' + COLOR_BENDS_FRAGMENT.replace('varying vec2 vUv;', 'in vec2 vUv;').replaceAll('gl_FragColor', 'fragColor')) } catch (error) {
     programs.forEach(p => gl.deleteProgram(p.program))
     shaders.forEach(s => gl.deleteShader(s))
     gl.getExtension('WEBGL_lose_context')?.loseContext()
@@ -58,6 +60,7 @@ export function createBackgroundRenderer(onSlowDevice: () => void) {
   let clock = 0
   let slowFrames = 0
   let dead = false
+  const bendsPalette = new Float32Array([0,86/255,214/255,61/255,139/255,1,122/255,167/255,1,56/255,189/255,248/255,0,0,0,0,0,0,0,0,0,0,0,0])
   const waves = new Float32Array(16)
   const palette = new Float32Array([.9, .035, 4.4, .82, .07, 4.45, .7, .12, 4.5, .82, .07, 4.45, .9, .035, 4.4])
   let px = 0
@@ -86,7 +89,7 @@ export function createBackgroundRenderer(onSlowDevice: () => void) {
     const ty = Number.parseFloat(host.style.getPropertyValue('--sb-y')) || 0
     px += (tx / 8 - px) * .045
     py += (ty / 8 - py) * .045
-    const p = variant === 'silk' ? silk : aurora
+    const p = variant === 'color-bends' ? bends : variant === 'silk' ? silk : aurora
     gl.useProgram(p.program)
     gl.bindVertexArray(vao)
     const location = p.attribute
@@ -95,7 +98,25 @@ export function createBackgroundRenderer(onSlowDevice: () => void) {
     gl.vertexAttribPointer(location, 2, gl.FLOAT, false, 0, 0)
     const u = p.uniforms
     gl.uniform1f(u.uTime, clock * .16)
-    if (variant === 'silk') {
+    if (variant === 'color-bends') {
+      gl.uniform1f(u.uTime, clock)
+      gl.uniform2f(u.uCanvas, canvas.width, canvas.height)
+      gl.uniform1f(u.uSpeed, .2)
+      gl.uniform2f(u.uRot, 0, 1)
+      gl.uniform1i(u.uColorCount, 4)
+      gl.uniform3fv(u.uColors, bendsPalette)
+      gl.uniform1i(u.uTransparent, 1)
+      gl.uniform1f(u.uScale, 1)
+      gl.uniform1f(u.uFrequency, 1)
+      gl.uniform1f(u.uWarpStrength, 1)
+      gl.uniform2f(u.uPointer, px, -py)
+      gl.uniform1f(u.uMouseInfluence, 1)
+      gl.uniform1f(u.uParallax, .5)
+      gl.uniform1f(u.uNoise, .15)
+      gl.uniform1i(u.uIterations, 1)
+      gl.uniform1f(u.uIntensity, 1.5)
+      gl.uniform1f(u.uBandWidth, 6)
+    } else if (variant === 'silk') {
       gl.uniform2f(u.uView, canvas.width, canvas.height)
       gl.uniform1f(u.uScale, 1.05)
       gl.uniform1f(u.uRotation, -.18)

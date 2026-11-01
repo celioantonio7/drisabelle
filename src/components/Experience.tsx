@@ -1,3 +1,4 @@
+import CardHoverLight from './CardHoverLight'
 import SectionBackground from './SectionBackground'
 import { useEffect, useRef, useState } from 'react'
 import { Play, User } from 'lucide-react'
@@ -147,7 +148,8 @@ export default function Experience({ onOpenVideo }: ExperienceProps) {
           </div>
         </div>
 
-        <div className="exp-card-pos exp-c1-pos hero-glass-card" data-exp-reveal data-tilt>
+        <div className="exp-card-pos exp-c1-pos hero-glass-card has-card-light" data-exp-reveal data-tilt>
+          <CardHoverLight />
           <div className="exp-icon-circle-pill">
             <ToothIcon width={20} height={20} />
           </div>
@@ -160,7 +162,8 @@ export default function Experience({ onOpenVideo }: ExperienceProps) {
           </a>
         </div>
 
-        <div className="exp-card-pos exp-c2-pos hero-glass-card" data-exp-reveal data-tilt>
+        <div className="exp-card-pos exp-c2-pos hero-glass-card has-card-light" data-exp-reveal data-tilt>
+          <CardHoverLight />
           <div className="exp-c2-content">
             <span className="exp-c2-tag">PLANEJAMENTO DETALHADO</span>
             <p className="exp-c2-desc">
@@ -202,7 +205,8 @@ export default function Experience({ onOpenVideo }: ExperienceProps) {
           />
         </div>
 
-        <div className="exp-card-pos exp-c4-pos hero-glass-card" data-exp-reveal data-tilt>
+        <div className="exp-card-pos exp-c4-pos hero-glass-card has-card-light" data-exp-reveal data-tilt>
+          <CardHoverLight />
           <div className="exp-c4-photo-box">
             <img
               src={assetUrl('/img/clinica.webp')}
@@ -228,7 +232,8 @@ export default function Experience({ onOpenVideo }: ExperienceProps) {
           </div>
         </div>
 
-        <div className="exp-card-pos exp-c5-pos hero-glass-card" data-exp-reveal data-tilt>
+        <div className="exp-card-pos exp-c5-pos hero-glass-card has-card-light" data-exp-reveal data-tilt>
+          <CardHoverLight />
           <div className="exp-c5-info">
             <div className="exp-icon-circle-pill" style={{ marginBottom: 8 }}>
               <User width={20} height={20} />

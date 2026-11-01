@@ -1,3 +1,4 @@
+import CardHoverLight from './CardHoverLight'
 import SectionBackground from './SectionBackground'
 import { useRef, useState, useLayoutEffect } from 'react'
 import { Plus, RotateCcw, ArrowRight } from 'lucide-react'
@@ -214,10 +215,11 @@ export default function FAQSection() {
                       {/* FRONT FACE (Question) */}
                       <div
                         aria-hidden={isFlipped}
-                        className={`faq-card-face faq-card-front ${
+                        className={`faq-card-face faq-card-front has-card-light ${
                           isBlueLiquidCard ? 'card-front-blue-liquid' : 'card-front-frosted'
                         }`}
                       >
+                        <CardHoverLight />
                         <div className="faq-card-top-row">
                           <span className="faq-card-num">{numStr}</span>
                           <span className="faq-card-action-btn" aria-hidden="true">
@@ -230,10 +232,11 @@ export default function FAQSection() {
                       {/* BACK FACE (Answer) */}
                       <div
                         aria-hidden={!isFlipped}
-                        className={`faq-card-face faq-card-back ${
+                        className={`faq-card-face faq-card-back has-card-light ${
                           isBlueLiquidCard ? 'card-back-blue-deep' : 'card-back-navy'
                         }`}
                       >
+                        <CardHoverLight />
                         <div className="faq-card-top-row">
                           <span className="faq-card-num back-num">{numStr}</span>
                           <span className="faq-card-action-btn back-btn" aria-hidden="true">

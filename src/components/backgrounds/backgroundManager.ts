@@ -1,6 +1,6 @@
 import type { createBackgroundRenderer } from './BackgroundRenderer'
 
-export type BackgroundVariant = 'soft-aurora' | 'silk' | 'mesh-gradient' | 'static'
+export type BackgroundVariant = 'soft-aurora' | 'silk' | 'mesh-gradient' | 'static' | 'color-bends'
 type Entry = { host: HTMLElement; section: HTMLElement; variant: BackgroundVariant; shader: boolean; motion: boolean; visible: boolean }
 type Renderer = ReturnType<typeof createBackgroundRenderer>
 const entries = new Set<Entry>()
@@ -27,11 +27,11 @@ function selectActive() {
     const visible = Math.max(0, Math.min(innerHeight, bounds.bottom) - Math.max(0, bounds.top))
     if (visible > best) { best = visible; selected = entry }
   })
-  if (!selected?.shader || !['silk', 'soft-aurora'].includes(selected.variant)) {
+  if (!selected?.shader || !['silk', 'soft-aurora', 'color-bends'].includes(selected.variant)) {
     renderer?.detach()
     return
   }
-  if (renderer) { renderer.attach(selected.host, selected.variant as 'silk' | 'soft-aurora'); return }
+  if (renderer) { renderer.attach(selected.host, selected.variant as 'silk' | 'soft-aurora' | 'color-bends'); return }
   if (loading) return
   loading = true
   import('./BackgroundRenderer').then(module => {

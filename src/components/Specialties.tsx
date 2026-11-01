@@ -1,3 +1,4 @@
+import CardHoverLight from './CardHoverLight'
 import SectionBackground from './SectionBackground'
 import { useEffect, useRef, useState } from 'react'
 import { ArrowDown } from 'lucide-react'
@@ -276,7 +277,8 @@ export default function Specialties() {
         {/* ================= MIDDLE ROW: GEOMETRIC SCULPTED CARDS 01 & 02 ================= */}
         <div id="spec-cards" className="spec-cards-row">
           {/* CARD 01: LENTES EM RESINA */}
-          <div id="lentes-resina" className="spec-card-pos spec-card-01-pos" data-spec-reveal data-tilt>
+          <div id="lentes-resina" className="spec-card-pos spec-card-01-pos has-card-light" data-spec-reveal data-tilt>
+            <CardHoverLight />
             <div className="spec-card-inner">
               <div className="spec-card-text-side">
                 <span className="spec-card-index">01</span>
@@ -314,7 +316,8 @@ export default function Specialties() {
           </div>
 
           {/* CARD 02: LENTES EM PORCELANA */}
-          <div id="lentes-porcelana" className="spec-card-pos spec-card-02-pos" data-spec-reveal data-tilt>
+          <div id="lentes-porcelana" className="spec-card-pos spec-card-02-pos has-card-light" data-spec-reveal data-tilt>
+            <CardHoverLight />
             <div className="spec-card-inner spec-card-02-inner">
               <div className="spec-card-text-side">
                 <span className="spec-card-index">02</span>
