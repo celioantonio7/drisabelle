@@ -54,4 +54,5 @@
 }
 
 /* 404 shader test: keep the blue light behind readable editorial content. */
-.section-background[data-variant='color-bends'] .section-background__shader { opacity: .24; }
+.section-background[data-variant='color-bends'] .section-background__shader { opacity: .36; }
+.footer-expandable-drawer > .section-background { border-radius: 0; }

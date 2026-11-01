@@ -169,11 +169,13 @@ export default function Footer() {
 
       {/* ================= FULLSCREEN UPWARD FOOTER OVERLAY (Sem Rolagem, Abre Para Cima 100vh) ================= */}
       <div
+        data-background-scope
         className={`footer-expandable-drawer ${expanded ? 'is-expanded' : ''}`}
         hidden={!expanded}
         inert={!expanded}
         aria-hidden={!expanded}
       >
+        {expanded && <SectionBackground variant="color-bends" />}
         {/* Atmospheric Silk Waves & Diagonal Curves Inside Expanded Footer (Exact Match to Reference) */}
         <div className="footer-drawer-bg-atmosphere" aria-hidden="true">
           <svg viewBox="0 0 1448 1086" fill="none" preserveAspectRatio="none" className="footer-bg-svg">

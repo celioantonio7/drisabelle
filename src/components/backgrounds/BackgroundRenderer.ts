@@ -69,7 +69,9 @@ export function createBackgroundRenderer(onSlowDevice: () => void) {
     if (!host) return
     const width = host.clientWidth
     const height = host.clientHeight
-    const ratio = Math.min(1, 960 / Math.max(1, width), 720 / Math.max(1, height))
+    const maxWidth = variant === 'color-bends' ? 720 : 960
+    const maxHeight = variant === 'color-bends' ? 480 : 720
+    const ratio = Math.min(1, maxWidth / Math.max(1, width), maxHeight / Math.max(1, height))
     canvas.width = Math.max(1, Math.round(width * ratio))
     canvas.height = Math.max(1, Math.round(height * ratio))
     gl.viewport(0, 0, canvas.width, canvas.height)

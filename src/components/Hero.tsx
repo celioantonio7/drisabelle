@@ -128,8 +128,7 @@ export default function Hero({ onOpenVideo }: HeroProps) {
         {/* LEFT COLUMN */}
         <div className="hero-col-left">
           <div className="hero-pill-badge" data-hero-fade>
-            <span className="hero-pill-dot" />
-            <span>ODONTOLOGIA ESTÉTICA &amp; HARMONIZAÇÃO FACIAL</span>
+            <span>Odontologia Estética <em>&amp; Harmonização Facial</em></span>
           </div>
 
           <h1 className="hero-headline" data-hero-fade>

@@ -25,7 +25,8 @@ function selectActive() {
     if (!entry.visible) return
     const bounds = entry.section.getBoundingClientRect()
     const visible = Math.max(0, Math.min(innerHeight, bounds.bottom) - Math.max(0, bounds.top))
-    if (visible > best) { best = visible; selected = entry }
+    const priority = visible + (entry.section.hasAttribute('data-background-scope') ? innerHeight : 0)
+    if (priority > best) { best = priority; selected = entry }
   })
   if (!selected?.shader || !['silk', 'soft-aurora', 'color-bends'].includes(selected.variant)) {
     renderer?.detach()
@@ -42,7 +43,7 @@ function selectActive() {
 }
 
 export function registerBackground(host: HTMLElement, variant: BackgroundVariant, options: { shader: boolean; motion: boolean }) {
-  const section = host.closest<HTMLElement>('section, footer') ?? host.parentElement!
+  const section = host.closest<HTMLElement>('[data-background-scope], section, footer') ?? host.parentElement!
   const entry: Entry = { host, section, variant, ...options, visible: false }
   entries.add(entry)
   host.dataset.motion = options.motion && !downgraded ? 'on' : 'off'

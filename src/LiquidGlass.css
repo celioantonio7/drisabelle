@@ -67,3 +67,46 @@
   border: 1px solid #ffffffed;
   box-shadow: inset 0 2px 1px #fff, inset 0 -1px 1px #91bdf54d, 0 12px 26px #0b234b1f;
 }
+
+/* Clearer glass over the ColorBends test, with the optical layer below text. */
+#experiencia .hero-glass-card,
+#experiencia .em-stag-card,
+#resultados .rm-ba-card,
+#resultados .results-comparison-summary,
+#resultados .results-excellence-card,
+#resultados .results-evaluation-card,
+#resultados .patient-reviews .depth-carousel__card,
+#contato .footer-pill-bar,
+#contato .footer-location-caption,
+#contato .fm-drawer-card {
+  background: linear-gradient(135deg, #ffffff70, #e8f2ff38 58%, #ffffff59);
+  border: 1px solid #ffffffeb;
+  backdrop-filter: blur(10px) saturate(135%);
+  -webkit-backdrop-filter: blur(10px) saturate(135%);
+  box-shadow: inset 0 2px 1px #ffffffeb, inset 0 -2px 2px #91bdf559, 0 12px 28px #244c801c;
+}
+#experiencia .em-navy-card { background: linear-gradient(135deg,#0b234bd9,#164e8cb3); }
+#inicio .hero-pill-badge {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+  color: #334765;
+  font-size: clamp(.75rem, 1.05vw, .95rem);
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+}
+#inicio .hero-pill-badge em {
+  color: #0056d6;
+  font-family: 'Playfair Display Variable', serif;
+  font-weight: 600;
+}
+@supports not (backdrop-filter: blur(10px)) {
+  #experiencia .hero-glass-card, #experiencia .em-stag-card,
+  #resultados .results-excellence-card, #resultados .results-evaluation-card,
+  #resultados .patient-reviews .depth-carousel__card,
+  #contato .fm-drawer-card { background: #f0f6ff; }
+}

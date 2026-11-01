@@ -52,7 +52,7 @@ Mantenha telefone, endereço e identidade consistentes em `config/site.json`, `s
 
 ## Fundos e acabamento dos cards
 
-`SectionBackground` oferece as variantes `soft-aurora`, `silk`, `mesh-gradient`, `static` e `color-bends`. `color-bends` reutiliza o shader da página 404 e está em teste em Resultados e no contato. Cada seção usa uma variante, atrás do conteúdo e sem capturar cliques. As equações Aurora e Silk vêm do React Bits, com a licença original preservada.
+`SectionBackground` oferece as variantes `soft-aurora`, `silk`, `mesh-gradient`, `static` e `color-bends`. `color-bends` reutiliza o shader da página 404 e está em teste em Experiência, Resultados e no contato, incluindo o rodapé expandido. Cada seção usa uma variante, atrás do conteúdo e sem capturar cliques. As equações Aurora e Silk vêm do React Bits, com a licença original preservada.
 
 ```tsx
 <SectionBackground variant="soft-aurora" />

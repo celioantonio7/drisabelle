@@ -9,7 +9,7 @@ export default function SectionBackground({ variant = 'static' }: SectionBackgro
   const hostRef = useRef<HTMLDivElement>(null)
   useEffect(() => {
     const host = hostRef.current
-    const section = host?.closest<HTMLElement>('section, footer')
+    const section = host?.closest<HTMLElement>('[data-background-scope], section, footer')
     if (!host || !section) return
     section.classList.add('has-section-background')
     const media = gsap.matchMedia()
