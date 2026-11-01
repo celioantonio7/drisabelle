@@ -1,5 +1,5 @@
 export const WHATSAPP_NUMBER = '5512996232567'
-export const WHATSAPP_MESSAGE = 'Olá, Dra. Isabella! Gostaria de agendar uma avaliação.'
+export const WHATSAPP_MESSAGE = 'Olá! Vim pelo site da Dra. Isabella Ferro e gostaria de saber mais sobre a avaliação do meu sorriso.'
 export const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`
 export const INSTAGRAM_URL = 'https://www.instagram.com/isabellapferro/'
 export const INSTAGRAM_POST_URL = 'https://www.instagram.com/p/DWXSzTTlou0/'

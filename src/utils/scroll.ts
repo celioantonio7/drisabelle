@@ -18,5 +18,6 @@ export function scrollToId(id: string, options: { immediate?: boolean } = {}) {
     ScrollTrigger.update()
     return
   }
-  gsap.to(window, { duration: 1.1, ease: 'power3.inOut', scrollTo: { y, autoKill: true } })
+  // A single native smooth scroll remains interruptible by touch or wheel.
+  window.scrollTo({ top: y, behavior: 'smooth' })
 }
