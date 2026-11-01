@@ -1,7 +1,7 @@
+import SpecialtiesMobileContour from './SpecialtiesMobileContour'
 import CardHoverLight from './CardHoverLight'
 import SectionBackground from './SectionBackground'
 import { useEffect, useRef, useState } from 'react'
-import { ArrowDown } from 'lucide-react'
 import { ToothIcon, FaceIcon, ShieldIcon, DiamondIcon } from './Icons'
 import { AttentionArrow } from './LottieflowIcons'
 import { WHATSAPP_URL } from '../data'
@@ -160,6 +160,7 @@ export default function Specialties() {
       <div className="spec-master-canvas">
         {/* ================= TOP STAGE: LEFT EDITORIAL COPY + STAMP + RIGHT CURVED SMILE HERO ================= */}
         <div className="spec-top-row">
+          <SpecialtiesMobileContour />
           {/* Left Lead Column */}
           <div className="spec-col-lead" data-spec-reveal>
             <div className="spec-eyebrow-pill">
@@ -197,16 +198,7 @@ export default function Specialties() {
               </span>
             </a>
 
-            {/* Mobile Discover Cue (Exact match to 03_especialidades_mobile.png) */}
-            <a href="#spec-cards" className="spec-mobile-discover-btn">
-              <span className="spec-mobile-discover-circle">
-                <ArrowDown width={15} height={15} />
-              </span>
-              <span>
-                Descubra <br />
-                nossas especialidades
-              </span>
-            </a>
+
           </div>
 
           {/* Center Rotating Stamp (NO STAR — Uses ToothIcon per user rule) */}
