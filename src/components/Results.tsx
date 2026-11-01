@@ -105,6 +105,18 @@ const CASES_DATA: CaseItem[] = [
     desc: 'Realce dos pontos de sustentação da face para um semblante mais leve, descansado e proporcional.',
     category: 'Full Face',
   },
+  {
+    id: 7,
+    antesImg: assetUrl('/img/cases/case2_antes.jpg'),
+    depoisImg: assetUrl('/img/exemploresina_clean.png'),
+    pairImg: assetUrl('/img/exemploresina_clean.png'),
+    tag: 'Lentes em Resina',
+    title: 'Facetas em Resina Composta',
+    quote:
+      'Escultura direta com anatomia natural, textura acetinada e alinhamento impecável do sorriso. 🤍',
+    desc: 'Transformação estética minimamente invasiva com estratificação policromática direta executada pela Dra. Isabella Ferro.',
+    category: 'Resina',
+  },
 ]
 
 /**

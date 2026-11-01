@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import SignaturePreloader from './components/SignaturePreloader'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
+import SerpentineTextScroll from './components/SerpentineTextScroll'
 import About from './components/About'
 import Specialties from './components/Specialties'
 import Experience from './components/Experience'
@@ -13,6 +14,7 @@ import WhatsAppFloat from './components/WhatsAppFloat'
 import BackToTopFloat from './components/BackToTopFloat'
 import SectionIndexStrip from './components/SectionIndexStrip'
 import NotFound404 from './components/NotFound404'
+import CinematicTransition from './components/CinematicTransition'
 import { useAwwwardsScrollSystem } from './animations/useAwwwardsScrollSystem'
 
 function checkIsNotFound(): boolean {
@@ -71,14 +73,19 @@ export default function App() {
         {/* 01: Hero Section */}
         <Hero onOpenVideo={() => setVideoOpen(true)} />
 
+        {/* Serpentine Text Scroll — Transição Artística e Dinâmica */}
+        <SerpentineTextScroll />
+
         {/* 02: Sobre a Dra. Isabella Ferro */}
         <About />
 
         {/* 03: Especialidades (Lentes em Resina, Porcelana e Harmonização) */}
         <Specialties />
 
-        {/* 04: Experiência além do procedimento */}
-        <Experience onOpenVideo={() => setVideoOpen(true)} />
+        {/* 04: Experiência além do procedimento (Com Transição Cinematográfica de Viewport) */}
+        <CinematicTransition>
+          <Experience onOpenVideo={() => setVideoOpen(true)} />
+        </CinematicTransition>
 
         {/* 05: Perguntas Frequentes (FAQ) */}
         <FAQSection />

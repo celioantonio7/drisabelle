@@ -242,18 +242,24 @@ export default function Specialties() {
             {/* Translucent Vertical Capsule Arch Rising Behind the Glass Card */}
             <div className="spec-capsule-backdrop" aria-hidden="true" />
 
-            {/* Floating "Planejamento Personalizado" Glass Card (Exact Match to Reference) */}
-            <div className="spec-floating-planning-card" data-tilt>
-              <div className="spec-plan-icon-wrap">
-                <ToothIcon width={20} height={20} />
+            {/* Floating Preenchimento Labial / Harmonização Glass Card (Com preenchimento_clean.png) */}
+            <div className="spec-floating-planning-card spec-floating-preenchimento-card hero-glass-card" data-tilt>
+              <div className="spec-plan-thumb-box">
+                <img
+                  src={assetUrl('/img/preenchimento_clean.png')}
+                  alt="Resultado real de preenchimento labial e harmonização facial pela Dra. Isabella Ferro"
+                  className="spec-plan-thumb-img"
+                  loading="lazy"
+                />
+                <span className="spec-plan-badge">CASO REAL</span>
               </div>
               <div className="spec-plan-info">
                 <strong className="spec-plan-title">
-                  Planejamento <br />
-                  Personalizado
+                  Harmonização &amp; <br />
+                  Preenchimento
                 </strong>
                 <p className="spec-plan-text">
-                  Analisamos sua face, suas proporções e seus objetivos para um resultado único.
+                  Escultura labial com proporção áurea, volume sutil e naturalidade absoluta.
                 </p>
               </div>
               <a
@@ -261,7 +267,7 @@ export default function Specialties() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="spec-plan-arrow"
-                aria-label="Agendar planejamento personalizado"
+                aria-label="Agendar avaliação de preenchimento e harmonização"
               >
                 <AttentionArrow size={15} />
               </a>
