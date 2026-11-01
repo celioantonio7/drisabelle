@@ -1,3 +1,4 @@
+import FooterLocationMap from './FooterLocationMap'
 import SectionBackground from './SectionBackground'
 import './FooterCompact.css'
 import { useEditorialReveal } from '../animations/useEditorialReveal'
@@ -88,26 +89,29 @@ export default function Footer() {
 
       <div className="section-container faq-container-layer">
         {/* ================= PRE-FOOTER CTA ("Seu sorriso é sua assinatura.") ================= */}
-        <div className="footer-signature-cta" data-footer-reveal>
-          <h2 className="footer-cta-headline">
-            <span>Seu sorriso é</span> <br />
-            <span className="text-accent-blue">sua assinatura.</span>
-          </h2>
-          <hr className="footer-signature-rule" />
-          <p className="footer-cta-sub">
-            Invista em você com quem entende de estética, precisão e elegância.
-          </p>
-          <a
-            href={WHATSAPP_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="footer-cta-primary-btn"
-            data-magnetic
-          >
-            <span>Agendar Avaliação Exclusiva</span>
-            <AttentionArrow size={18} />
-          </a>
+        <div className="footer-contact-layout">
+          <div className="footer-signature-cta" data-footer-reveal>
+            <h2 className="footer-cta-headline">
+              <span>Seu sorriso é</span> <br />
+              <span className="text-accent-blue">sua assinatura.</span>
+            </h2>
+            <hr className="footer-signature-rule" />
+            <p className="footer-cta-sub">
+              Invista em você com quem entende de estética, precisão e elegância.
+            </p>
+            <a
+              href={WHATSAPP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="footer-cta-primary-btn"
+              data-magnetic
+            >
+              <span>Agendar Avaliação Exclusiva</span>
+              <AttentionArrow size={18} />
+            </a>
 
+          </div>
+          <FooterLocationMap />
         </div>
 
         {/* ================= COLLAPSIBLE PILL BAR AT THE BOTTOM (Desktop & Mobile) ================= */}

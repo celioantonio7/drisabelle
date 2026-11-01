@@ -1,5 +1,5 @@
 import type { RefObject } from 'react'
-import { gsap, ScrollTrigger, SplitText } from './gsap'
+import { gsap, SplitText } from './gsap'
 import { useMotion } from './useMotion'
 
 type Scope = RefObject<HTMLElement | null>
@@ -367,27 +367,41 @@ export function useCardTilt(scope: Scope) {
 }
 
 /* -------------------------------------------------------------------------- */
-/* Float — [data-float]  (5–8px, 4–6s, yoyo, repeat -1; pausa fora da tela)     */
+/* Float — continuous oval drift; no shared stop at the turning points.       */
 /* -------------------------------------------------------------------------- */
 export function useFloat(scope: Scope) {
   useMotion(scope, ({ motion }, root) => {
     if (!motion) return
-    q(root, '[data-float]').forEach((el, i) => {
-      const dir = i % 2 ? -1 : 1
-      const tween = gsap.to(el, {
-        y: gsap.utils.random(5, 8) * dir,
-        duration: gsap.utils.random(4, 6),
-        ease: 'sine.inOut',
-        yoyo: true,
-        repeat: -1,
-        paused: true,
+    const cleanups: Array<() => void> = []
+    q(root, '[data-float]').forEach(el => {
+      const original = el.style.transform
+      const phase = { angle: 0 }
+      const paint = (transform: string) => { el.style.transform = transform }
+      const tween = gsap.to(phase, {
+        angle: Math.PI * 2, duration: 11.5, ease: 'none', repeat: -1, paused: true,
+        onUpdate: () => {
+          const x = Math.sin(phase.angle) * 3
+          const y = (Math.cos(phase.angle) - 1) * 4
+          const roll = Math.sin(phase.angle) * .14
+          paint(`translate3d(${x}px, ${y}px, 0) rotate(${roll}deg)`)
+        },
       })
-      ScrollTrigger.create({
-        trigger: el,
-        start: 'top bottom',
-        end: 'bottom top',
-        onToggle: (s) => (s.isActive ? tween.play() : tween.pause()),
+      let visible = false
+      const sync = () => { if (visible && !document.hidden) tween.play(); else tween.pause() }
+      // A margin wider than the drift prevents pause/resume flicker at the edge.
+      const observer = new IntersectionObserver(entries => {
+        visible = entries[0]?.isIntersecting ?? false
+        sync()
+      }, { rootMargin: '40px 0px' })
+      observer.observe(el)
+      document.addEventListener('visibilitychange', sync)
+      cleanups.push(() => {
+        observer.disconnect()
+        document.removeEventListener('visibilitychange', sync)
+        tween.kill()
+        el.style.transform = original
       })
     })
+    return () => cleanups.forEach(cleanup => cleanup())
   })
 }

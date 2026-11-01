@@ -1,0 +1,69 @@
+#contato .footer-contact-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.12fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(32px, 5vw, 84px);
+  max-width: 1180px;
+  margin: 0 auto 40px;
+}
+#contato .footer-contact-layout .footer-signature-cta {
+  text-align: left;
+  align-items: flex-start;
+  margin: 0;
+  max-width: none;
+}
+#contato .footer-contact-layout .footer-signature-rule { margin: 20px 0 24px; }
+#contato .footer-contact-layout .footer-cta-sub { max-width: 440px; }
+#contato .footer-contact-layout .footer-cta-primary-btn { max-width: 410px; }
+.footer-location { width: 100%; max-width: 480px; min-width: 0; margin: 0; justify-self: end; }
+.footer-location-shell { position: relative; padding: 8px; }
+.footer-location-shell::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 40% 25% 32px 32px / 30% 23% 32px 32px;
+  border: 1px solid #ffffffed;
+  background: linear-gradient(140deg, #ffffffd9, #c8dfff70);
+  box-shadow: inset 0 2px 2px #fff, 0 16px 38px #244b7c1a;
+  pointer-events: none;
+}
+.footer-location-viewport {
+  position: relative;
+  aspect-ratio: 1.18;
+  overflow: hidden;
+  border-radius: 40% 25% 24px 24px / 30% 23% 24px 24px;
+  background: #e8f2ff;
+  border: 1px solid #fffffff0;
+}
+/* Preserve the provider's bottom attribution strip and keep the map undistorted. */
+.footer-location-viewport iframe { display: block; width: 100%; height: 100%; border: 0; }
+.footer-location-caption {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 15px 16px;
+  margin: 12px 8px 0;
+  background: linear-gradient(140deg,#ffffffe8,#e8f2ffcc);
+  border: 1px solid #fff;
+  border-radius: 20px;
+  box-shadow: inset 0 1px 1px #fff, 0 8px 22px #276ef10d;
+  color: #276ef1;
+}
+.footer-location-caption > svg { flex-shrink: 0; }
+.footer-location-caption > div { flex: 1; min-width: 0; }
+.footer-location-caption strong { display: block; color: #0b192c; font-size: .85rem; line-height: 1.35; margin-bottom: 3px; }
+.footer-location-caption address { color: #4b5b76; font-size: .73rem; font-style: normal; line-height: 1.45; }
+.footer-location-caption a { display: grid; place-items: center; flex-shrink: 0; width: 42px; height: 42px; border-radius: 50%; color: #276ef1; background: #fff; border: 1px solid #dce9fc; }
+.footer-location-caption a:hover { background: #e8f2ff; }
+.footer-location-caption a:focus-visible { outline: 2px solid #276ef1; outline-offset: 3px; }
+@media (max-width: 959px) {
+  #contato .footer-contact-layout { grid-template-columns: 1fr; gap: 28px; max-width: 600px; }
+  #contato .footer-contact-layout .footer-signature-cta { align-items: flex-start; }
+  .footer-location { justify-self: center; }
+}
+@media (max-width: 479px) {
+  #contato .footer-contact-layout .footer-cta-headline { font-size: clamp(2.15rem, 9.4vw, 2.8rem); }
+  #contato .footer-contact-layout .footer-cta-primary-btn { padding: 16px 18px; font-size: .9rem; }
+  .footer-location-caption { padding: 13px 12px; gap: 8px; }
+  .footer-location-caption address { font-size: .7rem; }
+}
